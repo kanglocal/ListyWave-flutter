@@ -122,7 +122,8 @@ void main() {
     testWidgets('$location → $screen', (tester) async {
       final container = await pumpLoggedInApp(tester);
       container.read(routerProvider).go(location);
-      await tester.pumpAndSettle();
+      // 부모 route 화면도 조회 요청을 보내므로 그 요청까지 끝낸다 (settle 설명 참고).
+      await settle(tester);
 
       expect(find.byType(screen), findsOneWidget);
     });

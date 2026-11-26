@@ -1,0 +1,266 @@
+{
+  "hasNext": true,
+  "cursorUpdatedDate": "2024-11-20T14:31:08.123456",
+  "lists": [
+    {
+      "id": 201,
+      "ownerId": 11,
+      "ownerNickname": "리스터1",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 1",
+      "description": "출근길 플레이리스트 1번",
+      "items": [
+        {
+          "id": 3011,
+          "rank": 1,
+          "title": "노래 1-1"
+        },
+        {
+          "id": 3012,
+          "rank": 2,
+          "title": "노래 1-2"
+        },
+        {
+          "id": 3013,
+          "rank": 3,
+          "title": "노래 1-3"
+        }
+      ],
+      "updateCount": 1
+    },
+    {
+      "id": 202,
+      "ownerId": 12,
+      "ownerNickname": "리스터2",
+      "ownerProfileImage": "https://pub-4f2c1e.r2.dev/users/12/profile.webp",
+      "title": "요즘 듣는 노래 2",
+      "description": "출근길 플레이리스트 2번",
+      "items": [
+        {
+          "id": 3021,
+          "rank": 1,
+          "title": "노래 2-1"
+        },
+        {
+          "id": 3022,
+          "rank": 2,
+          "title": "노래 2-2"
+        },
+        {
+          "id": 3023,
+          "rank": 3,
+          "title": "노래 2-3"
+        }
+      ],
+      "updateCount": 2
+    },
+    {
+      "id": 203,
+      "ownerId": 13,
+      "ownerNickname": "리스터3",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 3",
+      "description": "출근길 플레이리스트 3번",
+      "items": [
+        {
+          "id": 3031,
+          "rank": 1,
+          "title": "노래 3-1"
+        },
+        {
+          "id": 3032,
+          "rank": 2,
+          "title": "노래 3-2"
+        },
+        {
+          "id": 3033,
+          "rank": 3,
+          "title": "노래 3-3"
+        }
+      ],
+      "updateCount": 3
+    },
+    {
+      "id": 204,
+      "ownerId": 14,
+      "ownerNickname": "리스터4",
+      "ownerProfileImage": "https://pub-4f2c1e.r2.dev/users/14/profile.webp",
+      "title": "요즘 듣는 노래 4",
+      "description": "출근길 플레이리스트 4번",
+      "items": [
+        {
+          "id": 3041,
+          "rank": 1,
+          "title": "노래 4-1"
+        },
+        {
+          "id": 3042,
+          "rank": 2,
+          "title": "노래 4-2"
+        },
+        {
+          "id": 3043,
+          "rank": 3,
+          "title": "노래 4-3"
+        }
+      ],
+      "updateCount": 0
+    },
+    {
+      "id": 205,
+      "ownerId": 15,
+      "ownerNickname": "리스터5",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 5",
+      "description": "출근길 플레이리스트 5번",
+      "items": [
+        {
+          "id": 3051,
+          "rank": 1,
+          "title": "노래 5-1"
+        },
+        {
+          "id": 3052,
+          "rank": 2,
+          "title": "노래 5-2"
+        },
+        {
+          "id": 3053,
+          "rank": 3,
+          "title": "노래 5-3"
+        }
+      ],
+      "updateCount": 1
+    },
+    {
+      "id": 206,
+      "ownerId": 16,
+      "ownerNickname": "리스터6",
+      "ownerProfileImage": "https://pub-4f2c1e.r2.dev/users/16/profile.webp",
+      "title": "요즘 듣는 노래 6",
+      "description": "출근길 플레이리스트 6번",
+      "items": [
+        {
+          "id": 3061,
+          "rank": 1,
+          "title": "노래 6-1"
+        },
+        {
+          "id": 3062,
+          "rank": 2,
+          "title": "노래 6-2"
+        },
+        {
+          "id": 3063,
+          "rank": 3,
+          "title": "노래 6-3"
+        }
+      ],
+      "updateCount": 2
+    },
+    {
+      "id": 207,
+      "ownerId": 17,
+      "ownerNickname": "리스터7",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 7",
+      "description": "출근길 플레이리스트 7번",
+      "items": [
+        {
+          "id": 3071,
+          "rank": 1,
+          "title": "노래 7-1"
+        },
+        {
+          "id": 3072,
+          "rank": 2,
+          "title": "노래 7-2"
+        },
+        {
+          "id": 3073,
+          "rank": 3,
+          "title": "노래 7-3"
+        }
+      ],
+      "updateCount": 3
+    },
+    {
+      "id": 208,
+      "ownerId": 18,
+      "ownerNickname": "리스터8",
+      "ownerProfileImage": "https://pub-4f2c1e.r2.dev/users/18/profile.webp",
+      "title": "요즘 듣는 노래 8",
+      "description": "출근길 플레이리스트 8번",
+      "items": [
+        {
+          "id": 3081,
+          "rank": 1,
+          "title": "노래 8-1"
+        },
+        {
+          "id": 3082,
+          "rank": 2,
+          "title": "노래 8-2"
+        },
+        {
+          "id": 3083,
+          "rank": 3,
+          "title": "노래 8-3"
+        }
+      ],
+      "updateCount": 0
+    },
+    {
+      "id": 209,
+      "ownerId": 19,
+      "ownerNickname": "리스터9",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 9",
+      "description": "출근길 플레이리스트 9번",
+      "items": [
+        {
+          "id": 3091,
+          "rank": 1,
+          "title": "노래 9-1"
+        },
+        {
+          "id": 3092,
+          "rank": 2,
+          "title": "노래 9-2"
+        },
+        {
+          "id": 3093,
+          "rank": 3,
+          "title": "노래 9-3"
+        }
+      ],
+      "updateCount": 1
+    },
+    {
+      "id": 210,
+      "ownerId": 20,
+      "ownerNickname": "리스터10",
+      "ownerProfileImage": "https://pub-4f2c1e.r2.dev/users/20/profile.webp",
+      "title": "요즘 듣는 노래 10",
+      "description": "출근길 플레이리스트 10번",
+      "items": [
+        {
+          "id": 3101,
+          "rank": 1,
+          "title": "노래 10-1"
+        },
+        {
+          "id": 3102,
+          "rank": 2,
+          "title": "노래 10-2"
+        },
+        {
+          "id": 3103,
+          "rank": 3,
+          "title": "노래 10-3"
+        }
+      ],
+      "updateCount": 2
+    }
+  ]
+}

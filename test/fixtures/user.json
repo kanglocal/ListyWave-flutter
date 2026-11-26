@@ -1,0 +1,11 @@
+{
+  "id": 9,
+  "backgroundImageUrl": "https://pub-4f2c1e.r2.dev/default/background_1.png",
+  "profileImageUrl": "https://pub-4f2c1e.r2.dev/users/9/profile.webp",
+  "nickname": "리스티",
+  "description": "취향을 기록합니다",
+  "followingCount": 12,
+  "followerCount": 10500,
+  "isFollowed": false,
+  "isOwner": true
+}

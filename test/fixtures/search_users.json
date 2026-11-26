@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 8,
+      "nickname": "빵지순례",
+      "profileImageUrl": null,
+      "isFollowing": false
+    },
+    {
+      "id": 12,
+      "nickname": "맛집탐방러",
+      "profileImageUrl": "https://pub-4f2c1e.r2.dev/users/12/profile.webp",
+      "isFollowing": true
+    }
+  ],
+  "totalCount": 2,
+  "hasNext": false
+}

@@ -18,6 +18,7 @@ abstract class PaginatedNotifier<T, C> extends AsyncNotifier<PageState<T, C>> {
       items: page.items,
       nextCursor: page.nextCursor,
       hasNext: page.hasNext,
+      totalCount: page.totalCount,
     );
   }
 
@@ -40,6 +41,7 @@ abstract class PaginatedNotifier<T, C> extends AsyncNotifier<PageState<T, C>> {
           items: [...current.items, ...page.items],
           nextCursor: page.nextCursor,
           hasNext: page.hasNext,
+          totalCount: page.totalCount ?? current.totalCount,
         ),
       );
     } on Exception catch (e) {

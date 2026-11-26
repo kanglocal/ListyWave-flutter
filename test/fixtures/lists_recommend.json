@@ -1,0 +1,54 @@
+[
+  {
+    "id": 101,
+    "ownerId": 3,
+    "ownerNickname": "서핑하는개발자",
+    "title": "서울 브런치 카페 TOP5",
+    "itemImageUrl": "https://pub-4f2c1e.r2.dev/lists/101/items/1.jpg",
+    "category": "맛집&카페",
+    "backgroundColor": "PASTEL_YELLOW",
+    "items": [
+      {
+        "id": 1001,
+        "rank": 1,
+        "title": "카페 어니언 성수"
+      },
+      {
+        "id": 1002,
+        "rank": 2,
+        "title": "테일러커피"
+      },
+      {
+        "id": 1003,
+        "rank": 3,
+        "title": "빌즈 광화문"
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "ownerId": 5,
+    "ownerNickname": "영화광",
+    "title": "반전 결말 영화 TOP3",
+    "itemImageUrl": null,
+    "category": "영화&드라마",
+    "backgroundColor": "VIVID_BLUE",
+    "items": [
+      {
+        "id": 1011,
+        "rank": 1,
+        "title": "식스 센스"
+      },
+      {
+        "id": 1012,
+        "rank": 2,
+        "title": "유주얼 서스펙트"
+      },
+      {
+        "id": 1013,
+        "rank": 3,
+        "title": "올드보이"
+      }
+    ]
+  }
+]

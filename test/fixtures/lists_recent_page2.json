@@ -1,0 +1,58 @@
+{
+  "hasNext": false,
+  "cursorUpdatedDate": "2024-11-18T09:02:44.5",
+  "lists": [
+    {
+      "id": 211,
+      "ownerId": 21,
+      "ownerNickname": "리스터11",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 11",
+      "description": "출근길 플레이리스트 11번",
+      "items": [
+        {
+          "id": 3111,
+          "rank": 1,
+          "title": "노래 11-1"
+        },
+        {
+          "id": 3112,
+          "rank": 2,
+          "title": "노래 11-2"
+        },
+        {
+          "id": 3113,
+          "rank": 3,
+          "title": "노래 11-3"
+        }
+      ],
+      "updateCount": 3
+    },
+    {
+      "id": 212,
+      "ownerId": 22,
+      "ownerNickname": "리스터12",
+      "ownerProfileImage": "https://pub-4f2c1e.r2.dev/users/22/profile.webp",
+      "title": "요즘 듣는 노래 12",
+      "description": "출근길 플레이리스트 12번",
+      "items": [
+        {
+          "id": 3121,
+          "rank": 1,
+          "title": "노래 12-1"
+        },
+        {
+          "id": 3122,
+          "rank": 2,
+          "title": "노래 12-2"
+        },
+        {
+          "id": 3123,
+          "rank": 3,
+          "title": "노래 12-3"
+        }
+      ],
+      "updateCount": 0
+    }
+  ]
+}

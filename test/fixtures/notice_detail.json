@@ -1,0 +1,57 @@
+{
+  "id": 4,
+  "category": "소식",
+  "title": "리스티웨이브 앱 출시 안내",
+  "description": "이제 앱으로도 만나요",
+  "contents": [
+    {
+      "type": "subtitle",
+      "description": "앱 출시",
+      "imageUrl": null,
+      "buttonName": null,
+      "buttonLink": null
+    },
+    {
+      "type": "body",
+      "description": "**iOS** 와 **Android** 에서 만나요.\n\n- 홈\n- 검색",
+      "imageUrl": null,
+      "buttonName": null,
+      "buttonLink": null
+    },
+    {
+      "type": "image",
+      "description": null,
+      "imageUrl": "https://pub-4f2c1e.r2.dev/notices/4/1.png",
+      "buttonName": null,
+      "buttonLink": null
+    },
+    {
+      "type": "line",
+      "description": null,
+      "imageUrl": null,
+      "buttonName": null,
+      "buttonLink": null
+    },
+    {
+      "type": "button",
+      "description": null,
+      "imageUrl": null,
+      "buttonName": "다운로드",
+      "buttonLink": "https://listywave.vercel.app"
+    },
+    {
+      "type": "note",
+      "description": "문의는 listywave8@gmail.com 으로 보내주세요.",
+      "imageUrl": null,
+      "buttonName": null,
+      "buttonLink": null
+    }
+  ],
+  "createdDate": "2024-11-01T10:00:00",
+  "prevNotice": {
+    "id": 3,
+    "title": "가을맞이 리스트 이벤트",
+    "description": "가을 리스트를 공유해 주세요"
+  },
+  "nextNotice": null
+}

@@ -1,0 +1,36 @@
+[
+  {
+    "id": 2,
+    "createdDate": "2024-11-20T14:31:08",
+    "isPublic": true,
+    "items": [
+      {
+        "id": 11,
+        "rank": 1,
+        "title": "카페 어니언 성수"
+      },
+      {
+        "id": 12,
+        "rank": 2,
+        "title": "테일러커피"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "createdDate": "2024-10-01T11:20:33",
+    "isPublic": false,
+    "items": [
+      {
+        "id": 1,
+        "rank": 1,
+        "title": "테일러커피"
+      },
+      {
+        "id": 2,
+        "rank": 2,
+        "title": "카페 어니언 성수"
+      }
+    ]
+  }
+]

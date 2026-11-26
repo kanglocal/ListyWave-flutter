@@ -1,0 +1,32 @@
+{
+  "hasNext": false,
+  "cursorUpdatedDate": "2024-11-21T08:00:00",
+  "lists": [
+    {
+      "id": 221,
+      "ownerId": 31,
+      "ownerNickname": "리스터21",
+      "ownerProfileImage": null,
+      "title": "요즘 듣는 노래 21",
+      "description": "출근길 플레이리스트 21번",
+      "items": [
+        {
+          "id": 3211,
+          "rank": 1,
+          "title": "노래 21-1"
+        },
+        {
+          "id": 3212,
+          "rank": 2,
+          "title": "노래 21-2"
+        },
+        {
+          "id": 3213,
+          "rank": 3,
+          "title": "노래 21-3"
+        }
+      ],
+      "updateCount": 1
+    }
+  ]
+}

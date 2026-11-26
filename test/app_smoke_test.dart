@@ -14,8 +14,16 @@ void main() {
 
     expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.byType(AppBottomNav), findsOneWidget);
-    expect(find.text('홈'), findsOneWidget);
-    expect(find.text('내 피드'), findsOneWidget);
+    // 홈 화면 제목도 "홈" 이라 (web Header.tsx) 하단 탭 안에서 찾는다.
+    final bottomNav = find.byType(AppBottomNav);
+    expect(
+      find.descendant(of: bottomNav, matching: find.text('홈')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: bottomNav, matching: find.text('내 피드')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('비로그인 상태에서 내 피드 / 추가를 누르면 로그인 dialog 가 뜬다', (tester) async {

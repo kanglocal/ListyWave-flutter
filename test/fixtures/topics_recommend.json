@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "내 인생 최고의 드라마",
+    "categoryKorName": "영화&드라마"
+  },
+  {
+    "id": 2,
+    "title": "비 오는 날 듣기 좋은 노래",
+    "categoryKorName": "음악"
+  },
+  {
+    "id": 3,
+    "title": "혼자 가기 좋은 국내 여행지",
+    "categoryKorName": "여행"
+  }
+]

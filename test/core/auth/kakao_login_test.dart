@@ -184,6 +184,7 @@ void main() {
 
     expect(find.byKey(const Key('fakeWebView')), findsNothing);
     expect(find.byType(LoginSheet), findsOneWidget);
-    expect(api.requests, isEmpty);
+    // 뒤의 홈 화면은 조회 요청을 보내므로 인증 요청만 본다.
+    expect(api.requests.where((r) => r.uri.path.startsWith('/auth')), isEmpty);
   });
 }

@@ -1,0 +1,11 @@
+{
+  "id": 3,
+  "backgroundImageUrl": null,
+  "profileImageUrl": null,
+  "nickname": "서핑하는개발자",
+  "description": null,
+  "followingCount": 3,
+  "followerCount": 40,
+  "isFollowed": false,
+  "isOwner": false
+}

@@ -24,3 +24,10 @@ prod: `--flavor prod -t lib/main_prod.dart --dart-define-from-file=env/prod.json
 ```bash
 bash scripts/verify.sh
 ```
+
+## 테스트 fixture
+
+`test/fixtures/*.json` 은 조회 API 응답이다. PLAN §7 M2 는 dev 서버 응답을 캡처하라고 하지만, M2 작업 시점에
+dev 서버가 없어 backend 응답 DTO(`ListyWave-back` 의 `*Response.java`)와 web 타입(`src/lib/types/*.ts`)을
+보고 손으로 만들었다. dev 서버를 띄울 수 있게 되면 실제 응답으로 바꾼다 (파일 이름은 그대로 두고,
+`test/core/models/model_roundtrip_test.dart` 가 모든 fixture 의 `fromJson → toJson` 왕복을 검사한다).

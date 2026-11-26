@@ -1,0 +1,18 @@
+[
+  {
+    "id": 4,
+    "createdDate": "2024-11-01T10:00:00",
+    "title": "리스티웨이브 앱 출시 안내",
+    "itemImageUrl": "https://pub-4f2c1e.r2.dev/notices/4/1.png",
+    "category": "소식",
+    "description": "이제 앱으로도 만나요"
+  },
+  {
+    "id": 3,
+    "createdDate": "2024-10-01T10:00:00",
+    "title": "가을맞이 리스트 이벤트",
+    "itemImageUrl": null,
+    "category": "이벤트",
+    "description": "가을 리스트를 공유해 주세요"
+  }
+]

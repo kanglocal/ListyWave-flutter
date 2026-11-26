@@ -1,0 +1,57 @@
+[
+  {
+    "code": "0",
+    "engName": "entire",
+    "korName": "전체"
+  },
+  {
+    "code": "1",
+    "engName": "music",
+    "korName": "음악"
+  },
+  {
+    "code": "2",
+    "engName": "movie_drama",
+    "korName": "영화&드라마"
+  },
+  {
+    "code": "3",
+    "engName": "entertainment_arts",
+    "korName": "엔터&예술"
+  },
+  {
+    "code": "4",
+    "engName": "travel",
+    "korName": "여행"
+  },
+  {
+    "code": "5",
+    "engName": "restaurant_cafe",
+    "korName": "맛집&카페"
+  },
+  {
+    "code": "6",
+    "engName": "food_recipes",
+    "korName": "음식&레시피"
+  },
+  {
+    "code": "7",
+    "engName": "place",
+    "korName": "공간"
+  },
+  {
+    "code": "8",
+    "engName": "dailylife_thoughts",
+    "korName": "일상&생각"
+  },
+  {
+    "code": "9",
+    "engName": "hobby_leisure",
+    "korName": "취미&레저"
+  },
+  {
+    "code": "10",
+    "engName": "etc",
+    "korName": "기타"
+  }
+]

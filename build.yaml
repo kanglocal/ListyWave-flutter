@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # 중첩 freezed 객체도 Map 으로 바꿔야 fixture 왕복 비교와 jsonEncode 가 맞는다.
+          explicit_to_json: true

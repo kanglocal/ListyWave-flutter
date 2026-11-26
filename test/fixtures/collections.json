@@ -1,0 +1,35 @@
+{
+  "cursorId": 12,
+  "hasNext": false,
+  "collectionLists": [
+    {
+      "id": 12,
+      "list": {
+        "id": 101,
+        "backgroundColor": "PASTEL_YELLOW",
+        "title": "서울 브런치 카페 TOP5",
+        "ownerId": 3,
+        "ownerNickname": "서핑하는개발자",
+        "ownerProfileImageUrl": null,
+        "representativeImageUrl": "https://pub-4f2c1e.r2.dev/lists/101/items/1.jpg",
+        "category": "맛집&카페",
+        "updatedDate": "2024-11-20T14:31:08.123456",
+        "listItems": [
+          {
+            "id": 1001,
+            "rank": 1,
+            "title": "카페 어니언 성수",
+            "imageUrl": "https://pub-4f2c1e.r2.dev/lists/101/items/1.jpg"
+          },
+          {
+            "id": 1002,
+            "rank": 2,
+            "title": "테일러커피",
+            "imageUrl": ""
+          }
+        ]
+      }
+    }
+  ],
+  "folderName": "기본 폴더"
+}

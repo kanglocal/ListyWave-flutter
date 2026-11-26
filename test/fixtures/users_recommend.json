@@ -1,0 +1,17 @@
+[
+  {
+    "id": 3,
+    "nickname": "서핑하는개발자",
+    "profileImageUrl": "https://pub-4f2c1e.r2.dev/users/3/profile.webp"
+  },
+  {
+    "id": 5,
+    "nickname": "영화광",
+    "profileImageUrl": null
+  },
+  {
+    "id": 8,
+    "nickname": "빵지순례",
+    "profileImageUrl": "https://pub-4f2c1e.r2.dev/default/profile_2.png"
+  }
+]

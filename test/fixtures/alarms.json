@@ -1,0 +1,92 @@
+[
+  {
+    "id": 91,
+    "createdDate": "2024-11-21T09:12:00",
+    "checked": false,
+    "type": "COMMENT",
+    "sendUser": {
+      "id": 8,
+      "nickname": "빵지순례",
+      "profileImageUrl": null
+    },
+    "list": {
+      "id": 101,
+      "title": "서울 브런치 카페 TOP5"
+    },
+    "comment": {
+      "id": 33,
+      "content": "어니언 저도 좋아해요!",
+      "mentions": []
+    },
+    "reply": null,
+    "notice": null
+  },
+  {
+    "id": 90,
+    "createdDate": "2024-11-20T10:00:00",
+    "checked": true,
+    "type": "REPLY",
+    "sendUser": {
+      "id": 3,
+      "nickname": "서핑하는개발자",
+      "profileImageUrl": null
+    },
+    "list": {
+      "id": 101,
+      "title": "서울 브런치 카페 TOP5"
+    },
+    "comment": {
+      "id": 33,
+      "content": "어니언 저도 좋아해요!",
+      "mentions": []
+    },
+    "reply": {
+      "id": 71,
+      "content": "@빵지순례 팡도르 꼭 드셔보세요",
+      "mentions": [
+        {
+          "targetUserId": 8,
+          "targetUserNickname": "빵지순례"
+        }
+      ]
+    },
+    "notice": null
+  },
+  {
+    "id": 89,
+    "createdDate": "2024-11-01T10:00:00",
+    "checked": true,
+    "type": "NOTICE",
+    "sendUser": {
+      "id": 1,
+      "nickname": "리스티웨이브",
+      "profileImageUrl": null
+    },
+    "list": null,
+    "comment": null,
+    "reply": null,
+    "notice": {
+      "id": 4,
+      "categoryCode": "1",
+      "categoryViewName": "소식",
+      "title": "리스티웨이브 앱 출시 안내",
+      "description": "이제 앱으로도 만나요",
+      "createdDate": "2024-11-01T10:00:00"
+    }
+  },
+  {
+    "id": 88,
+    "createdDate": "2024-10-30T10:00:00",
+    "checked": true,
+    "type": "FOLLOW",
+    "sendUser": {
+      "id": 5,
+      "nickname": "영화광",
+      "profileImageUrl": null
+    },
+    "list": null,
+    "comment": null,
+    "reply": null,
+    "notice": null
+  }
+]

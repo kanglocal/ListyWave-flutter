@@ -1,0 +1,60 @@
+{
+  "totalCount": 3,
+  "cursorId": 31,
+  "hasNext": false,
+  "comments": [
+    {
+      "id": 33,
+      "userId": 8,
+      "userNickname": "빵지순례",
+      "userProfileImageUrl": null,
+      "content": "어니언 저도 좋아해요!",
+      "createdDate": "2024-11-21T09:12:00",
+      "updatedDate": "2024-11-21T09:12:00",
+      "isDeleted": false,
+      "replies": [
+        {
+          "id": 71,
+          "commentId": 33,
+          "userId": 3,
+          "userNickname": "서핑하는개발자",
+          "userProfileImageUrl": "https://pub-4f2c1e.r2.dev/users/3/profile.webp",
+          "content": "@빵지순례 팡도르 꼭 드셔보세요",
+          "createdDate": "2024-11-21T10:00:00",
+          "updatedDate": "2024-11-21T10:00:00",
+          "mentions": [
+            {
+              "userId": 8,
+              "userNickname": "빵지순례"
+            }
+          ]
+        }
+      ],
+      "mentions": []
+    },
+    {
+      "id": 32,
+      "userId": 0,
+      "userNickname": "withdrawer",
+      "userProfileImageUrl": null,
+      "content": "삭제된 댓글",
+      "createdDate": "2024-11-10T12:00:00",
+      "updatedDate": "2024-11-10T12:00:00",
+      "isDeleted": true,
+      "replies": [],
+      "mentions": []
+    },
+    {
+      "id": 31,
+      "userId": 5,
+      "userNickname": "영화광",
+      "userProfileImageUrl": null,
+      "content": "테일러커피 라떼 추천",
+      "createdDate": "2024-10-02T08:30:00",
+      "updatedDate": "2024-10-02T08:45:10",
+      "isDeleted": false,
+      "replies": [],
+      "mentions": []
+    }
+  ]
+}

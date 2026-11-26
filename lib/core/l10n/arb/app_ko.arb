@@ -1,20 +1,29 @@
 {
   "@@locale": "ko",
   "appTitle": "ListyWave",
-  "@appTitle": { "description": "앱 이름" },
-
+  "@appTitle": {
+    "description": "앱 이름"
+  },
   "app_notFound": "존재하지 않는 페이지에요.",
-  "@app_notFound": { "description": "web src/app/locale.ts notFound" },
+  "@app_notFound": {
+    "description": "web src/app/locale.ts notFound"
+  },
   "app_goBack": "돌아가기",
-  "@app_goBack": { "description": "web src/app/locale.ts goBack" },
-
+  "@app_goBack": {
+    "description": "web src/app/locale.ts goBack"
+  },
   "bottomNav_home": "홈",
-  "@bottomNav_home": { "description": "web src/components/BottomNav/BottomNav.tsx 홈 탭" },
+  "@bottomNav_home": {
+    "description": "web src/components/BottomNav/BottomNav.tsx 홈 탭"
+  },
   "bottomNav_add": "리스트 작성하기",
-  "@bottomNav_add": { "description": "가운데 + 버튼 접근성 라벨 (web common createListButton)" },
+  "@bottomNav_add": {
+    "description": "가운데 + 버튼 접근성 라벨 (web common createListButton)"
+  },
   "bottomNav_myFeed": "내 피드",
-  "@bottomNav_myFeed": { "description": "web src/components/BottomNav/BottomNav.tsx 내 피드 탭" },
-
+  "@bottomNav_myFeed": {
+    "description": "web src/components/BottomNav/BottomNav.tsx 내 피드 탭"
+  },
   "common_follow": "팔로우",
   "common_following": "팔로잉",
   "common_signInAndUp": "로그인/회원가입",
@@ -27,15 +36,554 @@
   "common_noTitle": "제목이 없습니다.",
   "common_noDescription": "설명이 없습니다.",
   "common_invalidUrl": "유효하지 않은 url입니다.",
-
   "login_title": "나만의 리스트를 만들어보세요!",
-  "@login_title": { "description": "web src/components/locale.ts own + list + make" },
+  "@login_title": {
+    "description": "web src/components/locale.ts own + list + make"
+  },
   "login_kakao": "카카오로 시작하기",
-  "@login_kakao": { "description": "카카오 로그인 버튼, KakaoLoginWebView 제목" },
+  "@login_kakao": {
+    "description": "카카오 로그인 버튼, KakaoLoginWebView 제목"
+  },
   "login_local": "FE 개발용 로그인",
-  "@login_local": { "description": "dev flavor 전용 /login/local 버튼 (web LoginButtonForLocal)" },
+  "@login_local": {
+    "description": "dev flavor 전용 /login/local 버튼 (web LoginButtonForLocal)"
+  },
   "login_failed": "로그인에 실패했어요. 다시 시도해주세요.",
-  "@login_failed": { "description": "로그인 요청 실패" },
+  "@login_failed": {
+    "description": "로그인 요청 실패"
+  },
   "toast_userStatusLoggedOut": "로그아웃 된 사용자에요. 다시 로그인 해주세요.",
-  "@toast_userStatusLoggedOut": { "description": "web toastMessage.ts userStatusLoggedOut (토큰 갱신 실패)" }
+  "@toast_userStatusLoggedOut": {
+    "description": "web toastMessage.ts userStatusLoggedOut (토큰 갱신 실패)"
+  },
+  "common_confirm": "확인",
+  "@common_confirm": {
+    "description": "web user/locale confirm"
+  },
+  "common_goToNotification": "알림 페이지 이동 버튼",
+  "@common_goToNotification": {
+    "description": "web components/locale goToNotification"
+  },
+  "common_userProfileImage": "사용자 프로필 이미지",
+  "common_listOwnerImage": "리스트 생성자 이미지",
+  "common_recommendUserProfileImage": "추천 사용자 프로필 이미지",
+  "common_failToBringPreview": "미리보기를 가져오는데 실패했습니다.",
+  "error_loadFailed": "정보를 불러오지 못했어요.",
+  "@error_loadFailed": {
+    "description": "앱 추가: 조회 실패 (web 은 화면별 처리)"
+  },
+  "error_network": "네트워크에 연결할 수 없어요.",
+  "@error_network": {
+    "description": "앱 추가: 응답을 받지 못한 실패"
+  },
+  "error_retry": "다시 시도",
+  "@error_retry": {
+    "description": "앱 추가"
+  },
+  "time_justNow": "방금 전",
+  "@time_justNow": {
+    "description": "web lib/utils/time-diff.ts"
+  },
+  "time_minutesAgo": "{count}분 전",
+  "@time_minutesAgo": {
+    "description": "web time-diff.ts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "time_hoursAgo": "{count}시간 전",
+  "@time_hoursAgo": {
+    "description": "web time-diff.ts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "time_daysAgo": "{count}일 전",
+  "@time_daysAgo": {
+    "description": "web time-diff.ts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "home_title": "홈",
+  "@home_title": {
+    "description": "web (home)/_components/Header.tsx"
+  },
+  "home_tabRecommendation": "추천",
+  "@home_tabRecommendation": {
+    "description": "web HomeTab.tsx"
+  },
+  "home_tabRecent": "최신",
+  "@home_tabRecent": {
+    "description": "web HomeTab.tsx"
+  },
+  "home_tabFollowing": "팔로잉",
+  "@home_tabFollowing": {
+    "description": "web HomeTab.tsx"
+  },
+  "home_topicsTitle": "이 주제로 만들어 보세요",
+  "@home_topicsTitle": {
+    "description": "web TopicsRecommendation.tsx"
+  },
+  "home_requestTopic": "주제 요청하기→",
+  "@home_requestTopic": {
+    "description": "web TopicsRecommendation.tsx"
+  },
+  "home_recommendedUsers": "추천 리스터",
+  "@home_recommendedUsers": {
+    "description": "web RecommendedUsers.tsx"
+  },
+  "home_updateCount": "업데이트 {count}회째",
+  "@home_updateCount": {
+    "description": "web FeedLists.tsx / ListDetailInner Header.tsx",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "home_noRecentList": "새로 올라온 리스트가 없어요",
+  "@home_noRecentList": {
+    "description": "web FeedLists.tsx"
+  },
+  "home_noRecentListDescription": "30일 이내에 만들어지거나 수정된 리스트가 여기에 보여요",
+  "@home_noRecentListDescription": {
+    "description": "web FeedLists.tsx"
+  },
+  "home_goToRecommendedLists": "추천 리스트 보러가기",
+  "@home_goToRecommendedLists": {
+    "description": "web FeedLists.tsx"
+  },
+  "home_noFollowing": "팔로우 중인 리스터가 없어요 💦",
+  "@home_noFollowing": {
+    "description": "web FeedLists.tsx"
+  },
+  "home_goToRecommendedUsers": "추천 리스터 보러가기",
+  "@home_goToRecommendedUsers": {
+    "description": "web FeedLists.tsx"
+  },
+  "home_followingLoginRequired": "로그인하여 좋아하는 리스터를 팔로우하세요 🩵",
+  "@home_followingLoginRequired": {
+    "description": "web FollowingFeed.tsx"
+  },
+  "home_goToLogin": "로그인 하러가기",
+  "@home_goToLogin": {
+    "description": "web FollowingFeed.tsx"
+  },
+  "home_recentEnd": "최근 리스트를 모두 확인했어요!",
+  "@home_recentEnd": {
+    "description": "web RecentFeed.tsx"
+  },
+  "home_recentPolicy": "30일 이내 수정 및 생성된 리스트",
+  "@home_recentPolicy": {
+    "description": "web RecentFeed.tsx"
+  },
+  "linkPreview_goToLink": "링크 바로가기",
+  "@linkPreview_goToLink": {
+    "description": "web LinkPreview.tsx"
+  },
+  "listDetail_title": "리스트 상세",
+  "@listDetail_title": {
+    "description": "web list/[listId]/locale listDetail"
+  },
+  "listDetail_privateMessage": "비공개 처리된 게시물이에요.",
+  "@listDetail_privateMessage": {
+    "description": "web listLocale privateMessage"
+  },
+  "listDetail_deletedOrPrivate": "이 리스트는 삭제 또는 비공개 처리 되었어요.",
+  "@listDetail_deletedOrPrivate": {
+    "description": "web modalLocale privateMessage"
+  },
+  "listDetail_public": "공개",
+  "@listDetail_public": {
+    "description": "web listLocale public"
+  },
+  "listDetail_private": "비공개",
+  "@listDetail_private": {
+    "description": "web listLocale private"
+  },
+  "listDetail_collaborator": "콜라보레이터",
+  "@listDetail_collaborator": {
+    "description": "web listLocale collaborator"
+  },
+  "listDetail_profileImageAlt": "사용자 프로필 이미지",
+  "@listDetail_profileImageAlt": {
+    "description": "web listLocale profileImageAlt"
+  },
+  "listDetail_history": "히스토리",
+  "@listDetail_history": {
+    "description": "web listLocale history"
+  },
+  "listDetail_simple": "간단히",
+  "@listDetail_simple": {
+    "description": "web listLocale simple"
+  },
+  "listDetail_detail": "자세히",
+  "@listDetail_detail": {
+    "description": "web listLocale detail"
+  },
+  "listDetail_noData": "데이터가 없습니다.",
+  "@listDetail_noData": {
+    "description": "web listLocale noData"
+  },
+  "listDetail_crown": "1위 아이템",
+  "@listDetail_crown": {
+    "description": "web listLocale crown"
+  },
+  "listDetail_firstUpload": "첫 업로드!",
+  "@listDetail_firstUpload": {
+    "description": "web ListDetailInner/Header.tsx"
+  },
+  "comment_comment": "댓글",
+  "@comment_comment": {
+    "description": "web commentLocale comment"
+  },
+  "comment_count": "{count}개",
+  "@comment_count": {
+    "description": "web commentLocale unit (`N개`)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "comment_empty": "아직 댓글이 없어요. 첫 댓글을 남겨보세요!",
+  "@comment_empty": {
+    "description": "web NewestCommentPreview.tsx"
+  },
+  "comment_reply": "답글 달기",
+  "@comment_reply": {
+    "description": "web commentLocale reply"
+  },
+  "comment_replyCount": "답글 {count}개",
+  "@comment_replyCount": {
+    "description": "web NewestCommentPreview.tsx",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "comment_moreReply": "{count}개의 답글 더보기",
+  "@comment_moreReply": {
+    "description": "web replyLocale moreReply",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "comment_deletedMessage": "작성자의 요청으로 삭제된 댓글이에요.",
+  "@comment_deletedMessage": {
+    "description": "web commentLocale deletedMessage"
+  },
+  "comment_unknown": "알 수 없음",
+  "@comment_unknown": {
+    "description": "web commentLocale unknown"
+  },
+  "comment_profileImageAlt": "프로필 이미지",
+  "@comment_profileImageAlt": {
+    "description": "web commentLocale profileImageAlt"
+  },
+  "user_listTitle": "{nickname}님의 리스트",
+  "@user_listTitle": {
+    "description": "web user Content.tsx",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "user_collection": "콜렉션",
+  "@user_collection": {
+    "description": "web user Content.tsx"
+  },
+  "user_myList": "마이 리스트",
+  "@user_myList": {
+    "description": "web userLocale myList"
+  },
+  "user_collaboList": "콜라보 리스트",
+  "@user_collaboList": {
+    "description": "web userLocale collaboList"
+  },
+  "user_noListMessage": "해당 카테고리에 아직 리스트가 없어요",
+  "@user_noListMessage": {
+    "description": "web userLocale noListMessage"
+  },
+  "user_follower": "팔로워",
+  "@user_follower": {
+    "description": "web userLocale follower"
+  },
+  "user_following": "팔로잉",
+  "@user_following": {
+    "description": "web userLocale following"
+  },
+  "user_emptyFollower": "아직은 팔로워가 없어요",
+  "@user_emptyFollower": {
+    "description": "web userLocale empty.follower"
+  },
+  "user_emptyFollowing": "아직 팔로우한 사람이 없어요",
+  "@user_emptyFollowing": {
+    "description": "web userLocale empty.following"
+  },
+  "user_goToMypage": "마이페이지로 이동하기",
+  "@user_goToMypage": {
+    "description": "web userLocale goToMypage"
+  },
+  "user_profileImageAlt": "프로필 이미지",
+  "@user_profileImageAlt": {
+    "description": "web userLocale profileImageAlt"
+  },
+  "user_noDescription": "나에 대한 소개를 작성해 주세요",
+  "@user_noDescription": {
+    "description": "web user Profile.tsx"
+  },
+  "search_title": "검색",
+  "@search_title": {
+    "description": "web searchLocale search"
+  },
+  "search_placeholder": "리스트 혹은 리스터를 검색해 보세요",
+  "@search_placeholder": {
+    "description": "web lib/constants/placeholder.ts keyword"
+  },
+  "search_listCountTitle": "리스트",
+  "@search_listCountTitle": {
+    "description": "web searchLocale listCountFirst"
+  },
+  "search_listCount": "{count}건",
+  "@search_listCount": {
+    "description": "web searchLocale listCountLast",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "search_userCountTitle": "리스터",
+  "@search_userCountTitle": {
+    "description": "web searchLocale userCountFirst"
+  },
+  "search_userCount": "{count}건",
+  "@search_userCount": {
+    "description": "web searchLocale userCountLast",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "search_noList": "일치하는 리스트가 없어요 💦",
+  "@search_noList": {
+    "description": "web search NoDataContainer.tsx"
+  },
+  "search_noUser": "일치하는 리스터가 없어요 💦",
+  "@search_noUser": {
+    "description": "web search NoDataContainer.tsx"
+  },
+  "search_searchAllCategories": "전체 카테고리에서 검색하기",
+  "@search_searchAllCategories": {
+    "description": "web search NoDataContainer.tsx"
+  },
+  "search_sortNew": "최신순",
+  "@search_sortNew": {
+    "description": "web searchLocale new"
+  },
+  "search_sortOld": "오래된순",
+  "@search_sortOld": {
+    "description": "web searchLocale old"
+  },
+  "search_sortRelated": "관련도순",
+  "@search_sortRelated": {
+    "description": "web searchLocale related"
+  },
+  "search_sortCollect": "콜렉트순",
+  "@search_sortCollect": {
+    "description": "web searchLocale collect"
+  },
+  "notice_title": "게시판",
+  "@notice_title": {
+    "description": "web notice/page.tsx"
+  },
+  "notice_empty": "아직 게시물이 없어요",
+  "@notice_empty": {
+    "description": "앱 추가: 빈 목록"
+  },
+  "notice_prev": "이전글",
+  "@notice_prev": {
+    "description": "web NoticeDetail.tsx"
+  },
+  "notice_next": "다음글",
+  "@notice_next": {
+    "description": "web NoticeDetail.tsx"
+  },
+  "notice_backToList": "목록보기",
+  "@notice_backToList": {
+    "description": "web NoticeDetail.tsx"
+  },
+  "intro_tour": "둘러보기",
+  "@intro_tour": {
+    "description": "web introLocale tour"
+  },
+  "intro_privacy": "개인정보 취급방침",
+  "@intro_privacy": {
+    "description": "web introLocale privacy"
+  },
+  "intro_message1": "파도처럼 흐르는",
+  "@intro_message1": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message2": "나의 취향 기록",
+  "@intro_message2": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message3": "마음 속 순위로",
+  "@intro_message3": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message4": "기록하는 나",
+  "@intro_message4": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message5": "트렌드는 잠시 잊고,",
+  "@intro_message5": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message6": "지극히 개인적인 취향으로 순위를 매겨요.",
+  "@intro_message6": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message7": "한 눈으로 보는",
+  "@intro_message7": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message8": "순위 변화",
+  "@intro_message8": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message9": "마음이 바뀌면 수정만 해주세요.",
+  "@intro_message9": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message10": "자동으로 기록되는 히스토리로",
+  "@intro_message10": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message11": "나의 취향 변화를 살펴봐요.",
+  "@intro_message11": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message12": "검색으로",
+  "@intro_message12": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message13": "쉽게 찾는",
+  "@intro_message13": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message14": "솔직한 정보",
+  "@intro_message14": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message15": "3개부터 최대 10개까지 담기는 리스트엔",
+  "@intro_message15": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message16": "고르고 고른 것들만 담겨있어요.",
+  "@intro_message16": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message17": "발견해요",
+  "@intro_message17": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message18": "나랑 좋아하는 게 비슷한",
+  "@intro_message18": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message19": "취향 메이트를 발견할 수 있어요.",
+  "@intro_message19": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message20": "취향 저격 리스트는 한 곳에 모아 봐요.",
+  "@intro_message20": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message21": "취향으로 파도타기",
+  "@intro_message21": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message22": "공유해요",
+  "@intro_message22": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message23": "링크 하나로",
+  "@intro_message23": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message24": "내 소개 끝!",
+  "@intro_message24": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message25": "나를 소개하는 곳에 링크를 공유해요.",
+  "@intro_message25": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message26": "내 취향이 가득한 리스트는",
+  "@intro_message26": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_message27": "훌륭한 소개가 되어줄 거예요",
+  "@intro_message27": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_exampleTitle1": "내 최애 연예인 top10",
+  "@intro_exampleTitle1": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_exampleTitle2": "맛있는 인천 빵집 🥯",
+  "@intro_exampleTitle2": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_exampleTitle3": "나랑 잘 맞는 mbti 순위 top10",
+  "@intro_exampleTitle3": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_exampleTitle4": "아껴보는 소설 📚",
+  "@intro_exampleTitle4": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_exampleTitle5": "서울 포토존 명소 top10",
+  "@intro_exampleTitle5": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_exampleTitle6": "새벽 작업 노동요 추천 TOP10",
+  "@intro_exampleTitle6": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_searchExample1": "키우기 쉬운 식물 모았어요",
+  "@intro_searchExample1": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_searchExample2": "부산사람의 돼지국밥 맛집 5곳",
+  "@intro_searchExample2": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_searchExample3": "가장 슬프게 본 영화 TOP3",
+  "@intro_searchExample3": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_searchExample4": "코인노래방에서 자주 부르는 노래 top10 🎵",
+  "@intro_searchExample4": {
+    "description": "web app/intro/locale.ts"
+  },
+  "intro_searchExample5": "인생 넷플릭스 영화 TOP5",
+  "@intro_searchExample5": {
+    "description": "web app/intro/locale.ts"
+  }
 }

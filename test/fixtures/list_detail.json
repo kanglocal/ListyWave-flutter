@@ -1,0 +1,97 @@
+{
+  "categoryCode": "5",
+  "categoryEngName": "restaurant_cafe",
+  "categoryKorName": "맛집&카페",
+  "labels": [
+    {
+      "name": "성수"
+    },
+    {
+      "name": "브런치"
+    }
+  ],
+  "title": "서울 브런치 카페 TOP5",
+  "description": "주말마다 다니며 고른 브런치 맛집",
+  "createdDate": "2024-10-01T11:20:33.415",
+  "lastUpdatedDate": "2024-11-20T14:31:08.123456",
+  "ownerId": 3,
+  "ownerNickname": "서핑하는개발자",
+  "ownerProfileImageUrl": "https://pub-4f2c1e.r2.dev/users/3/profile.webp",
+  "collaborators": [
+    {
+      "id": 3,
+      "nickname": "서핑하는개발자",
+      "profileImageUrl": "https://pub-4f2c1e.r2.dev/users/3/profile.webp"
+    },
+    {
+      "id": 5,
+      "nickname": "영화광",
+      "profileImageUrl": null
+    },
+    {
+      "id": 8,
+      "nickname": "빵지순례",
+      "profileImageUrl": "https://pub-4f2c1e.r2.dev/default/profile_2.png"
+    }
+  ],
+  "items": [
+    {
+      "id": 1001,
+      "rank": 1,
+      "title": "카페 어니언 성수",
+      "comment": "팡도르가 최고",
+      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "imageUrl": "https://pub-4f2c1e.r2.dev/lists/101/items/1.jpg"
+    },
+    {
+      "id": 1002,
+      "rank": 2,
+      "title": "테일러커피",
+      "comment": "",
+      "link": "https://blog.example.com/taylor-coffee",
+      "imageUrl": ""
+    },
+    {
+      "id": 1003,
+      "rank": 3,
+      "title": "빌즈 광화문",
+      "comment": null,
+      "link": null,
+      "imageUrl": null
+    }
+  ],
+  "isCollected": false,
+  "isPublic": true,
+  "isFollowing": false,
+  "backgroundPalette": "PASTEL",
+  "backgroundColor": "PASTEL_YELLOW",
+  "collectCount": null,
+  "viewCount": 152,
+  "updateCount": 2,
+  "totalCommentCount": 3,
+  "newestComment": {
+    "userId": 8,
+    "userNickname": "빵지순례",
+    "userProfileImageUrl": null,
+    "createdDate": "2024-11-21T09:12:00",
+    "content": "어니언 저도 좋아해요!",
+    "totalReplyCount": 1
+  },
+  "reactions": [
+    {
+      "reaction": "COOL",
+      "count": null,
+      "isReacted": false
+    },
+    {
+      "reaction": "AGREE",
+      "count": null,
+      "isReacted": true
+    },
+    {
+      "reaction": "THANKS",
+      "count": null,
+      "isReacted": false
+    }
+  ]
+}

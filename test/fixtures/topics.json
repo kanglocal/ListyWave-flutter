@@ -1,0 +1,20 @@
+{
+  "hasNext": false,
+  "totalCount": 1,
+  "cursorId": 7,
+  "topics": [
+    {
+      "id": 7,
+      "categoryEngName": "MUSIC",
+      "categoryKorName": "음악",
+      "categoryCode": "1",
+      "title": "비 오는 날 듣기 좋은 노래",
+      "description": "잔잔한 노래 위주로요",
+      "createdDate": "2024-11-10T12:00:00",
+      "ownerId": 5,
+      "ownerNickname": "영화광",
+      "isAnonymous": false,
+      "isExposed": true
+    }
+  ]
+}

@@ -150,6 +150,7 @@ String _param(GoRouterState state, String name) => state.pathParameters[name]!;
 final List<RouteBase> appRoutes = [
   // 하단 탭 (web BottomNav: 홈 / 추가 / 내 피드). `/list/create` 는 탭 버튼의
   // 목적지라 shell 안에 두지만, web 처럼 탭 바는 `/` 와 `/mylist` 에서만 보인다.
+  // `/mylist` 는 아래에서 따로 AppShell 로 감싼다.
   ShellRoute(
     navigatorKey: _shellNavigatorKey,
     builder: (context, state, child) =>
@@ -166,14 +167,20 @@ final List<RouteBase> appRoutes = [
           category: state.uri.queryParameters['category'],
         ),
       ),
-      GoRoute(
-        path: '/user/:userId/mylist',
-        builder: (context, state) => UserProfileScreen(
-          userId: _param(state, 'userId'),
-          tab: UserProfileTab.my,
-        ),
-      ),
     ],
+  ),
+  // 마이리스트도 web 처럼 하단 탭을 보이지만 ShellRoute 밖에 둔다. 리스트 상세·댓글·팔로워
+  // 목록 등 root 화면에서 다른 사람의 마이리스트를 push 하면, shell navigator(GlobalKey) 가
+  // stack 에 두 번 생겨 Navigator 가 깨지기 때문이다. 하단 탭은 같은 AppShell 로 감싼다.
+  GoRoute(
+    path: '/user/:userId/mylist',
+    builder: (context, state) => AppShell(
+      location: state.matchedLocation,
+      child: UserProfileScreen(
+        userId: _param(state, 'userId'),
+        tab: UserProfileTab.my,
+      ),
+    ),
   ),
   GoRoute(
     path: AppRoutes.intro,
