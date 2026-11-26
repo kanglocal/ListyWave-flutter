@@ -9,6 +9,7 @@ import '../../../core/l10n/gen/app_localizations.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../core/widgets/user_profile_image.dart';
+import '../../notification/application/notification_providers.dart';
 import '../../user/application/user_providers.dart';
 import '../application/home_providers.dart';
 import 'widgets/feed_lists.dart';
@@ -76,7 +77,15 @@ class _HomeHeader extends ConsumerWidget {
             IconButton(
               tooltip: l10n.common_goToNotification,
               onPressed: () => context.push(AppRoutes.notification),
-              icon: SvgPicture.asset('assets/icons/ver3/bell.svg'),
+              // web Header 의 새 알림 점 (`/alarms/check-new`).
+              icon: Badge(
+                key: const Key('home.notificationBadge'),
+                isLabelVisible:
+                    ref.watch(hasNewNotificationProvider).value ?? false,
+                smallSize: 7,
+                backgroundColor: AppColors.red,
+                child: SvgPicture.asset('assets/icons/ver3/bell.svg'),
+              ),
             ),
             IconButton(
               tooltip: l10n.common_userProfileImage,

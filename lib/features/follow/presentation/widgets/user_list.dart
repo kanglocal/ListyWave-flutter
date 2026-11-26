@@ -11,7 +11,7 @@ import '../../../../core/widgets/no_data.dart';
 import '../../../../core/widgets/user_profile_image.dart';
 
 /// web `user/[userId]/(follow)/_components/UserList.tsx` + followers/followings page.
-/// 팔로워 삭제 버튼은 M3 에서 붙인다.
+/// [trailingBuilder] 는 사용자마다 오른쪽에 붙일 버튼 (팔로워 삭제, 팔로우) 이다.
 class FollowUserListScaffold extends StatelessWidget {
   const FollowUserListScaffold({
     super.key,
@@ -20,6 +20,7 @@ class FollowUserListScaffold extends StatelessWidget {
     required this.users,
     required this.emptyMessage,
     required this.onRetry,
+    this.trailingBuilder,
   });
 
   final String title;
@@ -27,6 +28,7 @@ class FollowUserListScaffold extends StatelessWidget {
   final FollowUsersValue users;
   final String emptyMessage;
   final VoidCallback onRetry;
+  final Widget Function(UserProfileType user)? trailingBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,10 @@ class FollowUserListScaffold extends StatelessWidget {
         key: const Key('follow.list'),
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: list.length,
-        itemBuilder: (context, index) => FollowUserTile(user: list[index]),
+        itemBuilder: (context, index) => FollowUserTile(
+          user: list[index],
+          trailing: trailingBuilder?.call(list[index]),
+        ),
       ),
       (users: null, error: final error?) => ListView(
         children: [ErrorView(error: error, onRetry: onRetry)],
@@ -78,9 +83,10 @@ class FollowUserListScaffold extends StatelessWidget {
 typedef FollowUsersValue = ({List<UserProfileType>? users, Object? error});
 
 class FollowUserTile extends StatelessWidget {
-  const FollowUserTile({super.key, required this.user});
+  const FollowUserTile({super.key, required this.user, this.trailing});
 
   final UserProfileType user;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +99,7 @@ class FollowUserTile extends StatelessWidget {
         semanticLabel: l10n.user_profileImageAlt,
       ),
       title: Text(user.nickname, style: context.typo.bodyBold),
+      trailing: trailing,
       onTap: () => context.push(AppRoutes.myList('${user.id}')),
     );
   }

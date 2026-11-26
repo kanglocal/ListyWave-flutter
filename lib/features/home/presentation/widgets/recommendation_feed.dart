@@ -15,6 +15,7 @@ import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/app_network_image.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/user_profile_image.dart';
+import '../../../follow/presentation/widgets/follow_button.dart';
 import '../../application/home_providers.dart';
 
 /// web `RecommendationFeed.tsx`: 추천 리스트 swiper + 추천 주제 + 추천 리스터.
@@ -307,7 +308,7 @@ class TopicsRecommendation extends ConsumerWidget {
   }
 }
 
-/// web `RecommendedUsers.tsx`. 팔로우 버튼은 M3 (쓰기) 에서 붙인다.
+/// web `RecommendedUsers.tsx`. backend 가 이미 팔로우한 사람을 빼고 주므로 처음엔 팔로우 버튼이다.
 class UsersRecommendation extends ConsumerWidget {
   const UsersRecommendation({super.key});
 
@@ -339,7 +340,7 @@ class UsersRecommendation extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 150,
+            height: 190,
             child: Skeletonizer(
               enabled: !users.hasValue,
               child: ListView.separated(
@@ -373,6 +374,9 @@ class UsersRecommendation extends ConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                             style: context.typo.labelBold,
                           ),
+                          const SizedBox(height: 6),
+                          if (users.hasValue)
+                            FollowButton(userId: user.id, isFollowed: false),
                         ],
                       ),
                     ),

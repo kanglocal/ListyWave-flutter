@@ -12,15 +12,20 @@ import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../core/widgets/label_chip.dart';
 import '../../../core/widgets/no_data.dart';
+import '../../../core/widgets/confirm_dialog.dart';
+import '../../../core/widgets/toast.dart';
 import '../../../core/widgets/user_profile_image.dart';
+import '../../follow/presentation/widgets/follow_button.dart';
 import '../application/list_detail_providers.dart';
 import 'widgets/collaborators.dart';
 import 'widgets/comments_sheet.dart';
+import 'widgets/list_footer.dart';
+import 'widgets/list_option_sheets.dart';
 import 'widgets/newest_comment_preview.dart';
 import 'widgets/rank_list.dart';
 
-/// web `src/app/list/[listId]` (ListInformation + ListDetailInner) 의 읽기 부분.
-/// 리액션/콜렉트/공유/더보기 footer 와 관리 메뉴는 M3 에서 붙인다.
+/// web `src/app/list/[listId]` (ListInformation + ListDetailInner).
+/// footer (리액션/콜렉트/공유/더보기) 와 주인 관리 메뉴 (`OpenBottomSheetButton.tsx`) 가 있다.
 class ListDetailScreen extends ConsumerWidget {
   const ListDetailScreen({super.key, required this.listId});
 
@@ -74,6 +79,15 @@ class ListDetailScreen extends ConsumerWidget {
               onPressed: () => context.push(AppRoutes.listHistory(listId)),
               icon: SvgPicture.asset('assets/icons/new/history.svg'),
             ),
+          if (isOwner)
+            IconButton(
+              key: const Key('listDetail.ownerMenu'),
+              tooltip: l10n.listDetail_manageList,
+              onPressed: () => _showOwnerMenu(context, ref, list, id!),
+              icon: SvgPicture.asset(
+                'assets/icons/new/vertical_kebab_button.svg',
+              ),
+            ),
         ],
       ),
       body: RefreshIndicator(
@@ -90,6 +104,71 @@ class ListDetailScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// 주인 관리 메뉴: 수정하기, 공개/비공개 전환, 삭제하기 (web `OpenBottomSheetButton.tsx`,
+/// `OptionToggleButton.tsx`).
+void _showOwnerMenu(
+  BuildContext context,
+  WidgetRef ref,
+  ListDetailType list,
+  int listId,
+) {
+  final l10n = AppLocalizations.of(context);
+  final notifier = ref.read(listDetailProvider(listId).notifier);
+
+  Future<void> toggleVisibility() async {
+    try {
+      await notifier.toggleVisibility();
+      if (context.mounted) {
+        showToast(context, l10n.toast_visibilityListSuccess);
+      }
+    } on Exception {
+      if (context.mounted) showToast(context, l10n.toast_visibilityListError);
+    }
+  }
+
+  Future<void> delete() async {
+    final confirmed = await showConfirmDialog(
+      context,
+      message: l10n.listDetail_deleteListConfirm,
+      description: l10n.listDetail_deleteListDescription,
+      confirmLabel: l10n.common_delete,
+    );
+    if (!confirmed || !context.mounted) return;
+    final router = GoRouter.of(context);
+    final me = ref.read(currentUserIdProvider);
+    try {
+      await notifier.delete();
+      if (!context.mounted) return;
+      showToast(context, l10n.toast_deleteListSuccess);
+      // web 과 같이 내 마이리스트로 간다.
+      router.go(me == null ? AppRoutes.home : AppRoutes.myList('$me'));
+    } on Exception {
+      if (context.mounted) showToast(context, l10n.toast_deleteListError);
+    }
+  }
+
+  showOptionSheet(context, [
+    SheetOption(
+      key: const Key('owner.edit'),
+      title: l10n.listDetail_editList,
+      onTap: () => context.push(AppRoutes.listEdit('$listId')),
+    ),
+    SheetOption(
+      key: const Key('owner.visibility'),
+      title: list.isPublic
+          ? l10n.listDetail_makePrivate
+          : l10n.listDetail_makePublic,
+      onTap: toggleVisibility,
+    ),
+    SheetOption(
+      key: const Key('owner.delete'),
+      title: l10n.listDetail_deleteList,
+      color: AppColors.red,
+      onTap: delete,
+    ),
+  ]);
 }
 
 class _ListContent extends StatelessWidget {
@@ -134,6 +213,13 @@ class _ListContent extends StatelessWidget {
               const Spacer(),
               if (collaborators.isNotEmpty)
                 Collaborators(collaborators: collaborators),
+              if (!isOwner && listId != 0) ...[
+                const SizedBox(width: 8),
+                FollowButton(
+                  userId: list.ownerId,
+                  isFollowed: list.isFollowing,
+                ),
+              ],
             ],
           ),
           const SizedBox(height: 20),
@@ -201,7 +287,9 @@ class _ListContent extends StatelessWidget {
           ],
           const SizedBox(height: 16),
           RankListSection(list: list),
-          const SizedBox(height: 24),
+          if (listId != 0)
+            ListFooter(list: list, listId: listId, isOwner: isOwner),
+          const SizedBox(height: 12),
           _CommentsCard(list: list, listId: listId),
         ],
       ),

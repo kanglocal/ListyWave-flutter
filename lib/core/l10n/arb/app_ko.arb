@@ -585,5 +585,427 @@
   "intro_searchExample5": "인생 넷플릭스 영화 TOP5",
   "@intro_searchExample5": {
     "description": "web app/intro/locale.ts"
+  },
+  "common_delete": "삭제",
+  "@common_delete": {
+    "description": "web userLocale delete"
+  },
+  "reaction_cool": "멋져요",
+  "@reaction_cool": {
+    "description": "web Footer.tsx getReactionText COOL"
+  },
+  "reaction_agree": "공감해요",
+  "@reaction_agree": {
+    "description": "web Footer.tsx getReactionText AGREE"
+  },
+  "reaction_thanks": "고마워요",
+  "@reaction_thanks": {
+    "description": "web Footer.tsx getReactionText THANKS"
+  },
+  "listDetail_collect": "콜렉트",
+  "@listDetail_collect": {
+    "description": "web CollectButton.tsx"
+  },
+  "listDetail_share": "공유하기",
+  "@listDetail_share": {
+    "description": "web Footer.tsx"
+  },
+  "listDetail_copyListLink": "리스트 링크 복사하기",
+  "@listDetail_copyListLink": {
+    "description": "web listLocale copyListLink"
+  },
+  "listDetail_shareListToKakaotalk": "리스트 카카오톡으로 공유하기",
+  "@listDetail_shareListToKakaotalk": {
+    "description": "web listLocale shareListToKakaotalk"
+  },
+  "listDetail_shareOther": "다른 앱으로 공유하기",
+  "@listDetail_shareOther": {
+    "description": "앱 추가: OS 공유 시트 (share_plus)"
+  },
+  "listDetail_saveListToImage": "리스트 이미지로 저장하기",
+  "@listDetail_saveListToImage": {
+    "description": "web listLocale saveListToImage"
+  },
+  "listDetail_saveImage": "저장하기",
+  "@listDetail_saveImage": {
+    "description": "web SaveImageModal.tsx"
+  },
+  "listDetail_createListToThisTitle": "이 타이틀로 리스트 생성하기",
+  "@listDetail_createListToThisTitle": {
+    "description": "web listLocale createListToThisTitle"
+  },
+  "listDetail_moveToCreateListPageMessage": "리스트 작성 페이지로 이동합니다.",
+  "@listDetail_moveToCreateListPageMessage": {
+    "description": "web listLocale moveToCreateListPageMessage"
+  },
+  "listDetail_manageList": "리스트 관리",
+  "@listDetail_manageList": {
+    "description": "web listLocale kebabButtonAlt (접근성 라벨)"
+  },
+  "listDetail_editList": "수정하기",
+  "@listDetail_editList": {
+    "description": "web listLocale editList"
+  },
+  "listDetail_deleteList": "삭제하기",
+  "@listDetail_deleteList": {
+    "description": "web listLocale deleteList"
+  },
+  "listDetail_makePublic": "공개로 전환하기",
+  "@listDetail_makePublic": {
+    "description": "web OptionToggleButton.tsx publicAction"
+  },
+  "listDetail_makePrivate": "비공개로 전환하기",
+  "@listDetail_makePrivate": {
+    "description": "web OptionToggleButton.tsx publicAction"
+  },
+  "listDetail_deleteListConfirm": "리스트를 정말 삭제하시나요?",
+  "@listDetail_deleteListConfirm": {
+    "description": "web OpenBottomSheetButton.tsx / modalLocale deleteListMessage"
+  },
+  "listDetail_deleteListDescription": "삭제 후에는 복구할 수 없어요.",
+  "@listDetail_deleteListDescription": {
+    "description": "web OpenBottomSheetButton.tsx"
+  },
+  "collect_selectFolder": "콜렉트할 폴더를 선택해 주세요",
+  "@collect_selectFolder": {
+    "description": "web CollectFolderSheet.tsx"
+  },
+  "collect_noFolder": "아직 폴더가 없어요. 새 폴더를 만들어 주세요.",
+  "@collect_noFolder": {
+    "description": "앱 추가: 폴더가 없을 때 (PLAN §11 Q1)"
+  },
+  "collect_addFolder": "새 폴더 만들기",
+  "@collect_addFolder": {
+    "description": "web CollectFolderSheet.tsx"
+  },
+  "collect_newFolder": "새로운 폴더",
+  "@collect_newFolder": {
+    "description": "web CollectButton.tsx"
+  },
+  "collect_folderNameHint": "폴더명을 작성해 주세요",
+  "@collect_folderNameHint": {
+    "description": "web CollectButton.tsx placeholder"
+  },
+  "collect_create": "만들기",
+  "@collect_create": {
+    "description": "web CollectButton.tsx"
+  },
+  "collect_listCount": "리스트 {count}개",
+  "@collect_listCount": {
+    "description": "폴더 안 리스트 수",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "comment_replyTo": "@{nickname} 님에게 남긴 답글",
+  "@comment_replyTo": {
+    "description": "web commentLocale replyNickname",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "comment_editing": "댓글/답글 수정 중",
+  "@comment_editing": {
+    "description": "web commentLocale editing"
+  },
+  "comment_cancelButtonAlt": "지우기 버튼",
+  "@comment_cancelButtonAlt": {
+    "description": "web commentLocale cancelButtonAlt"
+  },
+  "comment_placeholder": "댓글을 작성해주세요",
+  "@comment_placeholder": {
+    "description": "web placeholder.ts commentPlaceholder.comment"
+  },
+  "comment_placeholderLogin": "로그인 후 댓글을 작성할 수 있습니다.",
+  "@comment_placeholderLogin": {
+    "description": "web placeholder.ts commentPlaceholder.requiredLogin"
+  },
+  "comment_send": "보내기",
+  "@comment_send": {
+    "description": "앱 추가: 전송 버튼 접근성 라벨"
+  },
+  "comment_edit": "수정",
+  "@comment_edit": {
+    "description": "web Comment.tsx 수정 버튼"
+  },
+  "comment_deleteConfirm": "정말로 삭제하시겠습니까?",
+  "@comment_deleteConfirm": {
+    "description": "web modalLocale deleteMessage"
+  },
+  "user_cancelFollow": "팔로우 취소",
+  "@user_cancelFollow": {
+    "description": "web userLocale cancelFollow"
+  },
+  "user_deleteFollowerConfirm": "정말로 삭제하시겠습니까?",
+  "@user_deleteFollowerConfirm": {
+    "description": "web DeleteModal (팔로워 삭제)"
+  },
+  "notification_title": "알림",
+  "@notification_title": {
+    "description": "web notificationLocale notification"
+  },
+  "notification_readAll": "모두 읽음",
+  "@notification_readAll": {
+    "description": "web notificationLocale readNotification"
+  },
+  "notification_allRead": "모든 알림을 읽었어요.",
+  "@notification_allRead": {
+    "description": "web notificationLocale notificationMessage"
+  },
+  "notification_description": "30일이 지난 알림은 삭제돼요.",
+  "@notification_description": {
+    "description": "web notificationLocale notificationDescription"
+  },
+  "notification_recent": "최근 7일",
+  "@notification_recent": {
+    "description": "web notificationLocale notificationRecent"
+  },
+  "notification_profileImageAlt": "프로필 이미지",
+  "@notification_profileImageAlt": {
+    "description": "web notificationLocale profileImageAlt"
+  },
+  "notification_follow": " 님이 팔로우했어요.",
+  "@notification_follow": {
+    "description": "web NotificationList.tsx dataToMessage FOLLOW"
+  },
+  "notification_collect": " 님이 '{title}'를 콜렉트했어요.",
+  "@notification_collect": {
+    "description": "web dataToMessage COLLECT",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notification_comment": " 님이 '{title}'에 댓글을 남겼어요.",
+  "@notification_comment": {
+    "description": "web dataToMessage COMMENT",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notification_reply": " 님이 답글을 남겼어요.",
+  "@notification_reply": {
+    "description": "web dataToMessage REPLY"
+  },
+  "notification_mention": " 님이 언급했어요. :{content}",
+  "@notification_mention": {
+    "description": "web dataToMessage MENTION",
+    "placeholders": {
+      "content": {
+        "type": "String"
+      }
+    }
+  },
+  "notification_collaborator": " 님이 '{title}'의 콜라보레이터로 초대했어요.",
+  "@notification_collaborator": {
+    "description": "앱 추가: backend AlarmType.COLLABORATOR (web 에 없음)",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notification_reaction": " 님이 '{title}'에 리액션을 남겼어요.",
+  "@notification_reaction": {
+    "description": "앱 추가: backend AlarmType.REACTION (web 에 없음)",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "history_graph": "그래프",
+  "@history_graph": {
+    "description": "web listLocale graph"
+  },
+  "history_version": "버전",
+  "@history_version": {
+    "description": "web listLocale version"
+  },
+  "history_graphTitle": "아이템 순위 변화",
+  "@history_graphTitle": {
+    "description": "web HistoryGraph.tsx chart title"
+  },
+  "history_empty": "히스토리가 없어요.",
+  "@history_empty": {
+    "description": "web listLocale noHistory"
+  },
+  "history_rank": "{rank}위",
+  "@history_rank": {
+    "description": "web HistoryGraph.tsx vAxis tick",
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
+  "history_nth": "{index}번째 히스토리",
+  "@history_nth": {
+    "description": "web HistoryVersions.tsx",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "history_versionLabel": "{index}번째 히스토리: {date}",
+  "@history_versionLabel": {
+    "description": "web HistoryVersions.tsx historySelectOption",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "history_private": "비공개 히스토리에요.",
+  "@history_private": {
+    "description": "web listLocale privateHistory"
+  },
+  "history_hide": "히스토리 비공개하기",
+  "@history_hide": {
+    "description": "web listLocale hideHistory"
+  },
+  "history_show": "히스토리 공개하기",
+  "@history_show": {
+    "description": "앱 추가: hideHistory 의 반대"
+  },
+  "history_delete": "히스토리 삭제하기",
+  "@history_delete": {
+    "description": "web listLocale deleteHistory"
+  },
+  "history_setPublic": "이 히스토리가 공개 처리되었습니다.",
+  "@history_setPublic": {
+    "description": "web modalLocale setPublic"
+  },
+  "history_setPrivate": "이 히스토리가 비공개 처리되었습니다.",
+  "@history_setPrivate": {
+    "description": "web modalLocale setPrivate"
+  },
+  "history_toggleFailed": "히스토리 공개 여부 변경에 실패했어요. 다시 시도해주세요.",
+  "@history_toggleFailed": {
+    "description": "앱 추가: 토글 실패"
+  },
+  "history_deleteConfirm": "이 버전의 히스토리를 정말 삭제하시나요?",
+  "@history_deleteConfirm": {
+    "description": "web modalLocale deleteHistory1"
+  },
+  "history_deleteDescription": "삭제 후에는 복구할 수 없어요.",
+  "@history_deleteDescription": {
+    "description": "web modalLocale deleteHistory2"
+  },
+  "toast_limitFollow": "최대 {count}명까지 팔로우할 수 있어요.",
+  "@toast_limitFollow": {
+    "description": "web toastMessage limitFollow",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "toast_followFailed": "팔로우 변경에 실패했어요. 다시 시도해주세요.",
+  "@toast_followFailed": {
+    "description": "앱 추가: 팔로우 롤백"
+  },
+  "toast_deleteFollowerError": "팔로워 삭제에 실패했어요. 다시 시도해주세요.",
+  "@toast_deleteFollowerError": {
+    "description": "앱 추가: 팔로워 삭제 롤백"
+  },
+  "toast_reactionFailed": "리액션에 실패했어요. 다시 시도해주세요.",
+  "@toast_reactionFailed": {
+    "description": "앱 추가: 리액션 롤백"
+  },
+  "toast_failedCollect": "콜렉트에 실패했어요. 다시 시도해주세요.🥲",
+  "@toast_failedCollect": {
+    "description": "web toastMessage failedCollect"
+  },
+  "toast_collectSuccess": "콜렉션에 담았어요.",
+  "@toast_collectSuccess": {
+    "description": "web toastMessage collectSuccess"
+  },
+  "toast_cancelCollect": "콜렉트를 취소했어요.",
+  "@toast_cancelCollect": {
+    "description": "web toastMessage cancelCollect"
+  },
+  "toast_emptyFolderName": "폴더명을 작성해 주세요.",
+  "@toast_emptyFolderName": {
+    "description": "web toastMessage emptyFolderName"
+  },
+  "toast_duplicatedFolderName": "이미 존재하는 폴더입니다. 다른 이름을 지어주세요.",
+  "@toast_duplicatedFolderName": {
+    "description": "web toastMessage duplicatedFolderName"
+  },
+  "toast_failedFolder": "다시 시도해 주세요.",
+  "@toast_failedFolder": {
+    "description": "web toastMessage failedFolder"
+  },
+  "toast_copyLink": "링크를 복사했어요. 붙여넣기 해주세요.",
+  "@toast_copyLink": {
+    "description": "web toastMessage copyLink"
+  },
+  "toast_failedCopyLink": "링크 복사에 실패했어요. 다시 시도해주세요.",
+  "@toast_failedCopyLink": {
+    "description": "web toastMessage failedCopyLink"
+  },
+  "toast_kakaoShareUnavailable": "카카오톡 공유를 사용할 수 없어요.",
+  "@toast_kakaoShareUnavailable": {
+    "description": "앱 추가: KAKAO_NATIVE_APP_KEY 가 없을 때"
+  },
+  "toast_kakaoShareFailed": "카카오톡 공유에 실패했어요. 다시 시도해주세요.",
+  "@toast_kakaoShareFailed": {
+    "description": "앱 추가"
+  },
+  "toast_shareFailed": "공유에 실패했어요. 다시 시도해주세요.",
+  "@toast_shareFailed": {
+    "description": "앱 추가"
+  },
+  "toast_saveImageSuccess": "리스트 이미지를 갤러리에 저장했어요.",
+  "@toast_saveImageSuccess": {
+    "description": "앱 추가: gal 저장 성공"
+  },
+  "toast_saveImagePermissionDenied": "사진 보관함 접근 권한이 필요해요. 설정에서 허용해 주세요.",
+  "@toast_saveImagePermissionDenied": {
+    "description": "앱 추가: gal 권한 거절"
+  },
+  "toast_saveImageFailed": "이미지 저장에 실패했어요. 다시 시도해주세요.",
+  "@toast_saveImageFailed": {
+    "description": "앱 추가: gal 저장 실패"
+  },
+  "toast_deleteListSuccess": "리스트를 삭제했어요.",
+  "@toast_deleteListSuccess": {
+    "description": "web toastMessage deleteListSuccess"
+  },
+  "toast_deleteListError": "리스트 삭제에 실패했어요.",
+  "@toast_deleteListError": {
+    "description": "web toastMessage deleteListError"
+  },
+  "toast_visibilityListSuccess": "리스트 공개/비공개 변경을 완료했어요.",
+  "@toast_visibilityListSuccess": {
+    "description": "web toastMessage visibilityListSuccess"
+  },
+  "toast_visibilityListError": "리스트 공개/비공개 변경에 실패했어요.",
+  "@toast_visibilityListError": {
+    "description": "web toastMessage visibilityListError"
+  },
+  "toast_deleteHistorySuccess": "히스토리를 삭제했어요.",
+  "@toast_deleteHistorySuccess": {
+    "description": "web toastMessage deleteHistorySuccess"
+  },
+  "toast_deleteHistoryError": "히스토리 삭제에 실패했어요. 다시 시도해주세요.",
+  "@toast_deleteHistoryError": {
+    "description": "web toastMessage deleteHistoryError"
+  },
+  "toast_commentFailed": "댓글 처리에 실패했어요. 다시 시도해주세요.",
+  "@toast_commentFailed": {
+    "description": "앱 추가: 댓글 작성/수정/삭제 실패"
   }
 }

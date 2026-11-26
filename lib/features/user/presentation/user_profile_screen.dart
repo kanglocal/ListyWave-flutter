@@ -21,6 +21,8 @@ import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/infinite_scroll.dart';
 import '../../../core/widgets/no_data.dart';
 import '../../../core/widgets/user_profile_image.dart';
+import '../../follow/application/follow_providers.dart';
+import '../../follow/presentation/widgets/follow_button.dart';
 import '../application/user_providers.dart';
 import '../data/user_api.dart';
 import 'widgets/list_card.dart';
@@ -29,7 +31,6 @@ import 'widgets/list_card.dart';
 enum UserProfileTab { my, collabo }
 
 /// web `user/[userId]/{mylist,collabolist}/page.tsx` (Profile + Content).
-/// 팔로우 버튼과 공개/비공개 토글은 M3 에서 붙인다.
 class UserProfileScreen extends ConsumerStatefulWidget {
   const UserProfileScreen({super.key, required this.userId, required this.tab});
 
@@ -287,17 +288,23 @@ class _TabToggle extends StatelessWidget {
   }
 }
 
-/// web `user/[userId]/_components/Profile.tsx`.
-class _ProfileHeader extends StatelessWidget {
+/// web `user/[userId]/_components/Profile.tsx`. 다른 사람의 프로필이면 팔로우 버튼을 보인다.
+class _ProfileHeader extends ConsumerWidget {
   const _ProfileHeader({required this.userId, required this.user});
 
   final int userId;
   final UserType? user;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final u = user;
+    // 낙관적 팔로우 값이 서버 값과 다르면 팔로워 수를 그만큼 고쳐 보인다 (web onMutate).
+    final serverFollowed = u?.isFollowed ?? false;
+    final followed = watchIsFollowing(ref, userId, serverValue: serverFollowed);
+    final followerCount =
+        (u?.followerCount ?? 0) +
+        (followed == serverFollowed ? 0 : (followed ? 1 : -1));
     final textStyle = context.typo.label.copyWith(color: AppColors.white);
     return SizedBox(
       height: 280,
@@ -376,7 +383,7 @@ class _ProfileHeader extends StatelessWidget {
                               onTap: () =>
                                   context.push(AppRoutes.followers('$userId')),
                               child: Text(
-                                '${formatCount(u?.followerCount ?? 0)} ${l10n.user_follower}',
+                                '${formatCount(followerCount)} ${l10n.user_follower}',
                                 style: textStyle,
                               ),
                             ),
@@ -401,6 +408,14 @@ class _ProfileHeader extends StatelessWidget {
                       ],
                     ),
                   ),
+                  if (u != null && !u.isOwner) ...[
+                    const SizedBox(width: 8),
+                    FollowButton(
+                      userId: userId,
+                      isFollowed: u.isFollowed,
+                      profileStyle: true,
+                    ),
+                  ],
                 ],
               ),
             ),

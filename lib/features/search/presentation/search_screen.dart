@@ -17,6 +17,7 @@ import '../../../core/widgets/category_chips.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/infinite_scroll.dart';
 import '../../../core/widgets/user_profile_image.dart';
+import '../../follow/presentation/widgets/follow_button.dart';
 import '../application/search_providers.dart';
 import '../data/search_api.dart';
 import 'widgets/top3_card.dart';
@@ -295,7 +296,7 @@ const _skeletonList = SearchListType(
 );
 
 /// web `SearchUserResult.tsx`: 전체 카테고리에서 keyword 가 있을 때 리스터 결과를 가로로 보인다.
-/// 팔로우 버튼은 M3 에서 붙인다.
+/// backend 가 사람마다 `isFollowing` 을 주므로 팔로우 버튼에 그대로 쓴다.
 class _UserResults extends ConsumerWidget {
   const _UserResults({required this.keyword});
 
@@ -336,7 +337,7 @@ class _UserResults extends ConsumerWidget {
           )
         else
           SizedBox(
-            height: 170,
+            height: 210,
             child: InfiniteScroll(
               axis: Axis.horizontal,
               canLoadMore: page != null && page.hasNext && !page.isLoadingMore,
@@ -371,6 +372,13 @@ class _UserResults extends ConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: context.typo.labelBold,
                             ),
+                            if (user != null) ...[
+                              const SizedBox(height: 6),
+                              FollowButton(
+                                userId: user.id,
+                                isFollowed: user.isFollowing,
+                              ),
+                            ],
                           ],
                         ),
                       ),

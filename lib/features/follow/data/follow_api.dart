@@ -5,7 +5,7 @@ import '../../../core/models/follow_type.dart';
 import '../../../core/network/dio_provider.dart';
 import '../../../core/network/json.dart';
 
-/// web `_api/follow/getFollowerList.ts`, `getFollowingList.ts`.
+/// web `_api/follow/*.ts` (목록 조회, 팔로우/언팔로우, 팔로워 삭제).
 class FollowApi {
   const FollowApi(this._dio);
 
@@ -21,6 +21,16 @@ class FollowApi {
     final response = await _dio.get<Object?>('/users/$userId/followings');
     return FollowingListType.fromJson(asJsonMap(response.data));
   }
+
+  /// backend `UserController.follow` (204).
+  Future<void> follow(int userId) => _dio.post<void>('/follow/$userId');
+
+  /// backend `UserController.unfollow` (204).
+  Future<void> unfollow(int userId) => _dio.delete<void>('/follow/$userId');
+
+  /// 내 팔로워에서 [userId] 를 뺀다. backend `UserController.deleteFollower` (204).
+  Future<void> deleteFollower(int userId) =>
+      _dio.delete<void>('/followers/$userId');
 }
 
 final followApiProvider = Provider<FollowApi>(
