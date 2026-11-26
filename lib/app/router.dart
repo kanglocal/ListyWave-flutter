@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/auth/auth_controller.dart';
 import '../core/auth/login_sheet.dart';
 import '../features/account/presentation/account_screen.dart';
 import '../features/account/presentation/profile_edit_screen.dart';
@@ -56,17 +59,85 @@ abstract final class AppRoutes {
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
 
-/// auth guard 자리. M1 에서 web `src/middleware.ts` 의 `REQUIRED_TOKEN`
-/// (`/account*`, `/start-listy`, `/list/create`, `/collection`, `/notification`)
-/// 을 여기서 처리한다. 지금은 아무 곳으로도 보내지 않는다.
-String? authRedirect(Ref ref, GoRouterState state) => null;
+/// web `src/middleware.ts` 의 `REQUIRED_TOKEN`. web 은 `/collection` 만 정확히 비교하지만
+/// 앱은 폴더 상세(`/collection/:id`)도 막는다.
+bool isAuthRequired(String path) =>
+    path == AppRoutes.startListy ||
+    path == AppRoutes.listCreate ||
+    path == AppRoutes.notification ||
+    [
+      AppRoutes.account,
+      AppRoutes.collection,
+    ].any((p) => path == p || path.startsWith('$p/'));
 
-GoRouter createRouter(Ref ref) => GoRouter(
-  navigatorKey: rootNavigatorKey,
-  initialLocation: AppRoutes.home,
-  redirect: (context, state) => authRedirect(ref, state),
-  routes: appRoutes,
-);
+bool _needsLogin(Ref ref, String path) =>
+    ref.read(authControllerProvider).status == AuthStatus.loggedOut &&
+    isAuthRequired(path);
+
+/// 로그인 뒤 [from] 으로 돌아오는 로그인 sheet 위치.
+String loginLocation(Uri from) => Uri(
+  path: AppRoutes.login,
+  queryParameters: {'from': from.toString()},
+).toString();
+
+/// 앱 안에서 [isAuthRequired] 경로로 가려 하면 이동을 막고, 지금 화면 위에 로그인 sheet 를
+/// 띄운다 (web 이 `/?loginRequired=true` 로 홈 위에 모달을 띄우는 것과 같은 효과).
+/// 지금 화면도 보호 경로면 (세션 만료로 refresh 된 경우) [authRedirect] 에 맡긴다.
+FutureOr<OnEnterResult> authOnEnter(
+  Ref ref,
+  GoRouterState current,
+  GoRouterState next,
+) {
+  if (!_needsLogin(ref, next.uri.path) || isAuthRequired(current.uri.path)) {
+    return const Allow();
+  }
+  // 막힌 parse 도중 router.push 를 하면 Router 가 그 결과를 버린다. 그래서 route 가 아닌
+  // dialog 로 root navigator 에 바로 올린다. Future 는 sheet 가 닫힐 때 끝나므로 기다리지 않는다.
+  return Block.then(() {
+    final navigator = rootNavigatorKey.currentState;
+    if (navigator == null) return;
+    unawaited(
+      navigator.push(
+        DialogRoute<void>(
+          context: navigator.context,
+          builder: (_) => LoginSheet(from: next.uri.toString()),
+        ),
+      ),
+    );
+  });
+}
+
+/// 로그아웃 상태로 보호 경로에 남게 되면 (세션 만료, 보호 경로 deep link) 로그인 sheet 로 보내고
+/// 돌아올 위치를 `from` 으로 넘긴다. 세션 확인 중(unknown)에는 막지 않는다.
+/// 확인이 끝나 로그아웃 상태가 되면 refreshListenable 로 다시 돈다.
+String? authRedirect(Ref ref, GoRouterState state) =>
+    _needsLogin(ref, state.uri.path) ? loginLocation(state.uri) : null;
+
+GoRouter createRouter(Ref ref) {
+  // guard 결과가 바뀌는 것은 로그아웃 상태가 될 때뿐이다. 로그인 때 refresh 하면
+  // LoginSheet 의 pop 과 경쟁해 sheet 가 남으므로 로그아웃으로 바뀔 때만 알린다.
+  final loggedOut = _RouterRefresh();
+  ref.listen(
+    authControllerProvider.select((s) => s.status == AuthStatus.loggedOut),
+    (_, isLoggedOut) {
+      if (isLoggedOut) loggedOut.notify();
+    },
+  );
+  ref.onDispose(loggedOut.dispose);
+  return GoRouter(
+    navigatorKey: rootNavigatorKey,
+    initialLocation: AppRoutes.home,
+    refreshListenable: loggedOut,
+    onEnter: (context, current, next, router) =>
+        authOnEnter(ref, current, next),
+    redirect: (context, state) => authRedirect(ref, state),
+    routes: appRoutes,
+  );
+}
+
+class _RouterRefresh extends ChangeNotifier {
+  void notify() => notifyListeners();
+}
 
 final routerProvider = Provider<GoRouter>((ref) {
   final router = createRouter(ref);
@@ -205,8 +276,10 @@ final List<RouteBase> appRoutes = [
   GoRoute(
     path: AppRoutes.login,
     parentNavigatorKey: rootNavigatorKey,
-    pageBuilder: (context, state) =>
-        DialogPage<void>(key: state.pageKey, child: const LoginSheet()),
+    pageBuilder: (context, state) => DialogPage<void>(
+      key: state.pageKey,
+      child: LoginSheet(from: state.uri.queryParameters['from']),
+    ),
   ),
 ];
 

@@ -36,7 +36,7 @@ void main() {
   });
 
   testWidgets('하단 탭은 web 과 같이 / 와 /mylist 에서만 보인다', (tester) async {
-    final container = await pumpApp(tester);
+    final container = await pumpLoggedInApp(tester, userId: 3);
     final router = container.read(routerProvider);
 
     router.go(AppRoutes.listCreate);

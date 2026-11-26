@@ -1,4 +1,6 @@
-#include "Release.xcconfig"
+// CocoaPods 가 이 configuration 용으로 만든 xcconfig 를 쓴다 (Podfile 의 project 매핑).
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-dev.xcconfig"
+#include "Generated.xcconfig"
 
 // flavor: dev (PLAN §5.4)
 FLAVOR_BUNDLE_SUFFIX=.dev

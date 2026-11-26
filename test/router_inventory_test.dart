@@ -53,7 +53,8 @@ const planPaths = <String>{
   '/login',
 };
 
-/// 실제 location → 보여야 하는 화면.
+/// 실제 location → 보여야 하는 화면. 보호 경로도 화면이 보이도록 로그인 상태로 띄운다
+/// (비로그인 guard 는 test/core/auth/auth_guard_test.dart).
 const navigationCases = <String, Type>{
   '/': HomeScreen,
   '/intro': IntroScreen,
@@ -119,7 +120,7 @@ void main() {
   for (final MapEntry(key: location, value: screen)
       in navigationCases.entries) {
     testWidgets('$location → $screen', (tester) async {
-      final container = await pumpApp(tester);
+      final container = await pumpLoggedInApp(tester);
       container.read(routerProvider).go(location);
       await tester.pumpAndSettle();
 
@@ -128,7 +129,7 @@ void main() {
   }
 
   testWidgets('path/query 파라미터를 화면에 넘긴다', (tester) async {
-    final container = await pumpApp(tester);
+    final container = await pumpLoggedInApp(tester);
     final router = container.read(routerProvider);
 
     router.go('/list/create?title=t&category=culture');

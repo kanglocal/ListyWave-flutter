@@ -26,5 +26,16 @@
   "common_close": "닫기",
   "common_noTitle": "제목이 없습니다.",
   "common_noDescription": "설명이 없습니다.",
-  "common_invalidUrl": "유효하지 않은 url입니다."
+  "common_invalidUrl": "유효하지 않은 url입니다.",
+
+  "login_title": "나만의 리스트를 만들어보세요!",
+  "@login_title": { "description": "web src/components/locale.ts own + list + make" },
+  "login_kakao": "카카오로 시작하기",
+  "@login_kakao": { "description": "카카오 로그인 버튼, KakaoLoginWebView 제목" },
+  "login_local": "FE 개발용 로그인",
+  "@login_local": { "description": "dev flavor 전용 /login/local 버튼 (web LoginButtonForLocal)" },
+  "login_failed": "로그인에 실패했어요. 다시 시도해주세요.",
+  "@login_failed": { "description": "로그인 요청 실패" },
+  "toast_userStatusLoggedOut": "로그아웃 된 사용자에요. 다시 로그인 해주세요.",
+  "@toast_userStatusLoggedOut": { "description": "web toastMessage.ts userStatusLoggedOut (토큰 갱신 실패)" }
 }

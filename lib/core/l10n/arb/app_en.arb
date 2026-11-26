@@ -20,5 +20,11 @@
   "common_close": "Close",
   "common_noTitle": "There is no title.",
   "common_noDescription": "There is no explanation.",
-  "common_invalidUrl": "Invalid url."
+  "common_invalidUrl": "Invalid url.",
+
+  "login_title": "Create your own list!",
+  "login_kakao": "Continue with Kakao",
+  "login_local": "Local dev login",
+  "login_failed": "Login failed. Please try again.",
+  "toast_userStatusLoggedOut": "You have been logged out. Please log in again."
 }
