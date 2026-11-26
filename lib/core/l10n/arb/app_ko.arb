@@ -1,0 +1,30 @@
+{
+  "@@locale": "ko",
+  "appTitle": "ListyWave",
+  "@appTitle": { "description": "앱 이름" },
+
+  "app_notFound": "존재하지 않는 페이지에요.",
+  "@app_notFound": { "description": "web src/app/locale.ts notFound" },
+  "app_goBack": "돌아가기",
+  "@app_goBack": { "description": "web src/app/locale.ts goBack" },
+
+  "bottomNav_home": "홈",
+  "@bottomNav_home": { "description": "web src/components/BottomNav/BottomNav.tsx 홈 탭" },
+  "bottomNav_add": "리스트 작성하기",
+  "@bottomNav_add": { "description": "가운데 + 버튼 접근성 라벨 (web common createListButton)" },
+  "bottomNav_myFeed": "내 피드",
+  "@bottomNav_myFeed": { "description": "web src/components/BottomNav/BottomNav.tsx 내 피드 탭" },
+
+  "common_follow": "팔로우",
+  "common_following": "팔로잉",
+  "common_signInAndUp": "로그인/회원가입",
+  "common_more": "더보기",
+  "common_loading": "로딩중입니다.",
+  "common_start": "시작하기",
+  "common_cancel": "취소",
+  "common_back": "뒤로가기",
+  "common_close": "닫기",
+  "common_noTitle": "제목이 없습니다.",
+  "common_noDescription": "설명이 없습니다.",
+  "common_invalidUrl": "유효하지 않은 url입니다."
+}

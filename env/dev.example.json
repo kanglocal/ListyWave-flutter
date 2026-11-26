@@ -1,0 +1,8 @@
+{
+  "API_BASE_URL": "http://localhost:8080",
+  "SITE_URL": "http://localhost:3000",
+  "IMAGE_BASE_URL": "http://localhost:9000/listywave-local",
+  "KAKAO_NATIVE_APP_KEY": "",
+  "LOCAL_LOGIN_ID": "",
+  "LOCAL_PASSWORD": ""
+}

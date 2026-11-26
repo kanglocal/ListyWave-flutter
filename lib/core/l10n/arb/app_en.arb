@@ -1,0 +1,24 @@
+{
+  "@@locale": "en",
+  "appTitle": "ListyWave",
+
+  "app_notFound": "This page doesn't exist.",
+  "app_goBack": "Go back",
+
+  "bottomNav_home": "Home",
+  "bottomNav_add": "Create list",
+  "bottomNav_myFeed": "My feed",
+
+  "common_follow": "Follow",
+  "common_following": "Following",
+  "common_signInAndUp": "Sign In/Sign up",
+  "common_more": "See More",
+  "common_loading": "loading...",
+  "common_start": "Getting started",
+  "common_cancel": "Cancel",
+  "common_back": "Back",
+  "common_close": "Close",
+  "common_noTitle": "There is no title.",
+  "common_noDescription": "There is no explanation.",
+  "common_invalidUrl": "Invalid url."
+}

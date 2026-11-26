@@ -1,0 +1,8 @@
+{
+  "API_BASE_URL": "https://<IP>.sslip.io",
+  "SITE_URL": "https://listywave.vercel.app",
+  "IMAGE_BASE_URL": "https://pub-xxxx.r2.dev",
+  "KAKAO_NATIVE_APP_KEY": "",
+  "LOCAL_LOGIN_ID": "",
+  "LOCAL_PASSWORD": ""
+}
