@@ -542,7 +542,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1802148F907079EFE5B96517 /* Profile-dev.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-dev;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = X9PZP88PRD;
@@ -656,7 +656,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 523A61B7DCE2C3814F525CD4 /* Profile-prod.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-prod;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = X9PZP88PRD;
@@ -744,7 +744,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B6E326E56098E304FCA6A47 /* Debug-prod.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-prod;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = X9PZP88PRD;
@@ -840,7 +840,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FFFED64D40C80E85E5B1C9E4 /* Release-prod.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-prod;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = X9PZP88PRD;
@@ -862,7 +862,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 44BCB25D0021C6DB50CC7A65 /* Release-dev.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-dev;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = X9PZP88PRD;
@@ -884,7 +884,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B9722880FC6D2DE5EE3E7835 /* Debug-dev.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-dev;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = X9PZP88PRD;

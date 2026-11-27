@@ -58,6 +58,8 @@ dev_dependencies:
   path_provider_foundation: '>=2.4.1 <2.6.0'
   freezed: ^3.2.3
   json_serializable: ^6.11.2
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.7
 
 flutter:
   uses-material-design: true
@@ -70,6 +72,10 @@ flutter:
     # web 의 <pattern>/<image> SVG 는 flutter_svg 가 그리지 못해 rsvg-convert 로 1x/2x/3x PNG 로 바꿨다.
     - assets/icons/png/
     - assets/images/
+    # web intro Section3~7 그림 (mp4 영상은 GIF, filter 가 있는 SVG 는 rsvg-convert 로 1x/2x/3x PNG).
+    - assets/images/intro/
+    # Pretendard (SIL OFL 1.1) 원문. bootstrap 의 LicenseRegistry 가 읽어 라이선스 화면에 보인다.
+    - assets/licenses/
 
   # web public/fonts 의 woff2 를 fonttools 로 변환한 파일이다 (PLAN §5.6).
   fonts:

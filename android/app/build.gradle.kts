@@ -1,5 +1,7 @@
+import java.io.FileInputStream
 import java.net.URI
 import java.util.Base64
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -29,6 +31,18 @@ val appLinkHost: String =
         ?.let { runCatching { URI(it).host }.getOrNull() }
         ?.takeIf { it.isNotEmpty() }
         ?: "listywave-unset.invalid"
+
+// release 서명 (PLAN §7 M6, README "출시 서명"). android/key.properties 와 keystore(*.jks) 는 git 에서
+// 제외된다. 파일이 없으면 (CI, 다른 개발자) debug key 로 서명해 release 빌드가 계속 돌게 한다.
+// 이렇게 만든 파일은 스토어에 올릴 수 없다.
+val keystorePropertiesFile = rootProject.file("key.properties")
+val keystoreProperties =
+    Properties().apply {
+        if (keystorePropertiesFile.exists()) {
+            FileInputStream(keystorePropertiesFile).use { load(it) }
+        }
+    }
+val hasReleaseKeystore = keystorePropertiesFile.exists()
 
 android {
     namespace = "com.listywave.app"
@@ -73,11 +87,26 @@ android {
         }
     }
 
+    signingConfigs {
+        if (hasReleaseKeystore) {
+            create("release") {
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storeFile = keystoreProperties.getProperty("storeFile")?.let { file(it) }
+                storePassword = keystoreProperties.getProperty("storePassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig =
+                if (hasReleaseKeystore) {
+                    signingConfigs.getByName("release")
+                } else {
+                    logger.warn("android/key.properties 가 없어 release 빌드를 debug key 로 서명한다 (스토어 업로드 불가).")
+                    signingConfigs.getByName("debug")
+                }
         }
     }
 }

@@ -544,47 +544,263 @@
   },
   "intro_exampleTitle1": "내 최애 연예인 top10",
   "@intro_exampleTitle1": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.line1.title1"
   },
   "intro_exampleTitle2": "맛있는 인천 빵집 🥯",
   "@intro_exampleTitle2": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.line1.title2"
   },
   "intro_exampleTitle3": "나랑 잘 맞는 mbti 순위 top10",
   "@intro_exampleTitle3": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.line1.title3"
   },
-  "intro_exampleTitle4": "아껴보는 소설 📚",
+  "intro_exampleTitle4": "올해의 mvp 축구선수 순위 예측하기 🏟",
   "@intro_exampleTitle4": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.line1.title4"
   },
-  "intro_exampleTitle5": "서울 포토존 명소 top10",
+  "intro_exampleTitle5": "내가 좋아하는 롤 캐릭터 순위",
   "@intro_exampleTitle5": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.line2.title1"
   },
-  "intro_exampleTitle6": "새벽 작업 노동요 추천 TOP10",
+  "intro_exampleTitle6": "20대에 이루고 싶은 버킷리스트 top 10",
   "@intro_exampleTitle6": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.line2.title2"
+  },
+  "intro_exampleTitle7": "아껴보는 소설 📚",
+  "@intro_exampleTitle7": {
+    "description": "web locale.ts exampleTitles.line2.title3"
+  },
+  "intro_exampleTitle8": "지금 사고 싶은 아이템 top5",
+  "@intro_exampleTitle8": {
+    "description": "web locale.ts exampleTitles.line2.title4"
+  },
+  "intro_exampleTitle9": "내가 짜증나는 상황 top5 😫",
+  "@intro_exampleTitle9": {
+    "description": "web locale.ts exampleTitles.line3.title1"
+  },
+  "intro_exampleTitle10": "내 기준 소소하지만 확실한 행복들",
+  "@intro_exampleTitle10": {
+    "description": "web locale.ts exampleTitles.line3.title2"
+  },
+  "intro_exampleTitle11": "넷플릭스 크리스마스 시즌용 영화 Top5",
+  "@intro_exampleTitle11": {
+    "description": "web locale.ts exampleTitles.line3.title3"
+  },
+  "intro_exampleTitle12": "여행갈 때 꼭 들고가는 카메라 렌즈 3개 📷",
+  "@intro_exampleTitle12": {
+    "description": "web locale.ts exampleTitles.line3.title4"
+  },
+  "intro_exampleTitle13": "을지로 직장인 10년차의 찐 맛집 5 곳",
+  "@intro_exampleTitle13": {
+    "description": "web locale.ts exampleTitles.line4.title1"
+  },
+  "intro_exampleTitle14": "뉴욕에 가면 꼭 해야하는 5가지🗽",
+  "@intro_exampleTitle14": {
+    "description": "web locale.ts exampleTitles.line4.title2"
+  },
+  "intro_exampleTitle15": "서울 포토존 명소 top10",
+  "@intro_exampleTitle15": {
+    "description": "web locale.ts exampleTitles.line4.title3"
+  },
+  "intro_exampleTitle16": "내 주변 기준 가장 인기있는 쇼핑몰 TOP5",
+  "@intro_exampleTitle16": {
+    "description": "web locale.ts exampleTitles.line4.title4"
+  },
+  "intro_exampleTitle17": "내 책상에서 제일 좋아하는 아이템 3개",
+  "@intro_exampleTitle17": {
+    "description": "web locale.ts exampleTitles.line5.title1"
+  },
+  "intro_exampleTitle18": "우리 강아지의 사랑스러운 버릇 10가지",
+  "@intro_exampleTitle18": {
+    "description": "web locale.ts exampleTitles.line5.title2"
+  },
+  "intro_exampleTitle19": "울집 냥이😻가 제일 좋아하는 장난감 TOP3",
+  "@intro_exampleTitle19": {
+    "description": "web locale.ts exampleTitles.line5.title3"
+  },
+  "intro_exampleTitle20": "가장 마음에 드는 뉴진스 착장 TOP3",
+  "@intro_exampleTitle20": {
+    "description": "web locale.ts exampleTitles.line5.title4"
+  },
+  "intro_exampleTitle21": "나를 가장 빠르고 확실하게 행복하게 만드는것 TOP5",
+  "@intro_exampleTitle21": {
+    "description": "web locale.ts exampleTitles.line6.title1"
+  },
+  "intro_exampleTitle22": "새벽 작업 노동요 추천 TOP10",
+  "@intro_exampleTitle22": {
+    "description": "web locale.ts exampleTitles.line6.title2"
+  },
+  "intro_exampleTitle23": "인생 우선순위 TOP 10",
+  "@intro_exampleTitle23": {
+    "description": "web locale.ts exampleTitles.line6.title3"
+  },
+  "intro_exampleTitle24": "자주 다니는 카페별 베스트 음료 ☕️",
+  "@intro_exampleTitle24": {
+    "description": "web locale.ts exampleTitles.line6.title4"
   },
   "intro_searchExample1": "키우기 쉬운 식물 모았어요",
   "@intro_searchExample1": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.search.title1"
   },
   "intro_searchExample2": "부산사람의 돼지국밥 맛집 5곳",
   "@intro_searchExample2": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.search.title2"
   },
   "intro_searchExample3": "가장 슬프게 본 영화 TOP3",
   "@intro_searchExample3": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.search.title3"
   },
   "intro_searchExample4": "코인노래방에서 자주 부르는 노래 top10 🎵",
   "@intro_searchExample4": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.search.title4"
   },
   "intro_searchExample5": "인생 넷플릭스 영화 TOP5",
   "@intro_searchExample5": {
-    "description": "web app/intro/locale.ts"
+    "description": "web locale.ts exampleTitles.search.title5"
+  },
+  "intro_searchExample6": "대전 칼국수 맛집 top10",
+  "@intro_searchExample6": {
+    "description": "web locale.ts exampleTitles.search.title6"
+  },
+  "intro_searchExample7": "반전결말 왓챠 플레이 미드 TOP3",
+  "@intro_searchExample7": {
+    "description": "web locale.ts exampleTitles.search.title7"
+  },
+  "intro_searchExample8": "서울 김치가 맛있는 국밥집 top10",
+  "@intro_searchExample8": {
+    "description": "web locale.ts exampleTitles.search.title8"
+  },
+  "intro_searchExample9": "내가 이자카야에서 제일 자주 먹는 안주 TOP 3",
+  "@intro_searchExample9": {
+    "description": "web locale.ts exampleTitles.search.title9"
+  },
+  "intro_searchExample10": "내 플리의 최다 재생곡 TOP 10",
+  "@intro_searchExample10": {
+    "description": "web locale.ts exampleTitles.search.title10"
+  },
+  "intro_exampleItem1_1": "1.문화교류",
+  "@intro_exampleItem1_1": {
+    "description": "web locale.ts exampleItem.line1.title1"
+  },
+  "intro_exampleItem1_2": "2.체험",
+  "@intro_exampleItem1_2": {
+    "description": "web locale.ts exampleItem.line1.title2"
+  },
+  "intro_exampleItem1_3": "3.교환학생",
+  "@intro_exampleItem1_3": {
+    "description": "web locale.ts exampleItem.line1.title3"
+  },
+  "intro_exampleItem1_alt": "문화 카테고리 아이콘",
+  "@intro_exampleItem1_alt": {
+    "description": "web locale.ts exampleItem.line1.alt"
+  },
+  "intro_exampleItem2_1": "1.규칙적인 생활",
+  "@intro_exampleItem2_1": {
+    "description": "web locale.ts exampleItem.line2.title1"
+  },
+  "intro_exampleItem2_2": "2.건강한 식단",
+  "@intro_exampleItem2_2": {
+    "description": "web locale.ts exampleItem.line2.title2"
+  },
+  "intro_exampleItem2_3": "3.운동",
+  "@intro_exampleItem2_3": {
+    "description": "web locale.ts exampleItem.line2.title3"
+  },
+  "intro_exampleItem2_alt": "일상생활 카테고리 아이콘",
+  "@intro_exampleItem2_alt": {
+    "description": "web locale.ts exampleItem.line2.alt"
+  },
+  "intro_exampleItem3_1": "1.성심당",
+  "@intro_exampleItem3_1": {
+    "description": "web locale.ts exampleItem.line3.title1"
+  },
+  "intro_exampleItem3_2": "2.연희동 베이커리",
+  "@intro_exampleItem3_2": {
+    "description": "web locale.ts exampleItem.line3.title2"
+  },
+  "intro_exampleItem3_3": "3.진진빵집",
+  "@intro_exampleItem3_3": {
+    "description": "web locale.ts exampleItem.line3.title3"
+  },
+  "intro_exampleItem3_alt": "장소 카테고리 아이콘",
+  "@intro_exampleItem3_alt": {
+    "description": "web locale.ts exampleItem.line3.alt"
+  },
+  "intro_exampleItem4_1": "1.우연히 봄",
+  "@intro_exampleItem4_1": {
+    "description": "web locale.ts exampleItem.line4.title1"
+  },
+  "intro_exampleItem4_2": "2.벚꽃엔딩",
+  "@intro_exampleItem4_2": {
+    "description": "web locale.ts exampleItem.line4.title2"
+  },
+  "intro_exampleItem4_3": "3.봄사랑벚꽃말고",
+  "@intro_exampleItem4_3": {
+    "description": "web locale.ts exampleItem.line4.title3"
+  },
+  "intro_exampleItem4_alt": "음악 카테고리 아이콘",
+  "@intro_exampleItem4_alt": {
+    "description": "web locale.ts exampleItem.line4.alt"
+  },
+  "intro_exampleItem5_1": "1.부산행",
+  "@intro_exampleItem5_1": {
+    "description": "web locale.ts exampleItem.line5.title1"
+  },
+  "intro_exampleItem5_2": "2.분신사바",
+  "@intro_exampleItem5_2": {
+    "description": "web locale.ts exampleItem.line5.title2"
+  },
+  "intro_exampleItem5_3": "3.컨저링",
+  "@intro_exampleItem5_3": {
+    "description": "web locale.ts exampleItem.line5.title3"
+  },
+  "intro_exampleItem5_alt": "영화/드라마 카테고리 아이콘",
+  "@intro_exampleItem5_alt": {
+    "description": "web locale.ts exampleItem.line5.alt"
+  },
+  "intro_exampleItem6_1": "1.데미안",
+  "@intro_exampleItem6_1": {
+    "description": "web locale.ts exampleItem.line6.title1"
+  },
+  "intro_exampleItem6_2": "2.동물 농장",
+  "@intro_exampleItem6_2": {
+    "description": "web locale.ts exampleItem.line6.title2"
+  },
+  "intro_exampleItem6_3": "3.삼국지",
+  "@intro_exampleItem6_3": {
+    "description": "web locale.ts exampleItem.line6.title3"
+  },
+  "intro_exampleItem6_alt": "도서 카테고리 아이콘",
+  "@intro_exampleItem6_alt": {
+    "description": "web locale.ts exampleItem.line6.alt"
+  },
+  "intro_exampleItem7_1": "1.리트리버",
+  "@intro_exampleItem7_1": {
+    "description": "web locale.ts exampleItem.line7.title1"
+  },
+  "intro_exampleItem7_2": "2.비글",
+  "@intro_exampleItem7_2": {
+    "description": "web locale.ts exampleItem.line7.title2"
+  },
+  "intro_exampleItem7_3": "3.푸들",
+  "@intro_exampleItem7_3": {
+    "description": "web locale.ts exampleItem.line7.title3"
+  },
+  "intro_exampleItem7_alt": "동/식물 카테고리 아이콘",
+  "@intro_exampleItem7_alt": {
+    "description": "web locale.ts exampleItem.line7.alt"
+  },
+  "intro_eyeIcon": "눈 모양 이모지",
+  "@intro_eyeIcon": {
+    "description": "web locale.ts section.eyeIcon"
+  },
+  "intro_readingGlassesIcon": "돋보기 모양 아이콘",
+  "@intro_readingGlassesIcon": {
+    "description": "web locale.ts section.readingGlassesIcon"
+  },
+  "intro_cellphoneImage": "핸드폰 이미지",
+  "@intro_cellphoneImage": {
+    "description": "web locale.ts section.cellphoneImage"
   },
   "common_delete": "삭제",
   "@common_delete": {

@@ -1,0 +1,6 @@
+# android/key.properties 로 복사해 값을 채운다 (key.properties 와 *.jks 는 git 에서 제외된다).
+# storeFile 은 android/app 기준 상대 경로이거나 절대 경로다.
+storePassword=<keystore 비밀번호>
+keyPassword=<key 비밀번호>
+keyAlias=upload
+storeFile=/Users/<you>/keys/listywave-upload.jks
