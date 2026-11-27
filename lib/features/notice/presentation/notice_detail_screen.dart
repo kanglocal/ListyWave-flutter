@@ -14,6 +14,7 @@ import '../../../core/widgets/app_network_image.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/link_preview.dart';
 import '../application/notice_providers.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// web `/notice/[noticeId]` (`NoticeDetail.tsx`, `components/NoticeDetail/*`).
 class NoticeDetailScreen extends ConsumerWidget {
@@ -23,7 +24,6 @@ class NoticeDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
     final id = int.tryParse(noticeId);
     final detail = id == null ? null : ref.watch(noticeDetailProvider(id));
     final Widget body = switch (detail) {
@@ -48,16 +48,14 @@ class NoticeDetailScreen extends ConsumerWidget {
         ),
       ),
     };
+    // web `notice/[noticeId]/NoticeDetail.tsx`: 제목 없이 blue 헤더에 lightgray 뒤로가기.
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.notice_title, style: context.typo.bodyBold),
-        centerTitle: true,
+      appBar: const ListyHeader(
+        backgroundColor: AppColors.blue,
+        foregroundColor: AppColors.lightgray,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
         child: body,
       ),
     );
@@ -73,37 +71,94 @@ class _NoticeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          notice.category,
-          style: context.typo.labelBold.copyWith(color: AppColors.blue),
+        // web `NoticeDetailInfo.css.ts` info: blue, padding 25 16 40.
+        Container(
+          color: AppColors.blue,
+          padding: const EdgeInsets.fromLTRB(16, 25, 16, 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  notice.category,
+                  style: context.typo.labelBold.copyWith(
+                    color: AppColors.bluegray8,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Text(
+                notice.title,
+                style: context.typo.header.copyWith(
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: AppColors.white,
+                ),
+              ),
+              const SizedBox(height: 11),
+              Text(
+                notice.description,
+                style: context.typo.label.copyWith(
+                  letterSpacing: 0,
+                  color: AppColors.white,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                formatDate(notice.createdDate),
+                style: context.typo.label.copyWith(
+                  fontSize: 10,
+                  letterSpacing: 0,
+                  color: AppColors.bggray,
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 6),
-        Text(notice.title, style: context.typo.header),
-        const SizedBox(height: 6),
-        Text(
-          notice.description,
-          style: context.typo.body.copyWith(color: AppColors.gray3),
+        // contents: padding 20 16 0, 사이 15.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final (i, content) in notice.contents.indexed) ...[
+                if (i > 0) const SizedBox(height: 15),
+                NoticeContentBlock(content: content),
+              ],
+            ],
+          ),
         ),
-        const SizedBox(height: 6),
-        Text(
-          formatDate(notice.createdDate),
-          style: context.typo.labelSmall.copyWith(color: AppColors.gray),
-        ),
-        const Divider(height: 32),
-        for (final content in notice.contents)
-          NoticeContentBlock(content: content),
-        const SizedBox(height: 32),
-        if (notice.prevNotice case final prev?)
-          _BesideNotice(label: l10n.notice_prev, notice: prev),
-        if (notice.nextNotice case final next?)
-          _BesideNotice(label: l10n.notice_next, notice: next),
-        const SizedBox(height: 16),
-        Center(
-          child: OutlinedButton(
-            onPressed: () => context.go(AppRoutes.notice),
-            child: Text(l10n.notice_backToList),
+        // signPostWrapper: padding 12 16 32, 사이 8.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (notice.prevNotice case final prev?)
+                _BesideNotice(label: l10n.notice_prev, notice: prev),
+              if (notice.nextNotice case final next?)
+                _BesideNotice(label: l10n.notice_next, notice: next),
+              Center(
+                child: TextButton(
+                  onPressed: () => context.go(AppRoutes.notice),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.deepblue10,
+                    textStyle: context.typo.label.copyWith(letterSpacing: 0),
+                  ),
+                  child: Text(l10n.notice_backToList),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -120,55 +175,62 @@ class NoticeContentBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final description = content.description ?? '';
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: switch (content.type) {
-        NoticeContentsType.subtitle => Text(
+    // web `NoticeDetailContents.css.ts`.
+    return switch (content.type) {
+      NoticeContentsType.subtitle => Text(
+        description,
+        style: context.typo.subtitle.copyWith(color: AppColors.black),
+      ),
+      NoticeContentsType.body => MarkdownBody(
+        data: description,
+        onTapLink: (_, href, _) {
+          if (href != null) openExternalUrl(href);
+        },
+      ),
+      // imgaeBox: 높이 400, cover, radius 5.
+      NoticeContentsType.image => ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: AppNetworkImage(
+          url: content.imageUrl,
+          width: double.infinity,
+          height: 400,
+        ),
+      ),
+      // button: 흰 바탕, 1px blue, radius 18, padding 16 14, BodyRegular 700 blue.
+      NoticeContentsType.button => OutlinedButton(
+        onPressed: content.buttonLink == null
+            ? null
+            : () => openExternalUrl(content.buttonLink!),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+          side: const BorderSide(color: AppColors.blue),
+          textStyle: context.typo.bodyRegular.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        child: Text(content.buttonName ?? ''),
+      ),
+      // line: 2px lightblue, margin 10 0.
+      NoticeContentsType.line => Container(
+        height: 2,
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        color: AppColors.lightblue,
+      ),
+      // notice: Label bluegray8, 최소 120.
+      NoticeContentsType.note => ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 120),
+        child: Text(
           description,
-          style: context.typo.subtitle,
+          style: context.typo.label.copyWith(color: AppColors.bluegray8),
         ),
-        NoticeContentsType.body => MarkdownBody(
-          data: description,
-          onTapLink: (_, href, _) {
-            if (href != null) openExternalUrl(href);
-          },
-        ),
-        NoticeContentsType.image => ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: AppNetworkImage(
-            url: content.imageUrl,
-            width: double.infinity,
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-        NoticeContentsType.button => SizedBox(
-          width: double.infinity,
-          child: FilledButton(
-            onPressed: content.buttonLink == null
-                ? null
-                : () => openExternalUrl(content.buttonLink!),
-            child: Text(content.buttonName ?? ''),
-          ),
-        ),
-        NoticeContentsType.line => const Divider(),
-        NoticeContentsType.note => Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: AppColors.bggray,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            description,
-            style: context.typo.label.copyWith(color: AppColors.gray3),
-          ),
-        ),
-        NoticeContentsType.unknown => const SizedBox.shrink(),
-      },
-    );
+      ),
+      NoticeContentsType.unknown => const SizedBox.shrink(),
+    };
   }
 }
 
+/// web 이전글/다음글 카드: 흰색 padding 18 14, radius 16. 표시는 12 deepblue10,
+/// 제목 16/600 (위 4), 설명 12 (위 6).
 class _BesideNotice extends StatelessWidget {
   const _BesideNotice({required this.label, required this.notice});
 
@@ -177,26 +239,47 @@ class _BesideNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () =>
-          context.pushReplacement(AppRoutes.noticeDetail('${notice.id}')),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: context.typo.labelSmall.copyWith(color: AppColors.blue),
+    final ink = context.typo.label.copyWith(color: AppColors.black);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+      child: Material(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () =>
+              context.pushReplacement(AppRoutes.noticeDetail('${notice.id}')),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: ink.copyWith(
+                    fontSize: 12,
+                    letterSpacing: 0,
+                    color: AppColors.deepblue10,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  notice.title,
+                  style: context.typo.bodyBold.copyWith(
+                    letterSpacing: -0.48,
+                    color: AppColors.black,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  notice.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: ink.copyWith(fontSize: 12, letterSpacing: -0.36),
+                ),
+              ],
             ),
-            Text(notice.title, style: context.typo.bodyBold),
-            Text(
-              notice.description,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.typo.label.copyWith(color: AppColors.gray),
-            ),
-          ],
+          ),
         ),
       ),
     );

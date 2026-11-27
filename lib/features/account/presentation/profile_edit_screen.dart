@@ -19,6 +19,7 @@ import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/toast.dart';
 import '../../user/application/user_providers.dart';
 import '../../user/data/user_api.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// web `/account/profile`.
 class ProfileEditScreen extends ConsumerWidget {
@@ -31,7 +32,7 @@ class ProfileEditScreen extends ConsumerWidget {
     final data = user?.value;
     if (data != null) return ProfileEditForm(user: data);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const ListyHeader(),
       body: user != null && user.hasError
           ? ErrorView(
               error: user.error!,
@@ -270,12 +271,8 @@ class _ProfileEditFormState extends ConsumerState<ProfileEditForm> {
     final backgrounds =
         ref.watch(defaultBackgroundImagesProvider).value ?? const [];
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.account_profileSetting, style: context.typo.bodyBold),
+      appBar: ListyHeader(
+        title: l10n.account_profileSetting,
         actions: [
           TextButton(
             key: const Key('profile.save'),

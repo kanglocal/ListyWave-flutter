@@ -1,6 +1,6 @@
 import 'package:flutter/painting.dart';
 
-/// web `src/styles/theme.css.ts` 의 `vars.color` (21개).
+/// web `src/styles/theme.css.ts` 의 `vars.color` (22개).
 abstract final class AppColors {
   static const white = Color(0xFFFFFFFF);
   static const lightblue = Color(0xFFE5EEFE);
@@ -23,6 +23,12 @@ abstract final class AppColors {
   static const black2 = Color(0xFF213752);
   static const black3 = Color(0xFF3E4455);
   static const red = Color(0xFFFF0000);
+
+  /// Figma ver 3.0 테두리·구분선.
+  static const line = Color(0xFFDEE2EE);
+
+  /// web `Modal.css.ts` 의 dimmed 배경 `rgba(25, 25, 27, 0.3)`.
+  static const barrier = Color(0x4D19191B);
 }
 
 /// web `src/styles/Color.ts` `BACKGROUND_COLOR_PALETTE_TYPE`.

@@ -24,29 +24,29 @@ class ListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // web `user/[userId]/_components/Card.css.ts`: 흰 카드, padding 12, radius 24, gap 11.
+    final label = context.typo.labelSmall.copyWith(color: AppColors.blue);
+    final itemStyle = context.typo.label.copyWith(color: AppColors.black);
     return GestureDetector(
       onTap: () => context.push(AppRoutes.listDetail('${list.id}')),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color:
-              ListBackgroundColors.read[list.backgroundColor] ??
-              AppColors.bggray,
-          borderRadius: BorderRadius.circular(16),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                // label: LabelSmall blue, #F4F8FD 바탕, padding 4 10, 높이 26, radius 17.
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
+                  height: 26,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFFF4F8FD),
+                    borderRadius: BorderRadius.circular(17),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -61,7 +61,7 @@ class ListCard extends StatelessWidget {
                             BlendMode.srcIn,
                           ),
                         ),
-                        const SizedBox(width: 3),
+                        const SizedBox(width: 2),
                       ],
                       Text(
                         isOwner
@@ -69,9 +69,7 @@ class ListCard extends StatelessWidget {
                                   ? l10n.listDetail_public
                                   : l10n.listDetail_private)
                             : list.category,
-                        style: context.typo.labelSmall.copyWith(
-                          color: AppColors.blue,
-                        ),
+                        style: label,
                       ),
                     ],
                   ),
@@ -80,17 +78,35 @@ class ListCard extends StatelessWidget {
                 if (isOwner) _OwnerMenu(list: list),
               ],
             ),
-            const SizedBox(height: 10),
-            Text(list.title, style: context.typo.bodyBold),
-            const SizedBox(height: 8),
-            for (final item in list.listItems)
+            const SizedBox(height: 11),
+            Text(
+              list.title,
+              style: context.typo.bodyBold.copyWith(
+                fontSize: 17,
+                letterSpacing: -0.51,
+                color: AppColors.black,
+              ),
+            ),
+            const SizedBox(height: 11),
+            for (final (i, item) in list.listItems.indexed)
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                child: Text(
-                  '${item.rank}. ${item.title}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.typo.label.copyWith(color: AppColors.gray3),
+                padding: EdgeInsets.fromLTRB(0, i == 0 ? 0 : 8, 0, 0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 16,
+                      child: Text('${item.rank}.', style: itemStyle),
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        item.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: itemStyle,
+                      ),
+                    ),
+                  ],
                 ),
               ),
           ],

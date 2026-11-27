@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../app/router.dart';
 import '../../../../core/l10n/gen/app_localizations.dart';
@@ -60,7 +59,7 @@ class HomeRecommendedLists extends ConsumerWidget {
         onRetry: () => ref.invalidate(homeRecommendedListsProvider),
       ),
       _ => const SizedBox(
-        height: 300,
+        height: 280,
         child: Skeletonizer(
           child: Center(
             child: _RecommendedListItem(
@@ -95,11 +94,15 @@ class _RecommendedSwiper extends StatefulWidget {
   State<_RecommendedSwiper> createState() => _RecommendedSwiperState();
 }
 
+/// web swiper: slide 260, 사이 20, 높이 280 (위아래 10), 가운데 정렬. 점 표시는 없다.
 class _RecommendedSwiperState extends State<_RecommendedSwiper> {
   /// loop 를 위해 가운데에서 시작한다.
   static const _loopBase = 1000;
+  static const _slide = 260.0;
+  static const _gap = 20.0;
 
-  late final PageController _controller;
+  PageController? _controller;
+  double? _fraction;
   Timer? _autoplay;
   late int _page;
   bool _visible = true;
@@ -108,13 +111,13 @@ class _RecommendedSwiperState extends State<_RecommendedSwiper> {
   void initState() {
     super.initState();
     _page = widget.items.length * _loopBase;
-    _controller = PageController(initialPage: _page, viewportFraction: 0.7);
     _autoplay = Timer.periodic(const Duration(milliseconds: 1500), (_) {
+      final controller = _controller;
       // 다른 화면에 가려져 있으면 (TickerMode off) 넘기지 않는다.
-      if (!_controller.hasClients || !_visible) {
+      if (controller == null || !controller.hasClients || !_visible) {
         return;
       }
-      _controller.nextPage(
+      controller.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
@@ -124,44 +127,54 @@ class _RecommendedSwiperState extends State<_RecommendedSwiper> {
   @override
   void dispose() {
     _autoplay?.cancel();
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
+  }
+
+  PageController _controllerFor(double width) {
+    final fraction = ((_slide + _gap) / width).clamp(0.1, 1.0);
+    if (_controller == null || _fraction != fraction) {
+      _controller?.dispose();
+      _fraction = fraction;
+      _controller = PageController(
+        initialPage: _page,
+        viewportFraction: fraction,
+      );
+    }
+    return _controller!;
   }
 
   @override
   Widget build(BuildContext context) {
     _visible = TickerMode.of(context);
     final count = widget.items.length;
-    return Column(
-      children: [
-        SizedBox(
-          height: 300,
-          child: PageView.builder(
-            key: const Key('home.recommendedSwiper'),
-            controller: _controller,
-            onPageChanged: (page) => setState(() => _page = page),
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: _RecommendedListItem(item: widget.items[index % count]),
+    return SizedBox(
+      height: 280,
+      child: LayoutBuilder(
+        builder: (context, constraints) => PageView.builder(
+          key: const Key('home.recommendedSwiper'),
+          controller: _controllerFor(constraints.maxWidth),
+          onPageChanged: (page) => _page = page,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: _gap / 2,
+              vertical: 10,
+            ),
+            child: Center(
+              child: SizedBox.square(
+                dimension: _slide,
+                child: _RecommendedListItem(item: widget.items[index % count]),
+              ),
             ),
           ),
         ),
-        AnimatedSmoothIndicator(
-          activeIndex: _page % count,
-          count: count,
-          effect: const WormEffect(
-            dotWidth: 6,
-            dotHeight: 6,
-            activeDotColor: AppColors.blue,
-            dotColor: AppColors.bluegray6,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
 
-/// web RecommendedListsItem. 대표 이미지가 있으면 원형 이미지 배경, 없으면 흰 둥근 사각형.
+/// web RecommendedListsItem (`HomeRecommendedLists.css.ts`). 대표 이미지가 있으면 원형 이미지에
+/// 30% 검정을 덮고, 없으면 radius 38 흰 사각형이다.
 class _RecommendedListItem extends StatelessWidget {
   const _RecommendedListItem({required this.item});
 
@@ -171,7 +184,7 @@ class _RecommendedListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasImage = item.itemImageUrl?.isNotEmpty ?? false;
     final textColor = hasImage ? AppColors.white : AppColors.black;
-    final radius = hasImage ? 140.0 : 38.0;
+    final radius = hasImage ? 130.0 : 38.0;
     return GestureDetector(
       onTap: () => context.push(AppRoutes.listDetail('${item.id}')),
       child: AspectRatio(
@@ -183,13 +196,13 @@ class _RecommendedListItem extends StatelessWidget {
             children: [
               if (hasImage) ...[
                 AppNetworkImage(url: item.itemImageUrl),
-                const ColoredBox(color: Color(0x66000000)),
+                const ColoredBox(color: Color(0x4D000000)),
               ] else
                 const ColoredBox(color: AppColors.white),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 36,
+                  horizontal: 40,
+                  vertical: 24,
                 ),
                 // 정사각형 카드라 글자가 커지면 (접근성 글자 크기) 넘치는 대신 내용 전체를 줄인다.
                 child: LayoutBuilder(
@@ -202,46 +215,73 @@ class _RecommendedListItem extends StatelessWidget {
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 3,
+                              horizontal: 12,
+                              vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.skyblue,
-                              borderRadius: BorderRadius.circular(12),
+                              color: AppColors.blue,
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
                               item.category,
-                              style: context.typo.labelSmall.copyWith(
-                                color: AppColors.blue,
+                              style: context.typo.label.copyWith(
+                                letterSpacing: 0,
+                                color: AppColors.white,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 16),
                           Text(
                             item.title,
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: context.typo.subtitle.copyWith(
-                              color: textColor,
-                            ),
-                          ),
-                          Text(
-                            item.ownerNickname,
-                            style: context.typo.labelSmall.copyWith(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0,
                               color: textColor,
                             ),
                           ),
                           const SizedBox(height: 8),
+                          Text(
+                            item.ownerNickname,
+                            style: context.typo.bodyRegular.copyWith(
+                              letterSpacing: -0.48,
+                              color: textColor,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
                           for (final (index, top) in item.items.indexed)
-                            Text(
-                              '${index + 1}. ${top.title}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: context.typo.label.copyWith(
-                                color: hasImage
-                                    ? AppColors.skyblue
-                                    : AppColors.gray3,
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                index == 0 ? 0 : 7,
+                                0,
+                                0,
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 7,
+                                  vertical: 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: hasImage
+                                      ? const Color(0x4DF5FAFF)
+                                      : const Color(0xFFF5FAFF),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  '${index + 1}. ${top.title}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: context.typo.label.copyWith(
+                                    fontSize: 10,
+                                    letterSpacing: 0,
+                                    color: hasImage
+                                        ? AppColors.white
+                                        : AppColors.blue,
+                                  ),
+                                ),
                               ),
                             ),
                         ],
@@ -258,7 +298,8 @@ class _RecommendedListItem extends StatelessWidget {
   }
 }
 
-/// web `TopicsRecommendation.tsx`. 주제를 누르면 그 제목으로 리스트 작성을 시작한다.
+/// web `TopicsRecommendation.tsx` (`TopicsRecommendation.css.ts`). 주제를 누르면 그 제목으로
+/// 리스트 작성을 시작한다. 주제는 가로 한 줄로 흐르고 끝에 "주제 요청하기→" 가 붙는다.
 class TopicsRecommendation extends ConsumerWidget {
   const TopicsRecommendation({super.key});
 
@@ -266,60 +307,68 @@ class TopicsRecommendation extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final topics = ref.watch(recommendedTopicsProvider).value ?? const [];
+    final chipStyle = context.typo.body.copyWith(
+      letterSpacing: -0.45,
+      color: const Color(0xFF292929),
+    );
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.home_topicsTitle,
-                  style: context.typo.subtitle,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.home_topicsTitle,
+                    style: context.typo.subtitle.copyWith(
+                      letterSpacing: 0,
+                      color: AppColors.black,
+                    ),
+                  ),
                 ),
-              ),
-              TextButton(
-                onPressed: () => context.push(AppRoutes.topics),
-                child: Text(
-                  l10n.common_more,
-                  style: context.typo.label.copyWith(color: AppColors.gray),
+                GestureDetector(
+                  onTap: () => context.push(AppRoutes.topics),
+                  child: Text(
+                    l10n.common_more,
+                    style: context.typo.label.copyWith(
+                      letterSpacing: 0,
+                      color: AppColors.bluegray10,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (final topic in topics)
-                ActionChip(
-                  label: Text(topic.title),
-                  labelStyle: context.typo.label.copyWith(
-                    color: AppColors.black,
+          const SizedBox(height: 15),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: Row(
+              children: [
+                for (final topic in topics) ...[
+                  _TopicPill(
+                    label: topic.title,
+                    style: chipStyle,
+                    onTap: () => context.push(
+                      Uri(
+                        path: AppRoutes.listCreate,
+                        queryParameters: {'title': topic.title},
+                      ).toString(),
+                    ),
                   ),
-                  backgroundColor: AppColors.white,
-                  side: const BorderSide(color: AppColors.skyblue),
-                  shape: const StadiumBorder(),
-                  onPressed: () => context.push(
-                    Uri(
-                      path: AppRoutes.listCreate,
-                      queryParameters: {'title': topic.title},
-                    ).toString(),
-                  ),
+                  const SizedBox(width: 12),
+                ],
+                _TopicPill(
+                  label: l10n.home_requestTopic,
+                  style: chipStyle.copyWith(color: AppColors.white),
+                  background: AppColors.blue,
+                  onTap: () => context.push(AppRoutes.topics),
                 ),
-              ActionChip(
-                label: Text(l10n.home_requestTopic),
-                labelStyle: context.typo.labelBold.copyWith(
-                  color: AppColors.white,
-                ),
-                backgroundColor: AppColors.blue,
-                side: BorderSide.none,
-                shape: const StadiumBorder(),
-                onPressed: () => context.push(AppRoutes.topics),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -327,7 +376,40 @@ class TopicsRecommendation extends ConsumerWidget {
   }
 }
 
-/// web `RecommendedUsers.tsx`. backend 가 이미 팔로우한 사람을 빼고 주므로 처음엔 팔로우 버튼이다.
+/// web topic: padding 14, radius 20, 흰 바탕.
+class _TopicPill extends StatelessWidget {
+  const _TopicPill({
+    required this.label,
+    required this.style,
+    required this.onTap,
+    this.background = AppColors.white,
+  });
+
+  final String label;
+  final TextStyle style;
+  final VoidCallback onTap;
+  final Color background;
+
+  @override
+  Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(20);
+    return Material(
+      color: background,
+      borderRadius: radius,
+      child: InkWell(
+        borderRadius: radius,
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Text(label, style: style),
+        ),
+      ),
+    );
+  }
+}
+
+/// web `RecommendedUsers.tsx` (`RecommendedUsers.css.ts`). 카드 없이 122 원형 사진, 닉네임,
+/// 팔로우 버튼을 가로로 늘어놓는다. backend 가 이미 팔로우한 사람을 빼고 주므로 처음엔 팔로우다.
 class UsersRecommendation extends ConsumerWidget {
   const UsersRecommendation({super.key});
 
@@ -345,67 +427,66 @@ class UsersRecommendation extends ConsumerWidget {
       items = users.value ?? const [];
     }
     if (items.isEmpty) return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 32, 0, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              l10n.home_recommendedUsers,
-              style: context.typo.subtitle,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: Text(
+            l10n.home_recommendedUsers,
+            style: context.typo.subtitle.copyWith(
+              letterSpacing: 0,
+              color: AppColors.black,
             ),
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 190,
-            child: Skeletonizer(
-              enabled: !users.hasValue,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: items.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 12),
-                itemBuilder: (context, index) {
-                  final user = items[index];
-                  return GestureDetector(
-                    onTap: () => context.push(AppRoutes.myList('${user.id}')),
-                    child: Container(
-                      width: 120,
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: [
-                          UserProfileImage(
+        ),
+        Skeletonizer(
+          enabled: !users.hasValue,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final (i, user) in items.indexed) ...[
+                  if (i > 0) const SizedBox(width: 20),
+                  SizedBox(
+                    width: 122,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              context.push(AppRoutes.myList('${user.id}')),
+                          child: UserProfileImage(
                             src: user.profileImageUrl,
-                            size: 80,
+                            size: 122,
                             semanticLabel:
                                 l10n.common_recommendUserProfileImage,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            user.nickname,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.typo.labelBold,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          user.nickname,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: context.typo.label.copyWith(
+                            letterSpacing: -0.28,
+                            color: const Color(0xFF121417),
                           ),
-                          const SizedBox(height: 6),
-                          if (users.hasValue)
-                            FollowButton(userId: user.id, isFollowed: false),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 6),
+                        if (users.hasValue)
+                          FollowButton(userId: user.id, isFollowed: false),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                ],
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

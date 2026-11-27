@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,6 +11,8 @@ import '../../../core/l10n/locale_controller.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../core/widgets/confirm_dialog.dart';
+import '../../../core/widgets/listy_header.dart';
+import '../../../core/widgets/segmented_control.dart';
 
 /// web `account/page.tsx` 의 외부 링크.
 const contactUrl = 'https://open.kakao.com/o/saz6DObg';
@@ -42,103 +45,139 @@ class AccountScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final language = ref.watch(localeControllerProvider);
     return Scaffold(
-      backgroundColor: AppColors.bggray,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.bggray,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.account_settings, style: context.typo.bodyBold),
-      ),
+      appBar: ListyHeader(title: l10n.account_settings),
+      // web `account/page.css.ts`: padding 0 16, 섹션 사이 12.
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 40),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
         children: [
           _Section(
             children: [
-              ListTile(
+              _Row(
                 key: const Key('account.profile'),
-                leading: const Icon(Icons.person_outline),
-                title: Text(l10n.account_profileSetting),
-                trailing: const Icon(Icons.chevron_right),
+                icon: 'assets/icons/user.svg',
+                title: l10n.account_profileSetting,
                 onTap: () => context.push(AppRoutes.accountProfile),
               ),
             ],
           ),
           _Section(
             children: [
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: Text(l10n.account_language),
-                trailing: SegmentedButton<AppLanguage>(
+              _Row(
+                icon: 'assets/icons/globe.svg',
+                title: l10n.account_language,
+                trailing: SegmentedControl<AppLanguage>(
                   key: const Key('account.language'),
-                  showSelectedIcon: false,
                   segments: [
-                    ButtonSegment(
+                    Segment(
+                      key: const Key('account.language.ko'),
                       value: AppLanguage.ko,
-                      label: Text(
-                        l10n.account_korean,
-                        key: const Key('account.language.ko'),
-                      ),
+                      label: l10n.account_korean,
                     ),
-                    ButtonSegment(
+                    Segment(
+                      key: const Key('account.language.en'),
                       value: AppLanguage.en,
-                      label: Text(
-                        l10n.account_english,
-                        key: const Key('account.language.en'),
-                      ),
+                      label: l10n.account_english,
                     ),
                   ],
-                  selected: {language},
-                  onSelectionChanged: (selected) => ref
+                  selected: language,
+                  onChanged: (selected) => ref
                       .read(localeControllerProvider.notifier)
-                      .select(selected.single),
+                      .select(selected),
                 ),
               ),
             ],
           ),
           _Section(
             children: [
-              ListTile(
-                leading: const Icon(Icons.help_outline),
-                title: Text(l10n.account_contact),
-                trailing: const Icon(Icons.chevron_right),
+              _Row(
+                icon: 'assets/icons/help_circle.svg',
+                title: l10n.account_contact,
                 onTap: () => openExternal(contactUrl),
               ),
-              ListTile(
-                leading: const Icon(Icons.chat_bubble_outline),
-                title: Text(l10n.account_sendFeedback),
-                trailing: const Icon(Icons.chevron_right),
+              _Row(
+                icon: 'assets/icons/message_square.svg',
+                title: l10n.account_sendFeedback,
                 onTap: () => openExternal(feedbackUrl),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          // accountFooter: 위 30, 사이 10, Label bluegray8.
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
                 key: const Key('account.logout'),
                 onPressed: () => _logout(context, ref),
-                child: Text(
-                  l10n.account_logout,
-                  style: context.typo.label.copyWith(color: AppColors.gray),
-                ),
+                style: _footerButton(context),
+                child: Text(l10n.account_logout),
               ),
               Text(
                 '|',
-                style: context.typo.label.copyWith(color: AppColors.gray),
+                style: context.typo.label.copyWith(color: AppColors.bluegray8),
               ),
               TextButton(
                 key: const Key('account.withdraw'),
                 onPressed: () => context.push(AppRoutes.accountWithdraw),
-                child: Text(
-                  l10n.account_withdrawal,
-                  style: context.typo.label.copyWith(color: AppColors.gray),
-                ),
+                style: _footerButton(context),
+                child: Text(l10n.account_withdrawal),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+ButtonStyle _footerButton(BuildContext context) => TextButton.styleFrom(
+  foregroundColor: AppColors.bluegray8,
+  textStyle: context.typo.label,
+);
+
+/// web baseDiv/buttonDiv: LabelBold, padding 16 32, 아이콘 24 과 글자 사이 16, 오른쪽 chevron 16.
+class _Row extends StatelessWidget {
+  const _Row({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.onTap,
+    this.trailing,
+  });
+
+  final String icon;
+  final String title;
+  final VoidCallback? onTap;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    final row = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      child: Row(
+        children: [
+          SvgPicture.asset(icon, width: 24, height: 24),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              title,
+              style: context.typo.labelBold.copyWith(color: AppColors.black),
+            ),
+          ),
+          trailing ??
+              SvgPicture.asset(
+                'assets/icons/chevron_right.svg',
+                width: 16,
+                height: 16,
+              ),
+        ],
+      ),
+    );
+    if (onTap == null) return row;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: row,
     );
   }
 }
@@ -153,7 +192,7 @@ class _Section extends StatelessWidget {
     margin: const EdgeInsets.fromLTRB(0, 0, 0, 12),
     decoration: BoxDecoration(
       color: AppColors.white,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(12),
     ),
     child: Column(children: children),
   );

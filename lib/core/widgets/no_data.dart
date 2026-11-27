@@ -23,7 +23,9 @@ class NoDataView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 16),
+      // web `components/NoData/NoData.css.ts`: padding 55 0, 메시지 18/600 deepblue10,
+      // 설명 LabelSmall, 버튼은 흰 pill 에 blue 30% 테두리.
+      padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -31,18 +33,23 @@ class NoDataView extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: context.typo.bodyBold.copyWith(color: AppColors.black),
+            style: context.typo.subtitle.copyWith(
+              fontWeight: FontWeight.w600,
+              height: 1.6,
+              letterSpacing: -0.54,
+              color: AppColors.deepblue10,
+            ),
           ),
           if (description != null) ...[
             const SizedBox(height: 8),
             Text(
               description!,
               textAlign: TextAlign.center,
-              style: context.typo.label.copyWith(color: AppColors.gray),
+              style: context.typo.labelSmall.copyWith(color: AppColors.black),
             ),
           ],
           if (buttonLabel != null) ...[
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             NoDataButton(label: buttonLabel!, onPressed: onButtonPressed),
           ],
         ],
@@ -61,11 +68,16 @@ class NoDataButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
+      // web `NoDataButton.css.ts`: 흰 바탕, 1px #3D95FF4D, pill, blue 14, padding 7 14.
       style: FilledButton.styleFrom(
-        backgroundColor: AppColors.blue,
-        foregroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        textStyle: context.typo.labelBold,
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.blue,
+        minimumSize: const Size(0, 0),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+        side: const BorderSide(color: Color(0x4D3D95FF)),
+        shape: const StadiumBorder(),
+        textStyle: context.typo.label,
       ),
       onPressed: onPressed,
       child: Text(label),

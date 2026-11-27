@@ -25,6 +25,7 @@ import 'widgets/list_footer.dart';
 import 'widgets/list_option_sheets.dart';
 import 'widgets/newest_comment_preview.dart';
 import 'widgets/rank_list.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// web `src/app/list/[listId]` (ListInformation + ListDetailInner).
 /// footer (리액션/콜렉트/공유/더보기) 와 주인 관리 메뉴 (`OpenBottomSheetButton.tsx`) 가 있다.
@@ -79,12 +80,8 @@ class ListDetailScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.listDetail_title, style: context.typo.bodyBold),
+      appBar: ListyHeader(
+        title: l10n.listDetail_title,
         actions: [
           if (list != null && !isHidden)
             IconButton(
@@ -111,7 +108,7 @@ class ListDetailScreen extends ConsumerWidget {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: body,
         ),
       ),
@@ -201,121 +198,152 @@ class _ListContent extends StatelessWidget {
     final collaborators = list.collaborators
         .where((c) => c.id != list.ownerId)
         .toList();
+    // web 3.0 `ListInformation.css.ts`: container padding 16, gap 20. 리스트 정보는 흰 카드
+    // (padding 24, radius 20, gap 12), 댓글은 따로 흰 카드다.
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: () =>
-                        context.push(AppRoutes.myList('${list.ownerId}')),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        UserProfileImage(
-                          src: list.ownerProfileImageUrl,
-                          size: 36,
-                          semanticLabel: l10n.listDetail_profileImageAlt,
-                        ),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            list.ownerNickname,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.typo.bodyBold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              if (collaborators.isNotEmpty)
-                Collaborators(collaborators: collaborators),
-              if (!isOwner && listId != 0) ...[
-                const SizedBox(width: 8),
-                FollowButton(
-                  userId: list.ownerId,
-                  isFollowed: list.isFollowing,
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: [
-                    LabelChip(
-                      text: list.categoryKorName,
-                      type: LabelChipType.skyblue,
-                      onTap: () => context.push(
-                        Uri(
-                          path: AppRoutes.search,
-                          queryParameters: {'categoryCode': list.categoryCode},
-                        ).toString(),
-                      ),
-                    ),
-                    for (final label in list.labels)
-                      LabelChip(
-                        text: label.name,
-                        type: LabelChipType.tag,
-                        onTap: () => context.push(
-                          Uri(
-                            path: AppRoutes.search,
-                            queryParameters: {'keyword': label.name},
-                          ).toString(),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              if (isOwner)
+          _WhiteCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Row(
                   children: [
-                    if (!list.isPublic)
-                      SvgPicture.asset(
-                        'assets/icons/new/lock.svg',
-                        width: 20,
-                        height: 20,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: () =>
+                              context.push(AppRoutes.myList('${list.ownerId}')),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              UserProfileImage(
+                                src: list.ownerProfileImageUrl,
+                                size: 30,
+                                semanticLabel: l10n.listDetail_profileImageAlt,
+                              ),
+                              const SizedBox(width: 12),
+                              Flexible(
+                                child: Text(
+                                  list.ownerNickname,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: context.typo.bodyRegular.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: -0.48,
+                                    color: AppColors.gray2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    const SizedBox(width: 6),
-                    SvgPicture.asset(
-                      'assets/icons/ver3/visibility.svg',
-                      width: 20,
-                      height: 20,
                     ),
-                    const SizedBox(width: 2),
-                    Text('${list.viewCount}', style: context.typo.label),
+                    if (collaborators.isNotEmpty)
+                      Collaborators(collaborators: collaborators),
+                    if (!isOwner && listId != 0) ...[
+                      const SizedBox(width: 8),
+                      FollowButton(
+                        userId: list.ownerId,
+                        isFollowed: list.isFollowing,
+                      ),
+                    ],
                   ],
                 ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(list.title, style: context.typo.header),
-          if (list.description?.isNotEmpty ?? false) ...[
-            const SizedBox(height: 6),
-            Text(
-              list.description!,
-              style: context.typo.body.copyWith(color: AppColors.gray3),
+                const SizedBox(height: 12),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 6,
+                        children: [
+                          LabelChip(
+                            text: list.categoryKorName,
+                            type: LabelChipType.skyblue,
+                            onTap: () => context.push(
+                              Uri(
+                                path: AppRoutes.search,
+                                queryParameters: {
+                                  'categoryCode': list.categoryCode,
+                                },
+                              ).toString(),
+                            ),
+                          ),
+                          for (final label in list.labels)
+                            LabelChip(
+                              text: label.name,
+                              type: LabelChipType.tag,
+                              onTap: () => context.push(
+                                Uri(
+                                  path: AppRoutes.search,
+                                  queryParameters: {'keyword': label.name},
+                                ).toString(),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (isOwner)
+                      // listInfoWrapper: 사이 6, 조회수는 아이콘 아래에 숫자.
+                      Row(
+                        children: [
+                          if (!list.isPublic) ...[
+                            SvgPicture.asset(
+                              'assets/icons/ver3/lock.svg',
+                              width: 20,
+                              height: 20,
+                            ),
+                            const SizedBox(width: 6),
+                          ],
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/ver3/visibility.svg',
+                                width: 20,
+                                height: 20,
+                              ),
+                              Text(
+                                '${list.viewCount}',
+                                style: context.typo.label.copyWith(
+                                  fontSize: 10,
+                                  color: AppColors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  list.title,
+                  style: context.typo.header.copyWith(color: AppColors.black),
+                ),
+                if (list.description?.isNotEmpty ?? false) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    list.description!,
+                    style: context.typo.bodyRegular.copyWith(
+                      color: AppColors.black,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 12),
+                RankListSection(list: list),
+                if (listId != 0)
+                  ListFooter(list: list, listId: listId, isOwner: isOwner),
+              ],
             ),
-          ],
-          const SizedBox(height: 16),
-          RankListSection(list: list),
-          if (listId != 0)
-            ListFooter(list: list, listId: listId, isOwner: isOwner),
-          const SizedBox(height: 12),
+          ),
+          const SizedBox(height: 20),
           _CommentsCard(list: list, listId: listId),
         ],
       ),
@@ -323,7 +351,27 @@ class _ListContent extends StatelessWidget {
   }
 }
 
-/// web "댓글 카드": 최신 댓글 하나를 보이고, 누르면 전체 댓글 bottom sheet 를 연다.
+/// web 3.0 상세의 흰 카드 (padding 24, radius 20).
+class _WhiteCard extends StatelessWidget {
+  const _WhiteCard({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: child,
+    );
+  }
+}
+
+/// web "댓글 카드" (`ListInformation.css.ts` commentsContainer: 흰색, padding 24, radius 20, gap 20).
+/// 최신 댓글 하나를 보이고, 누르면 전체 댓글 bottom sheet 를 연다.
 class _CommentsCard extends StatelessWidget {
   const _CommentsCard({required this.list, required this.listId});
 
@@ -335,38 +383,49 @@ class _CommentsCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return Semantics(
       button: true,
-      child: InkWell(
-        key: const Key('listDetail.comments'),
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => showCommentsSheet(context, listId: listId),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.bggray,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(l10n.comment_comment, style: context.typo.bodyBold),
-                  const SizedBox(width: 6),
-                  Text(
-                    l10n.comment_count(list.totalCommentCount),
-                    style: context.typo.label.copyWith(color: AppColors.gray),
-                  ),
-                  const Spacer(),
-                  Text(
-                    l10n.common_more,
-                    style: context.typo.label.copyWith(color: AppColors.gray),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              NewestCommentPreview(comment: list.newestComment),
-            ],
+      child: Material(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          key: const Key('listDetail.comments'),
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => showCommentsSheet(context, listId: listId),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      l10n.comment_comment,
+                      style: context.typo.bodyBold.copyWith(
+                        letterSpacing: -0.48,
+                        color: AppColors.black3,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      l10n.comment_count(list.totalCommentCount),
+                      style: context.typo.label.copyWith(
+                        color: AppColors.gray3,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      l10n.common_more,
+                      style: context.typo.label.copyWith(
+                        fontSize: 13,
+                        letterSpacing: -0.39,
+                        color: AppColors.black2,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                NewestCommentPreview(comment: list.newestComment),
+              ],
+            ),
           ),
         ),
       ),

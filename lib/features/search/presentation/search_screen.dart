@@ -15,12 +15,14 @@ import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../core/widgets/category_chips.dart';
 import '../../../core/widgets/error_view.dart';
+import '../../../core/widgets/floating_buttons.dart';
 import '../../../core/widgets/infinite_scroll.dart';
 import '../../../core/widgets/user_profile_image.dart';
 import '../../follow/presentation/widgets/follow_button.dart';
 import '../application/search_providers.dart';
 import '../data/search_api.dart';
 import 'widgets/top3_card.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// `/search?keyword=&categoryCode=&sort=` (web `src/app/search`).
 /// 입력은 [debounce] 뒤에 검색하고, 엔터/검색 아이콘은 바로 검색한다 (web `useDebounce.ts`).
@@ -101,101 +103,122 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         _categoryCode == entireCategoryCode && _keyword.isNotEmpty;
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.search_title, style: context.typo.bodyBold),
-      ),
-      body: InfiniteScroll(
-        canLoadMore:
-            page != null &&
-            page.hasNext &&
-            !page.isLoadingMore &&
-            page.loadMoreError == null,
-        onLoadMore: () => ref.read(listsProvider.notifier).loadMore(),
-        child: CustomScrollView(
-          key: const Key('search.scroll'),
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: TextField(
-                  key: const Key('search.keyword'),
-                  controller: _input,
-                  textInputAction: TextInputAction.search,
-                  onChanged: _onChanged,
-                  onSubmitted: _submit,
-                  decoration: InputDecoration(
-                    hintText: l10n.search_placeholder,
-                    filled: true,
-                    fillColor: AppColors.bggray,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      borderSide: BorderSide.none,
+      appBar: ListyHeader(title: l10n.search_title),
+      body: FloatingButtonsScope(
+        sharePath: AppRoutes.search,
+        bottom: 32,
+        child: InfiniteScroll(
+          canLoadMore:
+              page != null &&
+              page.hasNext &&
+              !page.isLoadingMore &&
+              page.loadMoreError == null,
+          onLoadMore: () => ref.read(listsProvider.notifier).loadMore(),
+          child: CustomScrollView(
+            key: const Key('search.scroll'),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
+                  // web KeywordArea.css.ts: 흰 바탕 radius 12, 15px, padding 11 40 11 15.
+                  child: TextField(
+                    key: const Key('search.keyword'),
+                    controller: _input,
+                    textInputAction: TextInputAction.search,
+                    onChanged: _onChanged,
+                    onSubmitted: _submit,
+                    style: context.typo.body.copyWith(
+                      letterSpacing: 0,
+                      color: AppColors.black,
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                    suffixIcon: IconButton(
-                      tooltip: l10n.search_title,
-                      onPressed: () => _submit(_input.text),
-                      icon: SvgPicture.asset('assets/icons/ver3/search.svg'),
+                    decoration: InputDecoration(
+                      hintText: l10n.search_placeholder,
+                      hintStyle: context.typo.body.copyWith(
+                        letterSpacing: 0,
+                        color: AppColors.lightgray,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      isDense: true,
+                      contentPadding: const EdgeInsets.fromLTRB(15, 11, 0, 11),
+                      suffixIcon: IconButton(
+                        tooltip: l10n.search_title,
+                        onPressed: () => _submit(_input.text),
+                        icon: SvgPicture.asset('assets/icons/ver3/search.svg'),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: CategoryChips(
-                selectedCode: _categoryCode,
-                useEnglishName:
-                    Localizations.localeOf(context).languageCode == 'en',
-                onSelected: (c) => setState(() => _categoryCode = c.code),
-              ),
-            ),
-            if (showUsers)
-              SliverToBoxAdapter(child: _UserResults(keyword: _keyword)),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Row(
-                  children: [
-                    Text(
-                      l10n.search_listCountTitle,
-                      style: context.typo.subtitle,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      l10n.search_listCount(page?.totalCount ?? 0),
-                      style: context.typo.label.copyWith(color: AppColors.gray),
-                    ),
-                    const Spacer(),
-                    DropdownButton<SearchSort>(
-                      key: const Key('search.sort'),
-                      value: _effectiveSort,
-                      underline: const SizedBox.shrink(),
-                      style: context.typo.label.copyWith(
-                        color: AppColors.black,
-                      ),
-                      items: [
-                        for (final sort in SearchSort.optionsFor(_keyword))
-                          DropdownMenuItem(
-                            value: sort,
-                            child: Text(_sortLabel(l10n, sort)),
-                          ),
-                      ],
-                      onChanged: (sort) => setState(() => _sort = sort),
-                    ),
-                  ],
+              SliverToBoxAdapter(
+                child: CategoryChips(
+                  wrap: true,
+                  spacing: 10,
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  selectedCode: _categoryCode,
+                  useEnglishName:
+                      Localizations.localeOf(context).languageCode == 'en',
+                  onSelected: (c) => setState(() => _categoryCode = c.code),
                 ),
               ),
-            ),
-            ..._listResults(
-              context,
-              lists,
-              () => ref.invalidate(listsProvider),
-            ),
-          ],
+              if (showUsers)
+                SliverToBoxAdapter(child: _UserResults(keyword: _keyword)),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+                  // web SearchListResult.css.ts header: deepblue10, 제목 18/600, 개수 16/400.
+                  child: Row(
+                    children: [
+                      Text(
+                        l10n.search_listCountTitle,
+                        style: _sectionTitle(context),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        l10n.search_listCount(page?.totalCount ?? 0),
+                        style: _sectionCount(context),
+                      ),
+                      const Spacer(),
+                      DropdownButton<SearchSort>(
+                        key: const Key('search.sort'),
+                        value: _effectiveSort,
+                        underline: const SizedBox.shrink(),
+                        borderRadius: BorderRadius.circular(8),
+                        dropdownColor: AppColors.white,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: AppColors.black,
+                          size: 20,
+                        ),
+                        style: context.typo.label.copyWith(
+                          fontSize: 13,
+                          letterSpacing: 0,
+                          color: AppColors.black,
+                        ),
+                        items: [
+                          for (final sort in SearchSort.optionsFor(_keyword))
+                            DropdownMenuItem(
+                              value: sort,
+                              child: Text(_sortLabel(l10n, sort)),
+                            ),
+                        ],
+                        onChanged: (sort) => setState(() => _sort = sort),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ..._listResults(
+                context,
+                lists,
+                () => ref.invalidate(listsProvider),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -242,13 +265,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     }
     return [
       SliverPadding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
+        // web cards: 2열, 사이 16 15, 아래 90.
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 90),
         sliver: SliverGrid.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 0.78,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 15,
+            mainAxisExtent: Top3Card.height,
           ),
           itemCount: items.length,
           itemBuilder: (context, index) => Skeletonizer(
@@ -267,6 +291,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     ];
   }
 }
+
+TextStyle _sectionTitle(BuildContext context) => context.typo.subtitle.copyWith(
+  fontWeight: FontWeight.w600,
+  color: AppColors.deepblue10,
+);
+
+TextStyle _sectionCount(BuildContext context) => context.typo.bodyRegular
+    .copyWith(letterSpacing: -0.48, color: AppColors.deepblue10);
 
 String _sortLabel(AppLocalizations l10n, SearchSort sort) => switch (sort) {
   SearchSort.newest => l10n.search_sortNew,
@@ -318,14 +350,14 @@ class _UserResults extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
           child: Row(
             children: [
-              Text(l10n.search_userCountTitle, style: context.typo.subtitle),
-              const SizedBox(width: 6),
+              Text(l10n.search_userCountTitle, style: _sectionTitle(context)),
+              const SizedBox(width: 12),
               Text(
                 l10n.search_userCount(page?.totalCount ?? 0),
-                style: context.typo.label.copyWith(color: AppColors.gray),
+                style: _sectionCount(context),
               ),
             ],
           ),
@@ -337,7 +369,7 @@ class _UserResults extends ConsumerWidget {
           )
         else
           SizedBox(
-            height: 210,
+            height: 225,
             child: InfiniteScroll(
               axis: Axis.horizontal,
               canLoadMore: page != null && page.hasNext && !page.isLoadingMore,
@@ -347,9 +379,9 @@ class _UserResults extends ConsumerWidget {
                 child: ListView.separated(
                   key: const Key('search.users'),
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
                   itemCount: page?.items.length ?? 3,
-                  separatorBuilder: (_, _) => const SizedBox(width: 16),
+                  separatorBuilder: (_, _) => const SizedBox(width: 30),
                   itemBuilder: (context, index) {
                     final user = page?.items[index];
                     return GestureDetector(
@@ -360,17 +392,28 @@ class _UserResults extends ConsumerWidget {
                         width: 122,
                         child: Column(
                           children: [
-                            UserProfileImage(
-                              src: user?.profileImageUrl,
-                              size: 122,
-                              semanticLabel: l10n.user_profileImageAlt,
+                            // SearchUserProfile.css.ts: 122 원, 1px gray 테두리.
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: AppColors.gray),
+                              ),
+                              child: UserProfileImage(
+                                src: user?.profileImageUrl,
+                                size: 120,
+                                semanticLabel: l10n.user_profileImageAlt,
+                              ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
                             Text(
                               user?.nickname ?? 'nickname',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: context.typo.labelBold,
+                              textAlign: TextAlign.center,
+                              style: context.typo.label.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.black,
+                              ),
                             ),
                             if (user != null) ...[
                               const SizedBox(height: 6),

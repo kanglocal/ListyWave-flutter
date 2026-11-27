@@ -40,6 +40,8 @@ class _RecentFeedState extends ConsumerState<RecentFeed> {
       onLoadMore: () => ref.read(provider.notifier).loadMore(),
       onRetry: () => ref.invalidate(provider),
       header: CategoryChips(
+        wrap: true,
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
         selectedEngName: _category,
         onSelected: (category) => setState(() => _category = category.engName),
       ),
@@ -139,7 +141,7 @@ class _FeedScroll extends StatelessWidget {
             child: Column(
               children: [
                 for (var i = 0; i < 3; i++)
-                  FeedListCard(item: _skeletonItem, index: i),
+                  const FeedListCard(item: _skeletonItem),
               ],
             ),
           ),
@@ -152,7 +154,7 @@ class _FeedScroll extends StatelessWidget {
         SliverList.builder(
           itemCount: page.items.length,
           itemBuilder: (context, index) =>
-              FeedListCard(item: page.items[index], index: index),
+              FeedListCard(item: page.items[index]),
         ),
         if (page.isLoadingMore)
           const SliverToBoxAdapter(
@@ -180,6 +182,7 @@ class _FeedScroll extends StatelessWidget {
         slivers: [
           if (header != null) SliverToBoxAdapter(child: header),
           SliverPadding(
+            // web FeedLists.css.ts wrapperOuter: margin-top 12, padding 0 16 84.
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 84),
             sliver: SliverMainAxisGroup(slivers: body),
           ),
@@ -204,12 +207,11 @@ const _skeletonItem = ListRecommendationType(
   updateCount: 0,
 );
 
-/// web `FeedLists.tsx` FeedListItem.
+/// web `FeedLists.tsx` FeedListItem (3.0, `FeedLists.css.ts`): 흰 카드 radius 24, padding 30 24 14.
 class FeedListCard extends StatelessWidget {
-  const FeedListCard({super.key, required this.item, required this.index});
+  const FeedListCard({super.key, required this.item});
 
   final ListRecommendationType item;
-  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -221,8 +223,7 @@ class FeedListCard extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 35),
         padding: const EdgeInsets.fromLTRB(24, 30, 24, 14),
         decoration: BoxDecoration(
-          color:
-              exploreBackgroundColors[index % exploreBackgroundColors.length],
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
@@ -250,7 +251,11 @@ class FeedListCard extends StatelessWidget {
                               item.ownerNickname,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: context.typo.labelBold,
+                              style: context.typo.bodyRegular.copyWith(
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.48,
+                                color: AppColors.gray2,
+                              ),
                             ),
                           ),
                         ],
@@ -259,29 +264,46 @@ class FeedListCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(
-                  l10n.home_updateCount(item.updateCount),
-                  style: context.typo.labelSmall.copyWith(
-                    color: AppColors.gray,
+                // version: whiteblue pill, blue 14/400.
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteblue,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    l10n.home_updateCount(item.updateCount),
+                    style: context.typo.label.copyWith(color: AppColors.blue),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            Text(item.title, style: context.typo.header),
+            const SizedBox(height: 8),
+            Text(
+              item.title,
+              style: context.typo.header.copyWith(color: AppColors.black3),
+            ),
             if (item.description?.isNotEmpty ?? false) ...[
-              const SizedBox(height: 6),
+              const SizedBox(height: 13),
               Text(
                 item.description!,
-                style: context.typo.label.copyWith(color: AppColors.gray3),
+                style: context.typo.bodyRegular.copyWith(
+                  letterSpacing: 0,
+                  color: AppColors.black3,
+                ),
               ),
             ],
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
+            // simpleListWrapper: 위 1px line, padding 20 16, 아래 16.
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              decoration: BoxDecoration(
-                color: AppColors.white.withValues(alpha: 0.7),
-                borderRadius: BorderRadius.circular(16),
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              decoration: const BoxDecoration(
+                border: Border(top: BorderSide(color: AppColors.line)),
               ),
               child: SimpleRankList(
                 items: [

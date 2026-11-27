@@ -19,7 +19,8 @@ import '../helpers/read_api_mocks.dart';
 /// M2 의 조회 화면 → 비로그인일 때 보여야 하는 내용 하나.
 const _cases = <String, (Type, String)>{
   '/': (HomeScreen, '서울 브런치 카페 TOP5'),
-  '/intro': (IntroScreen, 'LISTY WAVE'),
+  // 첫 화면이 web Section1 (높이 842) 이라 'LISTY WAVE' (Section2) 는 화면 밖이다.
+  '/intro': (IntroScreen, "What's"),
   '/list/7': (ListDetailScreen, '카페 어니언 성수'),
   '/user/3/mylist': (UserProfileScreen, '서핑하는개발자님의 리스트'),
   '/user/3/collabolist': (UserProfileScreen, '서핑하는개발자님의 리스트'),

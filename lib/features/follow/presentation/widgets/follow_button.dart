@@ -67,25 +67,29 @@ class FollowButton extends ConsumerWidget {
         ? (profileStyle ? l10n.user_cancelFollow : l10n.common_following)
         : l10n.common_follow;
     final filled = !following;
-    return SizedBox(
-      height: 32,
-      child: TextButton(
-        key: Key('follow.$userId'),
-        onPressed: () => _onPressed(context, ref, following),
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          backgroundColor: filled ? AppColors.blue : AppColors.white,
-          foregroundColor: filled ? AppColors.white : AppColors.blue,
-          side: filled ? null : const BorderSide(color: AppColors.blue),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: Text(
-          label,
-          style: context.typo.labelBold.copyWith(
-            color: filled ? AppColors.white : AppColors.blue,
-          ),
+    // web `components/FollowButton/FollowButton.css.ts`: padding 4 6, radius 20, 12/400.
+    // 팔로우는 blue 바탕 흰 글자, 팔로잉은 흰 바탕 `bluegray8` 글자와 0.5px 테두리.
+    final foreground = filled ? AppColors.white : AppColors.bluegray8;
+    return TextButton(
+      key: Key('follow.$userId'),
+      onPressed: () => _onPressed(context, ref, following),
+      style: TextButton.styleFrom(
+        minimumSize: const Size(0, 0),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        backgroundColor: filled ? AppColors.blue : AppColors.white,
+        foregroundColor: foreground,
+        side: filled
+            ? null
+            : const BorderSide(color: AppColors.bluegray8, width: 0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      child: Text(
+        label,
+        style: context.typo.label.copyWith(
+          fontSize: 12,
+          letterSpacing: 0,
+          color: foreground,
         ),
       ),
     );

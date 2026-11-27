@@ -18,6 +18,7 @@ import '../../list_editor/application/list_draft.dart';
 import '../../list_editor/application/list_submitter.dart';
 import '../../user/application/user_providers.dart';
 import '../../user/data/user_api.dart';
+import '../../../core/widgets/listy_header.dart';
 
 enum _Step { nickname, category, title, items }
 
@@ -182,24 +183,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         if (!didPop) _back();
       },
       child: Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: AppBar(
-          backgroundColor: AppColors.white,
-          surfaceTintColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          leading: _step.index > _Step.category.index
-              ? IconButton(
-                  tooltip: l10n.common_back,
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  onPressed: _back,
-                )
-              : null,
+        appBar: ListyHeader(
+          showBack: _step.index > _Step.category.index,
+          onBack: _back,
           actions: [
             if (_step != _Step.nickname)
-              TextButton(
+              listyHeaderTextButton(
+                context,
                 key: const Key('onboarding.skip'),
+                label: l10n.onboarding_skip,
                 onPressed: _skip,
-                child: Text(l10n.onboarding_skip),
               ),
           ],
         ),

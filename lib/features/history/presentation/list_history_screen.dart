@@ -17,6 +17,8 @@ import '../../../core/widgets/toast.dart';
 import '../../list_detail/application/list_detail_providers.dart';
 import '../application/history_providers.dart';
 import 'widgets/history_graph.dart';
+import '../../../core/widgets/listy_header.dart';
+import '../../../core/widgets/segmented_control.dart';
 
 enum _HistoryTab { graph, version }
 
@@ -67,36 +69,26 @@ class _ListHistoryScreenState extends ConsumerState<ListHistoryScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.listDetail_history, style: context.typo.bodyBold),
+      appBar: ListyHeader(
+        title: l10n.listDetail_history,
         // web 은 뒤로가기를 누르면 리스트 상세로 간다.
-        leading: BackButton(
-          onPressed: () => context.canPop()
-              ? context.pop()
-              : context.go(AppRoutes.listDetail(widget.listId)),
-        ),
+        onBack: () => context.canPop()
+            ? context.pop()
+            : context.go(AppRoutes.listDetail(widget.listId)),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 40),
         children: [
-          SegmentedButton<_HistoryTab>(
-            showSelectedIcon: false,
+          SegmentedControl<_HistoryTab>(
+            expand: true,
+            trackColor: AppColors.white,
+            selectedColor: AppColors.lightblue,
             segments: [
-              ButtonSegment(
-                value: _HistoryTab.graph,
-                label: Text(l10n.history_graph),
-              ),
-              ButtonSegment(
-                value: _HistoryTab.version,
-                label: Text(l10n.history_version),
-              ),
+              Segment(value: _HistoryTab.graph, label: l10n.history_graph),
+              Segment(value: _HistoryTab.version, label: l10n.history_version),
             ],
-            selected: {_tab},
-            onSelectionChanged: (s) => setState(() => _tab = s.first),
+            selected: _tab,
+            onChanged: (t) => setState(() => _tab = t),
           ),
           const SizedBox(height: 16),
           if (list != null) Text(list.title, style: context.typo.subtitle),

@@ -17,17 +17,19 @@ class NewestCommentPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = comment;
+    // web `NewestCommentPreview.css.ts`.
+    final ink = context.typo.label.copyWith(color: AppColors.black3);
     if (c == null) {
       return Text(
         l10n.comment_empty,
-        style: context.typo.label.copyWith(color: AppColors.gray),
+        style: ink.copyWith(fontSize: 13, color: AppColors.gray3),
       );
     }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         UserProfileImage(src: c.userProfileImageUrl, size: 30),
-        const SizedBox(width: 10),
+        const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,26 +41,41 @@ class NewestCommentPreview extends StatelessWidget {
                       c.userNickname,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: context.typo.labelBold,
+                      style: ink.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 8),
                   Text(
                     timeDiff(c.createdDate, l10n),
-                    style: context.typo.labelSmall.copyWith(
-                      color: AppColors.gray,
+                    style: ink.copyWith(
+                      fontSize: 12,
+                      letterSpacing: -0.36,
+                      color: AppColors.gray3,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 2),
-              Text(c.content, style: context.typo.label),
-              const SizedBox(height: 4),
+              const SizedBox(height: 8),
+              Text(
+                c.content,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: ink.copyWith(
+                  fontSize: 13,
+                  height: 17 / 13,
+                  letterSpacing: -0.39,
+                ),
+              ),
+              const SizedBox(height: 8),
               Text(
                 c.totalReplyCount > 0
                     ? l10n.comment_replyCount(c.totalReplyCount)
                     : l10n.comment_reply,
-                style: context.typo.labelSmall.copyWith(color: AppColors.gray),
+                style: ink.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.13,
+                ),
               ),
             ],
           ),

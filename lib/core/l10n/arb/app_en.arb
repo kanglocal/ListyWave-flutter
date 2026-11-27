@@ -375,5 +375,12 @@
   "notFound_goHome": "Go to home",
   "common_goHome": "Go to home",
   "video_play": "Play video",
-  "profile_defaultImage": "Default image {index}"
+  "profile_defaultImage": "Default image {index}",
+  "common_goTop": "Go to top",
+  "common_shareLink": "Share link",
+  "login_own": "Create ",
+  "login_list": "your own",
+  "login_make": " list!",
+  "login_start": "Getting started",
+  "notice_emptyDescription": "Notices and news will show up here"
 }

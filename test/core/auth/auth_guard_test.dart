@@ -95,7 +95,7 @@ void main() {
     expect(find.byType(LoginSheet), findsOneWidget);
     expect(locationOf(router), '/notice');
 
-    await tester.tap(find.text('닫기'));
+    await tester.tap(find.byTooltip('닫기'));
     await tester.pumpAndSettle();
 
     expect(locationOf(router), '/notice');
@@ -132,7 +132,7 @@ void main() {
     expect(find.byType(LoginSheet), findsOneWidget);
     expect(find.byType(CollectionFoldersScreen), findsNothing);
 
-    await tester.tap(find.text('닫기'));
+    await tester.tap(find.byTooltip('닫기'));
     await tester.pumpAndSettle();
     expect(locationOf(router), '/');
   });

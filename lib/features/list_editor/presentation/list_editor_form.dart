@@ -9,6 +9,7 @@ import '../../../core/l10n/gen/app_localizations.dart';
 import '../../../core/models/categories_type.dart';
 import '../../../core/models/comment_type.dart';
 import '../../../core/theme/colors.dart';
+import '../../../core/theme/input_decorations.dart';
 import '../../../core/theme/typography.dart';
 import '../../../core/validation/validators.dart';
 import '../../../core/widgets/toast.dart';
@@ -17,6 +18,7 @@ import '../application/list_submitter.dart';
 import 'widgets/background_color_picker.dart';
 import 'widgets/collaborator_picker.dart';
 import 'widgets/editor_item_card.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// 리스트 생성/수정 3단계 화면 (web `list/create/_components/StepOne~Three.tsx`).
 /// 생성은 [listId] 가 null 이고, 수정은 [initial] 로 상세 내용을 채운다.
@@ -233,37 +235,29 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
         if (!didPop) setState(() => _step--);
       },
       child: Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: AppColors.white,
-          surfaceTintColor: Colors.transparent,
+        appBar: ListyHeader(
+          // web `StepOne.tsx` Header left="cancel". 첫 단계는 ×, 그 뒤는 ← 다.
           leading: IconButton(
             key: const Key('editor.back'),
             tooltip: _step == 0 ? l10n.common_cancel : l10n.common_back,
-            icon: Icon(_step == 0 ? Icons.close : Icons.arrow_back_ios_new),
+            icon: Icon(
+              _step == 0 ? Icons.close : Icons.arrow_back,
+              color: AppColors.black2,
+            ),
             onPressed: _back,
           ),
-          title: Text(
-            widget.isEdit
-                ? l10n.listEditor_editList
-                : l10n.listEditor_createList,
-            style: context.typo.bodyBold,
-          ),
+          title: widget.isEdit
+              ? l10n.listEditor_editList
+              : l10n.listEditor_createList,
           actions: [
-            TextButton(
+            listyHeaderTextButton(
+              context,
               key: const Key('editor.next'),
               onPressed: valid ? () => _next(l10n) : null,
-              child: _submitting
-                  ? const SizedBox.square(
-                      dimension: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : Text(
-                      _step == 2
-                          ? l10n.listEditor_publish
-                          : l10n.listEditor_next,
-                    ),
+              label: _step == 2
+                  ? l10n.listEditor_publish
+                  : l10n.listEditor_next,
+              busy: _submitting,
             ),
           ],
         ),
@@ -278,8 +272,9 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
     );
   }
 
+  /// web `Step.css.ts` label: Subtitle, 필드 사이 32, 라벨과 입력 사이 16.
   Widget _fieldLabel(String text, {bool required = false}) => Padding(
-    padding: const EdgeInsets.fromLTRB(0, 24, 0, 8),
+    padding: const EdgeInsets.fromLTRB(0, 32, 0, 16),
     child: Text.rich(
       TextSpan(
         text: text,
@@ -291,7 +286,7 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
             ),
         ],
       ),
-      style: context.typo.bodyBold,
+      style: context.typo.subtitle.copyWith(color: AppColors.black),
     ),
   );
 
@@ -300,12 +295,16 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
     final titleError = _title.text.isEmpty
         ? null
         : validateListTitle(l10n, _title.text);
+    // web section: padding 12 16. 설명은 Label bluegray8, line-height 20.
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 40),
       children: [
         Text(
           l10n.listEditor_intro,
-          style: context.typo.label.copyWith(color: AppColors.gray),
+          style: context.typo.label.copyWith(
+            height: 20 / 14,
+            color: AppColors.bluegray8,
+          ),
         ),
         _fieldLabel(l10n.listEditor_titleLabel, required: true),
         TextField(
@@ -315,7 +314,9 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
           inputFormatters: [
             LengthLimitingTextInputFormatter(ListRules.titleMax + 1),
           ],
-          decoration: InputDecoration(
+          style: listyInputText(context),
+          decoration: listyInputDecoration(
+            context,
             hintText: l10n.listEditor_titleHint,
             errorText: titleError,
             counterText: l10n.common_lengthCounter(
@@ -333,7 +334,9 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
           inputFormatters: [
             LengthLimitingTextInputFormatter(ListRules.descriptionMax + 1),
           ],
-          decoration: InputDecoration(
+          style: listyInputText(context),
+          decoration: listyInputDecoration(
+            context,
             hintText: l10n.listEditor_descriptionHint,
             errorText: validateListDescription(l10n, _description.text),
             counterText: l10n.common_lengthCounter(
@@ -349,16 +352,25 @@ class _ListEditorFormState extends ConsumerState<ListEditorForm> {
           children: [
             for (final c in categories ?? const <CategoryType>[])
               if (c.code != entireCategoryCode)
+                // web categoryChip: 흰 pill (padding 6 12, radius 20) Label bluegray8,
+                // 고르면 lightblue 바탕 blue.
                 ChoiceChip(
                   key: Key('editor.category.${c.engName}'),
                   label: Text(c.korName),
                   selected: _category == c.engName,
                   showCheckmark: false,
-                  selectedColor: AppColors.blue,
+                  side: BorderSide.none,
+                  shape: const StadiumBorder(),
+                  backgroundColor: AppColors.white,
+                  selectedColor: AppColors.lightblue,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  visualDensity: VisualDensity.compact,
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 12),
                   labelStyle: context.typo.label.copyWith(
                     color: _category == c.engName
-                        ? AppColors.white
-                        : AppColors.gray3,
+                        ? AppColors.blue
+                        : AppColors.bluegray8,
                   ),
                   onSelected: (_) => setState(() => _category = c.engName),
                 ),

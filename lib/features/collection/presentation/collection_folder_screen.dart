@@ -15,6 +15,7 @@ import '../../../core/widgets/no_data.dart';
 import '../../../core/widgets/simple_list.dart';
 import '../application/collection_providers.dart';
 import 'widgets/folder_actions.dart';
+import '../../../core/widgets/listy_header.dart';
 
 enum _FolderMenu { rename, delete }
 
@@ -31,7 +32,7 @@ class CollectionFolderScreen extends ConsumerWidget {
     final id = int.tryParse(folderId);
     if (id == null) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: const ListyHeader(),
         body: NoDataView(message: l10n.collection_noCollection),
       );
     }
@@ -96,12 +97,8 @@ class CollectionFolderScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(folderName, style: context.typo.bodyBold),
+      appBar: ListyHeader(
+        title: folderName,
         actions: [
           if (!isEntire)
             PopupMenuButton<_FolderMenu>(

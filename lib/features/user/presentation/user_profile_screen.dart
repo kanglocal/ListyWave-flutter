@@ -18,6 +18,7 @@ import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/app_network_image.dart';
 import '../../../core/widgets/category_chips.dart';
 import '../../../core/widgets/error_view.dart';
+import '../../../core/widgets/floating_buttons.dart';
 import '../../../core/widgets/infinite_scroll.dart';
 import '../../../core/widgets/no_data.dart';
 import '../../../core/widgets/user_profile_image.dart';
@@ -26,6 +27,8 @@ import '../../follow/presentation/widgets/follow_button.dart';
 import '../application/user_providers.dart';
 import '../data/user_api.dart';
 import 'widgets/list_card.dart';
+import '../../../core/widgets/listy_header.dart';
+import '../../../core/widgets/segmented_control.dart';
 
 /// web `/user/[userId]/mylist` 와 `/collabolist` 는 같은 화면의 탭이다.
 enum UserProfileTab { my, collabo }
@@ -58,7 +61,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     final userId = int.tryParse(widget.userId);
     if (userId == null) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: const ListyHeader(),
         body: NoDataView(
           message: l10n.error_loadFailed,
           buttonLabel: l10n.common_confirm,
@@ -71,7 +74,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       // web `Profile.tsx`: 탈퇴/없는 회원이면 서버 메시지를 보이고 홈으로 보낸다.
       final exception = AppException.from(error);
       return Scaffold(
-        appBar: AppBar(),
+        appBar: const ListyHeader(),
         body: Center(
           child: NoDataView(
             message: exception.status != null && exception.message.isNotEmpty
@@ -89,71 +92,101 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     final owner = user.value;
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      body: InfiniteScroll(
-        canLoadMore:
-            page != null &&
-            page.hasNext &&
-            !page.isLoadingMore &&
-            page.loadMoreError == null,
-        onLoadMore: () => ref.read(listsProvider.notifier).loadMore(),
-        child: RefreshIndicator(
-          onRefresh: () async {
-            ref
-              ..invalidate(userProvider(userId))
-              ..invalidate(listsProvider);
-            await ref.read(listsProvider.future);
-          },
-          child: CustomScrollView(
-            key: const Key('userProfile.scroll'),
-            slivers: [
-              SliverToBoxAdapter(
-                child: _ProfileHeader(userId: userId, user: owner),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          l10n.user_listTitle(owner?.nickname ?? ''),
-                          style: context.typo.subtitle,
-                        ),
+      body: FloatingButtonsScope(
+        sharePath: widget.tab == UserProfileTab.my
+            ? AppRoutes.myList(widget.userId)
+            : AppRoutes.collaboList(widget.userId),
+        child: InfiniteScroll(
+          canLoadMore:
+              page != null &&
+              page.hasNext &&
+              !page.isLoadingMore &&
+              page.loadMoreError == null,
+          onLoadMore: () => ref.read(listsProvider.notifier).loadMore(),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              ref
+                ..invalidate(userProvider(userId))
+                ..invalidate(listsProvider);
+              await ref.read(listsProvider.future);
+            },
+            child: CustomScrollView(
+              key: const Key('userProfile.scroll'),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _ProfileHeader(userId: userId, user: owner),
+                ),
+                SliverToBoxAdapter(
+                  // web Content.css.ts contentInfo: 높이 32, margin 16.5 16 6.5 19.
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(19, 16.5, 16, 6.5),
+                    child: SizedBox(
+                      height: 32,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              l10n.user_listTitle(owner?.nickname ?? ''),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.typo.subtitle.copyWith(
+                                color: AppColors.deepblue10,
+                              ),
+                            ),
+                          ),
+                          if (owner?.isOwner ?? false)
+                            // collectionButton: 흰 pill, padding 9 12, 사이 7, Label blue.
+                            Material(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () => context.push(AppRoutes.collection),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/ver3/bookmark.svg',
+                                        width: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          AppColors.blue,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 7),
+                                      Text(
+                                        l10n.user_collection,
+                                        style: context.typo.label.copyWith(
+                                          color: AppColors.blue,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
-                      if (owner?.isOwner ?? false)
-                        TextButton.icon(
-                          onPressed: () => context.push(AppRoutes.collection),
-                          icon: SvgPicture.asset(
-                            'assets/icons/ver3/bookmark.svg',
-                            width: 18,
-                            colorFilter: const ColorFilter.mode(
-                              AppColors.blue,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                          label: Text(
-                            l10n.user_collection,
-                            style: context.typo.labelBold.copyWith(
-                              color: AppColors.blue,
-                            ),
-                          ),
-                        ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: _TabToggle(userId: widget.userId, tab: widget.tab),
-              ),
-              SliverToBoxAdapter(
-                child: CategoryChips(
-                  selectedEngName: _category,
-                  onSelected: (c) => setState(() => _category = c.engName),
+                SliverToBoxAdapter(
+                  child: _TabToggle(userId: widget.userId, tab: widget.tab),
                 ),
-              ),
-              ..._listSlivers(context, lists, owner, userId),
-            ],
+                SliverToBoxAdapter(
+                  child: CategoryChips(
+                    selectedBackground: AppColors.lightblue,
+                    selectedEngName: _category,
+                    onSelected: (c) => setState(() => _category = c.engName),
+                  ),
+                ),
+                ..._listSlivers(context, lists, owner, userId),
+              ],
+            ),
           ),
         ),
       ),
@@ -212,7 +245,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     }
     return [
       SliverPadding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 84),
+        // web Content.css.ts cards: padding 1 21 10, 아래 84. MasonryGrid gap 16.
+        padding: const EdgeInsets.fromLTRB(21, 1, 21, 94),
         sliver: SliverMasonryGrid.count(
           crossAxisCount: 2,
           mainAxisSpacing: 16,
@@ -264,22 +298,27 @@ class _TabToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-      child: SegmentedButton<UserProfileTab>(
-        showSelectedIcon: false,
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      // web `SegmentedControl` 모양. 배경이 bggray 라 track 은 흰색으로 둔다.
+      child: SegmentedControl<UserProfileTab>(
+        expand: true,
+        trackColor: AppColors.white,
+        selectedColor: AppColors.lightblue,
         segments: [
-          ButtonSegment(
+          Segment(
+            key: const Key('userProfile.tab.my'),
             value: UserProfileTab.my,
-            label: Text(l10n.user_myList),
+            label: l10n.user_myList,
           ),
-          ButtonSegment(
+          Segment(
+            key: const Key('userProfile.tab.collabo'),
             value: UserProfileTab.collabo,
-            label: Text(l10n.user_collaboList),
+            label: l10n.user_collaboList,
           ),
         ],
-        selected: {tab},
-        onSelectionChanged: (selected) => context.replace(
-          selected.first == UserProfileTab.my
+        selected: tab,
+        onChanged: (selected) => context.replace(
+          selected == UserProfileTab.my
               ? AppRoutes.myList(userId)
               : AppRoutes.collaboList(userId),
         ),
@@ -305,122 +344,149 @@ class _ProfileHeader extends ConsumerWidget {
     final followerCount =
         (u?.followerCount ?? 0) +
         (followed == serverFollowed ? 0 : (followed ? 1 : -1));
-    final textStyle = context.typo.label.copyWith(color: AppColors.white);
-    return SizedBox(
-      height: 280,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          AppNetworkImage(
-            url: u?.backgroundImageUrl,
-            fallback: Image.asset(
-              'assets/images/fallback_backgroundImage.webp',
-              fit: BoxFit.cover,
-            ),
-          ),
-          const DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0x00000000), Color(0x99000000)],
+    // web `Profile.css.ts`: 높이 225, padding 21 20 19, 아래 모서리 45,
+    // 배경 이미지 위에 0→20% 검정 그라데이션. 글자는 black 이다.
+    final textStyle = context.typo.labelSmall.copyWith(color: AppColors.black);
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(45)),
+      child: SizedBox(
+        height: 225 + MediaQuery.paddingOf(context).top,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            ColoredBox(
+              color: AppColors.lightgray,
+              child: AppNetworkImage(
+                url: u?.backgroundImageUrl,
+                fallback: Image.asset(
+                  'assets/images/fallback_backgroundImage.webp',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SafeArea(
-            bottom: false,
-            child: Align(
-              alignment: Alignment.topRight,
-              child: u?.isOwner ?? false
-                  ? IconButton(
-                      tooltip: l10n.user_goToMypage,
-                      onPressed: () => context.push(AppRoutes.account),
-                      icon: SvgPicture.asset(
-                        'assets/icons/setting.svg',
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.white,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    )
-                  : (Navigator.of(context).canPop()
-                        ? const Align(
-                            alignment: Alignment.topLeft,
-                            child: BackButton(color: AppColors.white),
-                          )
-                        : const SizedBox.shrink()),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0, 0.68],
+                  colors: [Color(0x00000000), Color(0x33000000)],
+                ),
+              ),
             ),
-          ),
-          Positioned(
-            left: 16,
-            right: 16,
-            bottom: 20,
-            child: Skeletonizer(
-              enabled: u == null,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  UserProfileImage(
-                    src: u?.profileImageUrl,
-                    size: 50,
-                    semanticLabel: l10n.user_profileImageAlt,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          u?.nickname ?? 'nickname',
-                          style: context.typo.subtitle.copyWith(
-                            color: AppColors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  context.push(AppRoutes.followers('$userId')),
-                              child: Text(
-                                '${formatCount(followerCount)} ${l10n.user_follower}',
-                                style: textStyle,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            GestureDetector(
-                              onTap: () =>
-                                  context.push(AppRoutes.followings('$userId')),
-                              child: Text(
-                                '${formatCount(u?.followingCount ?? 0)} ${l10n.user_following}',
-                                style: textStyle,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          (u?.description?.isNotEmpty ?? false)
-                              ? u!.description!
-                              : l10n.user_noDescription,
-                          style: textStyle,
-                        ),
-                      ],
+            SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                child: Align(
+                  alignment: u?.isOwner ?? false
+                      ? Alignment.topRight
+                      : Alignment.topLeft,
+                  child: u?.isOwner ?? false
+                      ? IconButton(
+                          tooltip: l10n.user_goToMypage,
+                          onPressed: () => context.push(AppRoutes.account),
+                          icon: SvgPicture.asset('assets/icons/setting.svg'),
+                        )
+                      : (Navigator.of(context).canPop()
+                            ? const ListyBackButton()
+                            : const SizedBox.shrink()),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 20,
+              right: 20,
+              bottom: 19,
+              child: Skeletonizer(
+                enabled: u == null,
+                child: Row(
+                  children: [
+                    // profileImageWrapper: 48 흰 원, 안쪽 2px.
+                    Container(
+                      width: 48,
+                      height: 48,
+                      padding: const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
+                        color: AppColors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: UserProfileImage(
+                        src: u?.profileImageUrl,
+                        size: 44,
+                        semanticLabel: l10n.user_profileImageAlt,
+                      ),
                     ),
-                  ),
-                  if (u != null && !u.isOwner) ...[
-                    const SizedBox(width: 8),
-                    FollowButton(
-                      userId: userId,
-                      isFollowed: u.isFollowed,
-                      profileStyle: true,
+                    const SizedBox(width: 9),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Wrap(
+                            spacing: 10,
+                            runSpacing: 4,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Text(
+                                u?.nickname ?? 'nickname',
+                                style: context.typo.bodyBold.copyWith(
+                                  color: AppColors.black,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => context.push(
+                                  AppRoutes.followers('$userId'),
+                                ),
+                                child: Text(
+                                  '${formatCount(followerCount)} ${l10n.user_follower}',
+                                  style: textStyle,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => context.push(
+                                  AppRoutes.followings('$userId'),
+                                ),
+                                child: Text(
+                                  '${formatCount(u?.followingCount ?? 0)} ${l10n.user_following}',
+                                  style: textStyle,
+                                ),
+                              ),
+                              if (u != null && !u.isOwner)
+                                FollowButton(
+                                  userId: userId,
+                                  isFollowed: u.isFollowed,
+                                  profileStyle: true,
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          // description: 흰색 50% pill, padding 3 8.
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0x80FFFFFF),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              (u?.description?.isNotEmpty ?? false)
+                                  ? u!.description!
+                                  : l10n.user_noDescription,
+                              style: textStyle,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

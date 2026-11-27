@@ -9,6 +9,7 @@ import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/toast.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// web `/account/withdraw`: 안내, 동의 체크, 확인 modal 뒤 `DELETE /withdraw`.
 class WithdrawScreen extends ConsumerStatefulWidget {
@@ -53,13 +54,7 @@ class _WithdrawScreenState extends ConsumerState<WithdrawScreen> {
       l10n.account_withdrawCheck5,
     ];
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.account_withdrawal, style: context.typo.bodyBold),
-      ),
+      appBar: ListyHeader(title: l10n.account_withdrawal),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),

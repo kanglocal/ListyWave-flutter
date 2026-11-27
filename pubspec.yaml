@@ -67,6 +67,8 @@ flutter:
     - assets/icons/
     - assets/icons/new/
     - assets/icons/ver3/
+    # web 의 <pattern>/<image> SVG 는 flutter_svg 가 그리지 못해 rsvg-convert 로 1x/2x/3x PNG 로 바꿨다.
+    - assets/icons/png/
     - assets/images/
 
   # web public/fonts 의 woff2 를 fonttools 로 변환한 파일이다 (PLAN §5.6).

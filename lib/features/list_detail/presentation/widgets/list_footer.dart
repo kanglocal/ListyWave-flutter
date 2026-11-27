@@ -50,29 +50,46 @@ class ListFooter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    // web `Footer.css.ts` container: padding 10 0, 양 끝 정렬.
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       // 리액션은 왼쪽, 콜렉트·공유·더보기는 오른쪽 끝. 큰 글씨로 한 줄에 안 들어가면 줄을 바꾼다.
       child: Wrap(
         alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
         runSpacing: 8,
         children: [
-          Wrap(
-            children: [
-              for (final type in reactionTypes)
-                _ReactionButton(
-                  type: type,
-                  reaction: list.reactions
-                      .where((r) => r.reaction == type)
-                      .firstOrNull,
-                  showCount: isOwner,
-                  onTap: () => _react(context, ref, type),
-                ),
-            ],
+          // reactionContainer: bggray, padding 8 12, 사이 8, radius 16.
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.bggray,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final (i, type) in reactionTypes.indexed) ...[
+                  if (i > 0) const SizedBox(width: 8),
+                  _ReactionButton(
+                    type: type,
+                    reaction: list.reactions
+                        .where((r) => r.reaction == type)
+                        .firstOrNull,
+                    showCount: isOwner,
+                    onTap: () => _react(context, ref, type),
+                  ),
+                ],
+              ],
+            ),
           ),
-          Wrap(
+          // shareAndOthers: 사이 20.
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _CollectButton(list: list, listId: listId, isOwner: isOwner),
+              const SizedBox(width: 20),
               _FooterButton(
                 key: const Key('listFooter.share'),
                 icon: 'assets/icons/ver3/share.svg',
@@ -80,6 +97,7 @@ class ListFooter extends ConsumerWidget {
                 onTap: () =>
                     showShareSheet(context, list: list, listId: listId),
               ),
+              const SizedBox(width: 20),
               _FooterButton(
                 key: const Key('listFooter.more'),
                 icon: 'assets/icons/ver3/more.svg',
@@ -93,6 +111,21 @@ class ListFooter extends ConsumerWidget {
     );
   }
 }
+
+/// web Footer 의 글자: `<p>` 가 html 의 10px 을 그대로 받아 10/400 black 이다.
+TextStyle _footerText(BuildContext context) => context.typo.label.copyWith(
+  fontSize: 10,
+  letterSpacing: 0,
+  color: AppColors.black,
+);
+
+/// web 비활성 리액션의 `filter: grayscale(100%)`.
+const _grayscale = ColorFilter.matrix([
+  0.2126, 0.7152, 0.0722, 0, 0, //
+  0.2126, 0.7152, 0.0722, 0, 0, //
+  0.2126, 0.7152, 0.0722, 0, 0, //
+  0, 0, 0, 1, 0, //
+]);
 
 class _ReactionButton extends StatelessWidget {
   const _ReactionButton({
@@ -114,16 +147,17 @@ class _ReactionButton extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final (icon, label) = switch (type) {
       ReactionType.cool => (
-        'assets/icons/ver3/reaction_good.svg',
+        'assets/icons/png/reaction_good.png',
         l10n.reaction_cool,
       ),
       ReactionType.agree => (
-        'assets/icons/ver3/reaction_agree.svg',
+        'assets/icons/png/reaction_agree.png',
         l10n.reaction_agree,
       ),
-      _ => ('assets/icons/ver3/reaction_thanks.svg', l10n.reaction_thanks),
+      _ => ('assets/icons/png/reaction_thanks.png', l10n.reaction_thanks),
     };
     final reacted = reaction?.isReacted ?? false;
+    final image = Image.asset(icon, width: 24, height: 24);
     return Semantics(
       button: true,
       selected: reacted,
@@ -131,21 +165,19 @@ class _ReactionButton extends StatelessWidget {
         key: Key('reaction.${type.name}'),
         borderRadius: BorderRadius.circular(8),
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 40),
           child: Column(
             children: [
-              Opacity(
-                opacity: reacted ? 1 : 0.35,
-                child: SvgPicture.asset(icon, width: 24, height: 24),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                showCount ? '$label (${reaction?.count ?? 0})' : label,
-                style: context.typo.labelSmall.copyWith(
-                  color: reacted ? AppColors.blue : AppColors.gray,
-                ),
-              ),
+              reacted
+                  ? image
+                  : ColorFiltered(colorFilter: _grayscale, child: image),
+              const SizedBox(height: 6),
+              Text(label, style: _footerText(context)),
+              if (showCount) ...[
+                const SizedBox(height: 6),
+                Text('(${reaction?.count ?? 0})', style: _footerText(context)),
+              ],
             ],
           ),
         ),
@@ -154,6 +186,7 @@ class _ReactionButton extends StatelessWidget {
   }
 }
 
+/// web buttonComponent: 아이콘 24, 사이 6.
 class _FooterButton extends StatelessWidget {
   const _FooterButton({
     super.key,
@@ -171,18 +204,12 @@ class _FooterButton extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-        child: Column(
-          children: [
-            SvgPicture.asset(icon, width: 24, height: 24),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              style: context.typo.labelSmall.copyWith(color: AppColors.gray),
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          SvgPicture.asset(icon, width: 24, height: 24),
+          const SizedBox(height: 6),
+          Text(label, style: _footerText(context)),
+        ],
       ),
     );
   }

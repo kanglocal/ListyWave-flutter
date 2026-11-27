@@ -22,6 +22,20 @@ void main() {
     expect(t.labelSmall.letterSpacing, 0.6);
   });
 
+  test('3.0 구분선 토큰 line 은 web theme.css.ts 의 #DEE2EE 다', () {
+    expect(AppColors.line, const Color(0xFFDEE2EE));
+  });
+
+  test('테마는 web 3.0 처럼 bggray 바탕에 높이 50 헤더를 쓰고 M3 tint 를 끈다', () {
+    final theme = AppTheme.light();
+    expect(theme.scaffoldBackgroundColor, AppColors.bggray);
+    expect(theme.appBarTheme.toolbarHeight, 50);
+    expect(theme.appBarTheme.backgroundColor, AppColors.bggray);
+    expect(theme.appBarTheme.surfaceTintColor, Colors.transparent);
+    expect(theme.dialogTheme.backgroundColor, AppColors.white);
+    expect(theme.dialogTheme.surfaceTintColor, Colors.transparent);
+  });
+
   test('테마는 Pretendard 와 AppTypography extension 을 쓴다', () {
     final theme = AppTheme.light();
     expect(theme.textTheme.bodyMedium?.fontFamily, 'Pretendard');

@@ -13,6 +13,7 @@ import '../../../core/widgets/infinite_scroll.dart';
 import '../../../core/widgets/no_data.dart';
 import '../application/topics_providers.dart';
 import 'widgets/topic_request_sheet.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// web `/topics`: 요청 주제 목록 (infinite) + 주제 요청 bottom sheet.
 /// 주제를 누르면 그 제목과 카테고리로 리스트 만들기를 연다.
@@ -70,11 +71,7 @@ class TopicsScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-      ),
+      appBar: const ListyHeader(),
       body: body,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(

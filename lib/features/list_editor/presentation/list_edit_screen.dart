@@ -7,6 +7,7 @@ import '../../../core/widgets/no_data.dart';
 import '../../list_detail/application/list_detail_providers.dart';
 import '../application/list_draft.dart';
 import 'list_editor_form.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// `/list/:listId/edit`. 생성 화면을 상세 내용으로 채워 다시 쓴다 (web `list/[listId]/edit`).
 class ListEditScreen extends ConsumerWidget {
@@ -20,7 +21,7 @@ class ListEditScreen extends ConsumerWidget {
     final id = int.tryParse(listId);
     if (id == null) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: const ListyHeader(),
         body: NoDataView(message: l10n.listDetail_deletedOrPrivate),
       );
     }
@@ -36,7 +37,7 @@ class ListEditScreen extends ConsumerWidget {
       );
     }
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const ListyHeader(),
       body: detail.hasError
           ? ErrorView(
               error: detail.error!,

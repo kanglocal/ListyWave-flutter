@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/env.dart';
 import '../l10n/gen/app_localizations.dart';
 import '../network/app_exception.dart';
+import '../theme/colors.dart';
 import '../theme/typography.dart';
 import 'auth_controller.dart';
 import 'kakao_login_webview.dart';
@@ -81,41 +82,103 @@ class _LoginSheetState extends ConsumerState<LoginSheet> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final isDev = ref.watch(envProvider).isDev;
-    return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(
-            'assets/icons/large_logo.svg',
-            width: 207,
-            height: 35,
-            semanticsLabel: l10n.appTitle,
-          ),
-          const SizedBox(height: 16),
-          Text(l10n.login_title, style: context.typo.bodyRegular),
-          const SizedBox(height: 24),
-          if (_busy)
-            const CircularProgressIndicator()
-          else ...[
-            Semantics(
-              button: true,
-              label: l10n.login_kakao,
-              child: InkWell(
-                key: const Key('login.kakao'),
-                onTap: _loginWithKakao,
-                child: SvgPicture.asset('assets/icons/kakao_login.svg'),
+    final text = context.typo.body.copyWith(color: AppColors.black);
+    // web `LoginModal.tsx` 를 `Modal size="large"` (`Modal.css.ts`: 흰색, radius 30,
+    // padding 60 25, 최소 327) 에 담은 모양. web 은 바깥을 눌러 닫지만 앱은 × 도 둔다.
+    return Dialog(
+      backgroundColor: AppColors.white,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 327, maxWidth: 420),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 60),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    'assets/icons/png/large_logo.png',
+                    width: 207,
+                    height: 35,
+                    semanticLabel: l10n.appTitle,
+                  ),
+                  const SizedBox(height: 24),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(text: l10n.login_own),
+                        TextSpan(
+                          text: l10n.login_list,
+                          style: text.copyWith(color: AppColors.blue),
+                        ),
+                        TextSpan(text: l10n.login_make),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                    style: text,
+                  ),
+                  const SizedBox(height: 18),
+                  Text(
+                    l10n.login_start,
+                    style: context.typo.header.copyWith(color: AppColors.black),
+                  ),
+                  const SizedBox(height: 24),
+                  // buttonContainer: 위 1px line, padding-top 24, gap 10.
+                  const Divider(height: 1),
+                  const SizedBox(height: 24),
+                  if (_busy)
+                    const CircularProgressIndicator()
+                  else ...[
+                    Semantics(
+                      button: true,
+                      label: l10n.login_kakao,
+                      excludeSemantics: true,
+                      child: InkWell(
+                        key: const Key('login.kakao'),
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: _loginWithKakao,
+                        child: SvgPicture.asset(
+                          'assets/icons/kakao_login_narrow.svg',
+                        ),
+                      ),
+                    ),
+                    if (isDev) ...[
+                      const SizedBox(height: 10),
+                      // buttonForLocal: 높이 47, 1px line, whiteblue, radius 12.
+                      OutlinedButton(
+                        key: const Key('login.local'),
+                        onPressed: _loginLocal,
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size(183, 47),
+                          backgroundColor: AppColors.whiteblue,
+                          foregroundColor: AppColors.black,
+                          side: const BorderSide(color: AppColors.line),
+                          textStyle: context.typo.label,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(l10n.login_local),
+                      ),
+                    ],
+                  ],
+                ],
               ),
             ),
-            if (isDev)
-              TextButton(
-                key: const Key('login.local'),
-                onPressed: _loginLocal,
-                child: Text(l10n.login_local),
+            Positioned(
+              top: 12,
+              right: 12,
+              child: IconButton(
+                tooltip: l10n.common_close,
+                onPressed: _close,
+                icon: const Icon(Icons.close, color: AppColors.bluegray8),
               ),
+            ),
           ],
-        ],
+        ),
       ),
-      actions: [TextButton(onPressed: _close, child: Text(l10n.common_close))],
     );
   }
 }

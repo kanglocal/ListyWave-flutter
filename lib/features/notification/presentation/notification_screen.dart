@@ -14,6 +14,7 @@ import '../../../core/widgets/no_data.dart';
 import '../../../core/widgets/toast.dart';
 import '../../../core/widgets/user_profile_image.dart';
 import '../application/notification_providers.dart';
+import '../../../core/widgets/listy_header.dart';
 
 /// web `src/app/notification` (page + NotificationList). 로그인 사용자만 들어온다 (auth guard).
 class NotificationScreen extends ConsumerWidget {
@@ -56,15 +57,15 @@ class NotificationScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(l10n.notification_title, style: context.typo.bodyBold),
+      appBar: ListyHeader(
+        title: l10n.notification_title,
         actions: [
           TextButton(
             key: const Key('notification.readAll'),
+            // web `NotificationList.css.ts` readAllButton: LabelBold blue, 비활성 lightgray.
+            style: TextButton.styleFrom(
+              disabledForegroundColor: AppColors.lightgray,
+            ),
             // web 과 같이 모두 읽었거나 확인 중이면 누를 수 없다.
             onPressed: hasNew.value ?? false
                 ? () async {
@@ -138,19 +139,35 @@ class _NotificationList extends ConsumerWidget {
       if (path != null) await router.push(path);
     }
 
+    // web `NotificationList.css.ts`: 아래 24, 알림 사이 6, 지난 알림 앞 1px line (위아래 6).
     return ListView(
       key: const Key('notification.list'),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
       children: [
         if (firstOld != 0)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
-            child: Text(
-              l10n.notification_recent,
-              style: context.typo.labelBold.copyWith(color: AppColors.gray),
+          // label: BodyBold 흰 pill (padding 5 10), 오른쪽 정렬, margin 18 16.
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                l10n.notification_recent,
+                style: context.typo.bodyBold.copyWith(color: AppColors.blue),
+              ),
             ),
           ),
         for (final (index, n) in items.indexed) ...[
-          if (index == firstOld) const Divider(height: 24, thickness: 6),
+          if (index > 0) const SizedBox(height: 6),
+          if (index == firstOld)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 6),
+              child: Divider(height: 1),
+            ),
           NotificationTile(notification: n, onTap: () => open(n)),
         ],
       ],
@@ -209,45 +226,47 @@ class NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final n = notification;
-    final date = Text(
-      timeDiff(n.createdDate, l10n),
-      style: context.typo.labelSmall.copyWith(color: AppColors.gray),
+    // web date: LabelSmall lightgray, 메시지 뒤 4.
+    final dateStyle = context.typo.labelSmall.copyWith(
+      color: AppColors.lightgray,
     );
+    final date = timeDiff(n.createdDate, l10n);
     if (n.type == NotificationKind.notice) {
       final notice = n.notice;
       return InkWell(
         key: Key('notification.${n.id}'),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
+                  // infoLabel: 흰 pill padding 4 8, blue.
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 2,
+                      horizontal: 8,
+                      vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.lightblue,
-                      borderRadius: BorderRadius.circular(6),
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       notice?.categoryViewName ?? '',
-                      style: context.typo.labelSmall.copyWith(
-                        color: AppColors.blue,
-                      ),
+                      style: context.typo.label.copyWith(color: AppColors.blue),
                     ),
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       notice?.title ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: context.typo.labelBold,
+                      style: context.typo.labelBold.copyWith(
+                        color: AppColors.black,
+                      ),
                     ),
                   ),
                 ],
@@ -257,56 +276,64 @@ class NotificationTile extends StatelessWidget {
                 notice?.description ?? '',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: context.typo.label.copyWith(color: AppColors.gray3),
+                style: context.typo.label.copyWith(color: AppColors.black),
               ),
               const SizedBox(height: 4),
-              date,
+              Text(date, style: dateStyle),
             ],
           ),
         ),
       );
     }
-    final color = n.checked ? AppColors.gray : AppColors.black;
+    // web message: 14/500, line 20, +0.2. 읽은 알림은 lightgray.
+    final color = n.checked ? AppColors.lightgray : AppColors.black;
+    final message = context.typo.label.copyWith(
+      fontWeight: FontWeight.w500,
+      height: 20 / 14,
+      letterSpacing: 0.2,
+      color: color,
+    );
     return InkWell(
       key: Key('notification.${n.id}'),
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
               onTap: onTap == null
                   ? null
                   : () => context.push(AppRoutes.myList('${n.sendUser.id}')),
-              child: UserProfileImage(
-                src: n.sendUser.profileImageUrl,
-                size: 40,
-                semanticLabel: l10n.notification_profileImageAlt,
+              // ProfileImage.css.ts: 45 원, 흰 바탕, 1px blue 테두리.
+              child: Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.blue),
+                ),
+                child: UserProfileImage(
+                  src: n.sendUser.profileImageUrl,
+                  size: 43,
+                  semanticLabel: l10n.notification_profileImageAlt,
+                ),
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text.rich(
+              child: Text.rich(
+                TextSpan(
+                  children: [
                     TextSpan(
-                      children: [
-                        TextSpan(
-                          text: n.sendUser.nickname,
-                          style: context.typo.labelBold.copyWith(color: color),
-                        ),
-                        TextSpan(
-                          text: notificationMessage(l10n, n),
-                          style: context.typo.label.copyWith(color: color),
-                        ),
-                      ],
+                      text: n.sendUser.nickname,
+                      style: message.copyWith(fontWeight: FontWeight.w600),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  date,
-                ],
+                    TextSpan(text: notificationMessage(l10n, n)),
+                    TextSpan(text: '  $date', style: dateStyle),
+                  ],
+                ),
+                style: message,
               ),
             ),
             if (!n.checked)
@@ -314,7 +341,7 @@ class NotificationTile extends StatelessWidget {
                 key: Key('notification.${n.id}.unread'),
                 width: 6,
                 height: 6,
-                margin: const EdgeInsets.fromLTRB(8, 6, 0, 0),
+                margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                 decoration: const BoxDecoration(
                   color: AppColors.blue,
                   shape: BoxShape.circle,

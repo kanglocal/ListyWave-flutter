@@ -9,6 +9,7 @@ import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/no_data.dart';
 import '../../../../core/widgets/user_profile_image.dart';
+import '../../../../core/widgets/listy_header.dart';
 
 /// web `user/[userId]/(follow)/_components/UserList.tsx` + followers/followings page.
 /// [trailingBuilder] 는 사용자마다 오른쪽에 붙일 버튼 (팔로워 삭제, 팔로우) 이다.
@@ -64,15 +65,12 @@ class FollowUserListScaffold extends StatelessWidget {
       ),
     };
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(title, style: context.typo.bodyBold),
+      appBar: ListyHeader(
+        title: title,
         // web 은 뒤로가기를 누르면 그 사용자의 마이리스트로 간다.
-        leading: BackButton(
-          onPressed: () => context.canPop()
-              ? context.pop()
-              : context.go(AppRoutes.myList(userId)),
-        ),
+        onBack: () => context.canPop()
+            ? context.pop()
+            : context.go(AppRoutes.myList(userId)),
       ),
       body: body,
     );

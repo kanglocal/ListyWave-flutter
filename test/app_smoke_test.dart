@@ -33,7 +33,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(LoginSheet), findsOneWidget);
 
-    await tester.tap(find.text('닫기'));
+    await tester.tap(find.byTooltip('닫기'));
     await tester.pumpAndSettle();
     expect(find.byType(LoginSheet), findsNothing);
     expect(find.byType(HomeScreen), findsOneWidget);

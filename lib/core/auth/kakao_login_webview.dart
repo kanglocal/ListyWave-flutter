@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../app/env.dart';
 import '../l10n/gen/app_localizations.dart';
+import '../widgets/listy_header.dart';
 
 enum LoginNavigationDecision { navigate, prevent }
 
@@ -94,8 +95,8 @@ class _KakaoLoginWebViewState extends ConsumerState<KakaoLoginWebView> {
   Widget build(BuildContext context) {
     final apiBaseUrl = ref.watch(envProvider).apiBaseUrl;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).login_kakao),
+      appBar: ListyHeader(
+        title: AppLocalizations.of(context).login_kakao,
         leading: IconButton(
           key: const Key('kakaoLogin.close'),
           icon: const Icon(Icons.close),

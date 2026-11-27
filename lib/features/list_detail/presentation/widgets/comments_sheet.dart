@@ -420,6 +420,10 @@ class _Composer extends StatelessWidget {
                         'assets/icons/cancel_button.svg',
                         width: 18,
                         height: 18,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.lightgray,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ],
