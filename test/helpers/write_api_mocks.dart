@@ -83,8 +83,12 @@ class FakeShareService extends ShareService {
   Future<void> shareKakao(Map<String, String> templateArgs) async =>
       kakaoArgs.add(templateArgs);
 
+  /// 저장을 시도한 횟수 (실패 포함). 캡처는 실제 비동기 작업이라 테스트가 이 값으로 끝을 기다린다.
+  int saveAttempts = 0;
+
   @override
   Future<void> saveImageToGallery(List<int> png, {required String name}) async {
+    saveAttempts++;
     if (saveError case final error?) throw error;
     savedImages.add(name);
   }

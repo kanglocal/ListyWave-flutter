@@ -383,11 +383,22 @@ void main() {
         await settle(tester);
         await tester.tap(find.byKey(const Key('etc.saveImage')));
         await settle(tester);
+        // web 저장 이미지처럼 폭 390 캡처에 로고 옆 작성자·저장 날짜와 사이트 주소가 있다.
+        expect(
+          tester.getSize(find.byKey(const Key('saveImage.capture'))).width,
+          390,
+        );
+        expect(find.textContaining('님의 리스트 · '), findsOneWidget);
+        final attempts = share.saveAttempts;
         await tester.runAsync(() async {
           await tester.tap(find.byKey(const Key('saveImage.save')));
-          // RepaintBoundary.toImage 는 실제 비동기 작업이다.
-          await Future<void>.delayed(const Duration(milliseconds: 200));
+          // 사진 precache 와 RepaintBoundary.toImage 는 실제 비동기 작업이다. 저장 호출이 올 때까지
+          // 기다린다 (최대 10초).
+          for (var i = 0; i < 200 && share.saveAttempts == attempts; i++) {
+            await Future<void>.delayed(const Duration(milliseconds: 50));
+          }
         });
+        expect(share.saveAttempts, attempts + 1);
         await settle(tester);
       }
 

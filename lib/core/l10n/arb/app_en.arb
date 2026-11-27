@@ -436,5 +436,17 @@
   "login_list": "your own",
   "login_make": " list!",
   "login_start": "Getting started",
-  "notice_emptyDescription": "Notices and news will show up here"
+  "notice_emptyDescription": "Notices and news will show up here",
+  "saveImage_brandMeta": "{nickname}'s list · saved {date}",
+  "@saveImage_brandMeta": {
+    "description": "web SaveImageModal.tsx 하단 brandMeta (작성자 · 저장 날짜)",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

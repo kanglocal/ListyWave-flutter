@@ -1908,5 +1908,17 @@
   "notice_emptyDescription": "공지사항과 소식이 올라오면 여기에 보여요",
   "@notice_emptyDescription": {
     "description": "web NoticeList.tsx 빈 상태 설명"
+  },
+  "saveImage_brandMeta": "{nickname}님의 리스트 · {date} 저장",
+  "@saveImage_brandMeta": {
+    "description": "web SaveImageModal.tsx 하단 brandMeta (작성자 · 저장 날짜)",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }
