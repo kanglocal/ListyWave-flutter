@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RequestedTopicType {
 
- int get id; String get categoryEngName; String get categoryKorName; String get categoryCode; String get title; String get description; String get createdDate; int get ownerId; String get ownerNickname; bool get isAnonymous; bool get isExposed;
+ int get id; String get categoryEngName; String get categoryKorName; String get title; String get description; int get ownerId; String get ownerNickname; bool get isAnonymous;
 /// Create a copy of RequestedTopicType
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $RequestedTopicTypeCopyWith<RequestedTopicType> get copyWith => _$RequestedTopic
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestedTopicType&&(identical(other.id, id) || other.id == id)&&(identical(other.categoryEngName, categoryEngName) || other.categoryEngName == categoryEngName)&&(identical(other.categoryKorName, categoryKorName) || other.categoryKorName == categoryKorName)&&(identical(other.categoryCode, categoryCode) || other.categoryCode == categoryCode)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdDate, createdDate) || other.createdDate == createdDate)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.ownerNickname, ownerNickname) || other.ownerNickname == ownerNickname)&&(identical(other.isAnonymous, isAnonymous) || other.isAnonymous == isAnonymous)&&(identical(other.isExposed, isExposed) || other.isExposed == isExposed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestedTopicType&&(identical(other.id, id) || other.id == id)&&(identical(other.categoryEngName, categoryEngName) || other.categoryEngName == categoryEngName)&&(identical(other.categoryKorName, categoryKorName) || other.categoryKorName == categoryKorName)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.ownerNickname, ownerNickname) || other.ownerNickname == ownerNickname)&&(identical(other.isAnonymous, isAnonymous) || other.isAnonymous == isAnonymous));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,categoryEngName,categoryKorName,categoryCode,title,description,createdDate,ownerId,ownerNickname,isAnonymous,isExposed);
+int get hashCode => Object.hash(runtimeType,id,categoryEngName,categoryKorName,title,description,ownerId,ownerNickname,isAnonymous);
 
 @override
 String toString() {
-  return 'RequestedTopicType(id: $id, categoryEngName: $categoryEngName, categoryKorName: $categoryKorName, categoryCode: $categoryCode, title: $title, description: $description, createdDate: $createdDate, ownerId: $ownerId, ownerNickname: $ownerNickname, isAnonymous: $isAnonymous, isExposed: $isExposed)';
+  return 'RequestedTopicType(id: $id, categoryEngName: $categoryEngName, categoryKorName: $categoryKorName, title: $title, description: $description, ownerId: $ownerId, ownerNickname: $ownerNickname, isAnonymous: $isAnonymous)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $RequestedTopicTypeCopyWith<$Res>  {
   factory $RequestedTopicTypeCopyWith(RequestedTopicType value, $Res Function(RequestedTopicType) _then) = _$RequestedTopicTypeCopyWithImpl;
 @useResult
 $Res call({
- int id, String categoryEngName, String categoryKorName, String categoryCode, String title, String description, String createdDate, int ownerId, String ownerNickname, bool isAnonymous, bool isExposed
+ int id, String categoryEngName, String categoryKorName, String title, String description, int ownerId, String ownerNickname, bool isAnonymous
 });
 
 
@@ -65,19 +65,16 @@ class _$RequestedTopicTypeCopyWithImpl<$Res>
 
 /// Create a copy of RequestedTopicType
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? categoryEngName = null,Object? categoryKorName = null,Object? categoryCode = null,Object? title = null,Object? description = null,Object? createdDate = null,Object? ownerId = null,Object? ownerNickname = null,Object? isAnonymous = null,Object? isExposed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? categoryEngName = null,Object? categoryKorName = null,Object? title = null,Object? description = null,Object? ownerId = null,Object? ownerNickname = null,Object? isAnonymous = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,categoryEngName: null == categoryEngName ? _self.categoryEngName : categoryEngName // ignore: cast_nullable_to_non_nullable
 as String,categoryKorName: null == categoryKorName ? _self.categoryKorName : categoryKorName // ignore: cast_nullable_to_non_nullable
-as String,categoryCode: null == categoryCode ? _self.categoryCode : categoryCode // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,createdDate: null == createdDate ? _self.createdDate : createdDate // ignore: cast_nullable_to_non_nullable
 as String,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as int,ownerNickname: null == ownerNickname ? _self.ownerNickname : ownerNickname // ignore: cast_nullable_to_non_nullable
 as String,isAnonymous: null == isAnonymous ? _self.isAnonymous : isAnonymous // ignore: cast_nullable_to_non_nullable
-as bool,isExposed: null == isExposed ? _self.isExposed : isExposed // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -163,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String categoryEngName,  String categoryKorName,  String categoryCode,  String title,  String description,  String createdDate,  int ownerId,  String ownerNickname,  bool isAnonymous,  bool isExposed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String categoryEngName,  String categoryKorName,  String title,  String description,  int ownerId,  String ownerNickname,  bool isAnonymous)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RequestedTopicType() when $default != null:
-return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.categoryCode,_that.title,_that.description,_that.createdDate,_that.ownerId,_that.ownerNickname,_that.isAnonymous,_that.isExposed);case _:
+return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.title,_that.description,_that.ownerId,_that.ownerNickname,_that.isAnonymous);case _:
   return orElse();
 
 }
@@ -184,10 +181,10 @@ return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.categ
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String categoryEngName,  String categoryKorName,  String categoryCode,  String title,  String description,  String createdDate,  int ownerId,  String ownerNickname,  bool isAnonymous,  bool isExposed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String categoryEngName,  String categoryKorName,  String title,  String description,  int ownerId,  String ownerNickname,  bool isAnonymous)  $default,) {final _that = this;
 switch (_that) {
 case _RequestedTopicType():
-return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.categoryCode,_that.title,_that.description,_that.createdDate,_that.ownerId,_that.ownerNickname,_that.isAnonymous,_that.isExposed);case _:
+return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.title,_that.description,_that.ownerId,_that.ownerNickname,_that.isAnonymous);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +201,10 @@ return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.categ
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String categoryEngName,  String categoryKorName,  String categoryCode,  String title,  String description,  String createdDate,  int ownerId,  String ownerNickname,  bool isAnonymous,  bool isExposed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String categoryEngName,  String categoryKorName,  String title,  String description,  int ownerId,  String ownerNickname,  bool isAnonymous)?  $default,) {final _that = this;
 switch (_that) {
 case _RequestedTopicType() when $default != null:
-return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.categoryCode,_that.title,_that.description,_that.createdDate,_that.ownerId,_that.ownerNickname,_that.isAnonymous,_that.isExposed);case _:
+return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.title,_that.description,_that.ownerId,_that.ownerNickname,_that.isAnonymous);case _:
   return null;
 
 }
@@ -219,20 +216,17 @@ return $default(_that.id,_that.categoryEngName,_that.categoryKorName,_that.categ
 @JsonSerializable()
 
 class _RequestedTopicType implements RequestedTopicType {
-  const _RequestedTopicType({required this.id, required this.categoryEngName, required this.categoryKorName, required this.categoryCode, required this.title, required this.description, required this.createdDate, required this.ownerId, required this.ownerNickname, required this.isAnonymous, required this.isExposed});
+  const _RequestedTopicType({required this.id, required this.categoryEngName, required this.categoryKorName, required this.title, required this.description, required this.ownerId, required this.ownerNickname, required this.isAnonymous});
   factory _RequestedTopicType.fromJson(Map<String, dynamic> json) => _$RequestedTopicTypeFromJson(json);
 
 @override final  int id;
 @override final  String categoryEngName;
 @override final  String categoryKorName;
-@override final  String categoryCode;
 @override final  String title;
 @override final  String description;
-@override final  String createdDate;
 @override final  int ownerId;
 @override final  String ownerNickname;
 @override final  bool isAnonymous;
-@override final  bool isExposed;
 
 /// Create a copy of RequestedTopicType
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestedTopicType&&(identical(other.id, id) || other.id == id)&&(identical(other.categoryEngName, categoryEngName) || other.categoryEngName == categoryEngName)&&(identical(other.categoryKorName, categoryKorName) || other.categoryKorName == categoryKorName)&&(identical(other.categoryCode, categoryCode) || other.categoryCode == categoryCode)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdDate, createdDate) || other.createdDate == createdDate)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.ownerNickname, ownerNickname) || other.ownerNickname == ownerNickname)&&(identical(other.isAnonymous, isAnonymous) || other.isAnonymous == isAnonymous)&&(identical(other.isExposed, isExposed) || other.isExposed == isExposed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestedTopicType&&(identical(other.id, id) || other.id == id)&&(identical(other.categoryEngName, categoryEngName) || other.categoryEngName == categoryEngName)&&(identical(other.categoryKorName, categoryKorName) || other.categoryKorName == categoryKorName)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.ownerNickname, ownerNickname) || other.ownerNickname == ownerNickname)&&(identical(other.isAnonymous, isAnonymous) || other.isAnonymous == isAnonymous));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,categoryEngName,categoryKorName,categoryCode,title,description,createdDate,ownerId,ownerNickname,isAnonymous,isExposed);
+int get hashCode => Object.hash(runtimeType,id,categoryEngName,categoryKorName,title,description,ownerId,ownerNickname,isAnonymous);
 
 @override
 String toString() {
-  return 'RequestedTopicType(id: $id, categoryEngName: $categoryEngName, categoryKorName: $categoryKorName, categoryCode: $categoryCode, title: $title, description: $description, createdDate: $createdDate, ownerId: $ownerId, ownerNickname: $ownerNickname, isAnonymous: $isAnonymous, isExposed: $isExposed)';
+  return 'RequestedTopicType(id: $id, categoryEngName: $categoryEngName, categoryKorName: $categoryKorName, title: $title, description: $description, ownerId: $ownerId, ownerNickname: $ownerNickname, isAnonymous: $isAnonymous)';
 }
 
 
@@ -267,7 +261,7 @@ abstract mixin class _$RequestedTopicTypeCopyWith<$Res> implements $RequestedTop
   factory _$RequestedTopicTypeCopyWith(_RequestedTopicType value, $Res Function(_RequestedTopicType) _then) = __$RequestedTopicTypeCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String categoryEngName, String categoryKorName, String categoryCode, String title, String description, String createdDate, int ownerId, String ownerNickname, bool isAnonymous, bool isExposed
+ int id, String categoryEngName, String categoryKorName, String title, String description, int ownerId, String ownerNickname, bool isAnonymous
 });
 
 
@@ -284,19 +278,16 @@ class __$RequestedTopicTypeCopyWithImpl<$Res>
 
 /// Create a copy of RequestedTopicType
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? categoryEngName = null,Object? categoryKorName = null,Object? categoryCode = null,Object? title = null,Object? description = null,Object? createdDate = null,Object? ownerId = null,Object? ownerNickname = null,Object? isAnonymous = null,Object? isExposed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? categoryEngName = null,Object? categoryKorName = null,Object? title = null,Object? description = null,Object? ownerId = null,Object? ownerNickname = null,Object? isAnonymous = null,}) {
   return _then(_RequestedTopicType(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,categoryEngName: null == categoryEngName ? _self.categoryEngName : categoryEngName // ignore: cast_nullable_to_non_nullable
 as String,categoryKorName: null == categoryKorName ? _self.categoryKorName : categoryKorName // ignore: cast_nullable_to_non_nullable
-as String,categoryCode: null == categoryCode ? _self.categoryCode : categoryCode // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,createdDate: null == createdDate ? _self.createdDate : createdDate // ignore: cast_nullable_to_non_nullable
 as String,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as int,ownerNickname: null == ownerNickname ? _self.ownerNickname : ownerNickname // ignore: cast_nullable_to_non_nullable
 as String,isAnonymous: null == isAnonymous ? _self.isAnonymous : isAnonymous // ignore: cast_nullable_to_non_nullable
-as bool,isExposed: null == isExposed ? _self.isExposed : isExposed // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -308,7 +299,7 @@ as bool,
 /// @nodoc
 mixin _$TopicsResponseType {
 
- bool get hasNext; int get totalCount; int? get cursorId; List<RequestedTopicType> get topics;
+ int? get cursorId; bool get hasNext; List<RequestedTopicType> get topics;
 /// Create a copy of TopicsResponseType
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -321,16 +312,16 @@ $TopicsResponseTypeCopyWith<TopicsResponseType> get copyWith => _$TopicsResponse
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TopicsResponseType&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&(identical(other.totalCount, totalCount) || other.totalCount == totalCount)&&(identical(other.cursorId, cursorId) || other.cursorId == cursorId)&&const DeepCollectionEquality().equals(other.topics, topics));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TopicsResponseType&&(identical(other.cursorId, cursorId) || other.cursorId == cursorId)&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&const DeepCollectionEquality().equals(other.topics, topics));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hasNext,totalCount,cursorId,const DeepCollectionEquality().hash(topics));
+int get hashCode => Object.hash(runtimeType,cursorId,hasNext,const DeepCollectionEquality().hash(topics));
 
 @override
 String toString() {
-  return 'TopicsResponseType(hasNext: $hasNext, totalCount: $totalCount, cursorId: $cursorId, topics: $topics)';
+  return 'TopicsResponseType(cursorId: $cursorId, hasNext: $hasNext, topics: $topics)';
 }
 
 
@@ -341,7 +332,7 @@ abstract mixin class $TopicsResponseTypeCopyWith<$Res>  {
   factory $TopicsResponseTypeCopyWith(TopicsResponseType value, $Res Function(TopicsResponseType) _then) = _$TopicsResponseTypeCopyWithImpl;
 @useResult
 $Res call({
- bool hasNext, int totalCount, int? cursorId, List<RequestedTopicType> topics
+ int? cursorId, bool hasNext, List<RequestedTopicType> topics
 });
 
 
@@ -358,12 +349,11 @@ class _$TopicsResponseTypeCopyWithImpl<$Res>
 
 /// Create a copy of TopicsResponseType
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? hasNext = null,Object? totalCount = null,Object? cursorId = freezed,Object? topics = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? cursorId = freezed,Object? hasNext = null,Object? topics = null,}) {
   return _then(_self.copyWith(
-hasNext: null == hasNext ? _self.hasNext : hasNext // ignore: cast_nullable_to_non_nullable
-as bool,totalCount: null == totalCount ? _self.totalCount : totalCount // ignore: cast_nullable_to_non_nullable
-as int,cursorId: freezed == cursorId ? _self.cursorId : cursorId // ignore: cast_nullable_to_non_nullable
-as int?,topics: null == topics ? _self.topics : topics // ignore: cast_nullable_to_non_nullable
+cursorId: freezed == cursorId ? _self.cursorId : cursorId // ignore: cast_nullable_to_non_nullable
+as int?,hasNext: null == hasNext ? _self.hasNext : hasNext // ignore: cast_nullable_to_non_nullable
+as bool,topics: null == topics ? _self.topics : topics // ignore: cast_nullable_to_non_nullable
 as List<RequestedTopicType>,
   ));
 }
@@ -449,10 +439,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool hasNext,  int totalCount,  int? cursorId,  List<RequestedTopicType> topics)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? cursorId,  bool hasNext,  List<RequestedTopicType> topics)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TopicsResponseType() when $default != null:
-return $default(_that.hasNext,_that.totalCount,_that.cursorId,_that.topics);case _:
+return $default(_that.cursorId,_that.hasNext,_that.topics);case _:
   return orElse();
 
 }
@@ -470,10 +460,10 @@ return $default(_that.hasNext,_that.totalCount,_that.cursorId,_that.topics);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool hasNext,  int totalCount,  int? cursorId,  List<RequestedTopicType> topics)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? cursorId,  bool hasNext,  List<RequestedTopicType> topics)  $default,) {final _that = this;
 switch (_that) {
 case _TopicsResponseType():
-return $default(_that.hasNext,_that.totalCount,_that.cursorId,_that.topics);case _:
+return $default(_that.cursorId,_that.hasNext,_that.topics);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -490,10 +480,10 @@ return $default(_that.hasNext,_that.totalCount,_that.cursorId,_that.topics);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool hasNext,  int totalCount,  int? cursorId,  List<RequestedTopicType> topics)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? cursorId,  bool hasNext,  List<RequestedTopicType> topics)?  $default,) {final _that = this;
 switch (_that) {
 case _TopicsResponseType() when $default != null:
-return $default(_that.hasNext,_that.totalCount,_that.cursorId,_that.topics);case _:
+return $default(_that.cursorId,_that.hasNext,_that.topics);case _:
   return null;
 
 }
@@ -505,12 +495,11 @@ return $default(_that.hasNext,_that.totalCount,_that.cursorId,_that.topics);case
 @JsonSerializable()
 
 class _TopicsResponseType implements TopicsResponseType {
-  const _TopicsResponseType({required this.hasNext, required this.totalCount, required this.cursorId, required final  List<RequestedTopicType> topics}): _topics = topics;
+  const _TopicsResponseType({required this.cursorId, required this.hasNext, required final  List<RequestedTopicType> topics}): _topics = topics;
   factory _TopicsResponseType.fromJson(Map<String, dynamic> json) => _$TopicsResponseTypeFromJson(json);
 
-@override final  bool hasNext;
-@override final  int totalCount;
 @override final  int? cursorId;
+@override final  bool hasNext;
  final  List<RequestedTopicType> _topics;
 @override List<RequestedTopicType> get topics {
   if (_topics is EqualUnmodifiableListView) return _topics;
@@ -532,16 +521,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TopicsResponseType&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&(identical(other.totalCount, totalCount) || other.totalCount == totalCount)&&(identical(other.cursorId, cursorId) || other.cursorId == cursorId)&&const DeepCollectionEquality().equals(other._topics, _topics));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TopicsResponseType&&(identical(other.cursorId, cursorId) || other.cursorId == cursorId)&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&const DeepCollectionEquality().equals(other._topics, _topics));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hasNext,totalCount,cursorId,const DeepCollectionEquality().hash(_topics));
+int get hashCode => Object.hash(runtimeType,cursorId,hasNext,const DeepCollectionEquality().hash(_topics));
 
 @override
 String toString() {
-  return 'TopicsResponseType(hasNext: $hasNext, totalCount: $totalCount, cursorId: $cursorId, topics: $topics)';
+  return 'TopicsResponseType(cursorId: $cursorId, hasNext: $hasNext, topics: $topics)';
 }
 
 
@@ -552,7 +541,7 @@ abstract mixin class _$TopicsResponseTypeCopyWith<$Res> implements $TopicsRespon
   factory _$TopicsResponseTypeCopyWith(_TopicsResponseType value, $Res Function(_TopicsResponseType) _then) = __$TopicsResponseTypeCopyWithImpl;
 @override @useResult
 $Res call({
- bool hasNext, int totalCount, int? cursorId, List<RequestedTopicType> topics
+ int? cursorId, bool hasNext, List<RequestedTopicType> topics
 });
 
 
@@ -569,12 +558,11 @@ class __$TopicsResponseTypeCopyWithImpl<$Res>
 
 /// Create a copy of TopicsResponseType
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? hasNext = null,Object? totalCount = null,Object? cursorId = freezed,Object? topics = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? cursorId = freezed,Object? hasNext = null,Object? topics = null,}) {
   return _then(_TopicsResponseType(
-hasNext: null == hasNext ? _self.hasNext : hasNext // ignore: cast_nullable_to_non_nullable
-as bool,totalCount: null == totalCount ? _self.totalCount : totalCount // ignore: cast_nullable_to_non_nullable
-as int,cursorId: freezed == cursorId ? _self.cursorId : cursorId // ignore: cast_nullable_to_non_nullable
-as int?,topics: null == topics ? _self._topics : topics // ignore: cast_nullable_to_non_nullable
+cursorId: freezed == cursorId ? _self.cursorId : cursorId // ignore: cast_nullable_to_non_nullable
+as int?,hasNext: null == hasNext ? _self.hasNext : hasNext // ignore: cast_nullable_to_non_nullable
+as bool,topics: null == topics ? _self._topics : topics // ignore: cast_nullable_to_non_nullable
 as List<RequestedTopicType>,
   ));
 }

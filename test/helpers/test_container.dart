@@ -11,6 +11,7 @@ import 'package:listywave_app/core/auth/kakao_login_webview.dart';
 import 'package:listywave_app/core/link_preview/link_preview_fetcher.dart';
 import 'package:listywave_app/core/network/dio_provider.dart';
 import 'package:listywave_app/core/network/retry_policy.dart';
+import 'package:listywave_app/core/upload/presigned_uploader.dart';
 import 'package:listywave_app/core/widgets/app_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,18 +51,20 @@ ProviderContainer createTestContainer({
   );
 }
 
-/// 백엔드 Dio 와 refresh Dio 에 같은 [DioAdapter] 를 붙이고 보낸 요청을 기록한다.
-/// 기록 interceptor 는 맨 뒤에 붙어 실제로 나간 header 를 본다.
+/// 백엔드 Dio 와 refresh Dio (그리고 og 미리보기, presigned 업로드 Dio) 에 같은 [DioAdapter] 를
+/// 붙이고 보낸 요청을 기록한다. 기록 interceptor 는 맨 뒤에 붙어 실제로 나간 header 를 본다.
 class ApiMock {
   ApiMock(ProviderContainer container) {
     final dio = container.read(dioProvider);
     final refreshDio = container.read(refreshDioProvider);
     final linkPreviewDio = container.read(linkPreviewDioProvider);
+    final uploadDio = container.read(presignedUploaderProvider).dio;
     // dev flavor 의 LogInterceptor 출력이 테스트 결과를 덮지 않게 뺀다.
     dio.interceptors.removeWhere((i) => i is LogInterceptor);
     adapter = DioAdapter(dio: dio);
     refreshDio.httpClientAdapter = adapter;
     linkPreviewDio.httpClientAdapter = adapter;
+    uploadDio.httpClientAdapter = adapter;
     final recorder = InterceptorsWrapper(
       onRequest: (options, handler) {
         requests.add(options);
@@ -71,6 +74,7 @@ class ApiMock {
     dio.interceptors.add(recorder);
     refreshDio.interceptors.add(recorder);
     linkPreviewDio.interceptors.add(recorder);
+    uploadDio.interceptors.add(recorder);
   }
 
   late final DioAdapter adapter;

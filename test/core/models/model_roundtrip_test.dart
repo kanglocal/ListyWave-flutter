@@ -46,6 +46,8 @@ final Map<String, _FromJson> _models = {
   'collections': CollectionListResponseType.fromJson,
   'histories': HistoryType.fromJson,
   'topics': TopicsResponseType.fromJson,
+  'default_profile_images': DefaultImageType.fromJson,
+  'default_background_images': DefaultImageType.fromJson,
 };
 
 /// toJson 결과를 순수 JSON 값으로 바꾼다 (중첩 객체까지).

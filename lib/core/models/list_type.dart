@@ -9,7 +9,7 @@ part 'list_type.g.dart';
 
 // web `src/lib/types/listType.ts` 의 응답 타입. 생성/수정 요청 타입
 // (ItemCreateType, ListCreateType, ListEditType, ItemImage(s)Type, PresignedUrlType) 은
-// 쓰는 화면이 생기는 M4 에서 옮긴다.
+// `features/list_editor/application/list_draft.dart` 와 `list_editor_api.dart` 에 있다.
 
 /// 리스트 상세의 라벨. backend `ListDetailResponse.LabelResponse` (name 만 있다).
 @freezed

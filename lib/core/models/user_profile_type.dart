@@ -46,3 +46,16 @@ abstract class UserType with _$UserType {
   factory UserType.fromJson(Map<String, dynamic> json) =>
       _$UserTypeFromJson(json);
 }
+
+/// web `DefaultImagesType` 한 개 · backend `DefaultProfileImageUrlResponse`,
+/// `DefaultBackgroundImageUrlResponse`.
+@freezed
+abstract class DefaultImageType with _$DefaultImageType {
+  const factory DefaultImageType({
+    required String name,
+    required String imageUrl,
+  }) = _DefaultImageType;
+
+  factory DefaultImageType.fromJson(Map<String, dynamic> json) =>
+      _$DefaultImageTypeFromJson(json);
+}

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/auth/auth_controller.dart';
 import '../core/l10n/gen/app_localizations.dart';
+import '../core/l10n/locale_controller.dart';
 import '../core/theme/app_theme.dart';
 import 'router.dart';
 
@@ -36,8 +37,8 @@ class ListyWaveApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       routerConfig: ref.watch(routerProvider),
-      // web 기본 언어(ko)를 따른다. 언어 토글은 localeControllerProvider 로 붙인다.
-      locale: const Locale('ko'),
+      // web 기본 언어(ko). 계정 화면의 언어 토글이 바꾸고 저장한다 (PLAN §5.5).
+      locale: ref.watch(localeControllerProvider).locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,

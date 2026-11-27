@@ -120,4 +120,52 @@ void main() {
     expect(calls.every((c) => c.$1 <= 1920 && c.$2 <= 1920), isTrue);
     expect(calls.last.$1, lessThan(1920));
   });
+
+  group('prepareForUpload', _prepareForUploadTests);
+}
+
+void _prepareForUploadTests() {
+  const mb = 1024 * 1024;
+  late _MockCodec codec;
+  late ImageCompressor compressor;
+
+  setUp(() {
+    codec = _MockCodec();
+    compressor = ImageCompressor(codec);
+  });
+
+  test('prepareForUpload: JPEG/PNG 는 compress 와 같다', () async {
+    final input = Uint8List(1000);
+
+    final out = await compressor.prepareForUpload(input, mimeType: 'image/png');
+
+    expect(identical(out.bytes, input), isTrue);
+    expect(out.mimeType, 'image/png');
+    expect(uploadExtensionOf(out.mimeType), 'png');
+    verifyZeroInteractions(codec);
+  });
+
+  test('prepareForUpload: backend 가 받지 않는 형식(HEIC) 은 JPEG 로 바꾼다', () async {
+    final input = Uint8List(2 * mb);
+    when(
+      () => codec.sizeOf(input),
+    ).thenAnswer((_) async => (width: 1000, height: 800));
+    _stubEncoder(codec, divisor: 100);
+
+    final out = await compressor.prepareForUpload(
+      input,
+      mimeType: 'image/heic',
+    );
+
+    expect(out.mimeType, 'image/jpeg');
+    expect(uploadExtensionOf(out.mimeType), 'jpeg');
+    expect(_encodeCalls(codec), [(1000, 800, 90)]);
+  });
+
+  test('uploadExtensionOf 는 backend ImageFileExtension 이름을 준다', () {
+    expect(uploadExtensionOf('image/jpeg'), 'jpeg');
+    expect(uploadExtensionOf('image/jpg'), 'jpeg');
+    expect(uploadExtensionOf('image/png'), 'png');
+    expect(uploadExtensionOf('image/webp'), isNull);
+  });
 }

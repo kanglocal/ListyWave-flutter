@@ -3,6 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/auth/current_user.dart';
 import '../../../core/models/folder_type.dart';
+import '../../../core/models/list_type.dart';
+import '../../../core/pagination/cursor_page.dart';
+import '../../../core/pagination/paginated_notifier.dart';
 import '../data/folder_api.dart';
 
 /// web QUERY_KEYS.getFolders. 로그인 사용자의 폴더다.
@@ -37,3 +40,36 @@ int? preferredFolderId(List<FoldersType> folders, int? lastUsed) {
       ? lastUsed
       : folders.first.folderId;
 }
+
+/// 모든 폴더를 합친 "전체" 폴더 id (web `FolderList.tsx` defaultFolder).
+const entireFolderId = 0;
+
+/// web QUERY_KEYS.getCollection (infinite). 폴더 이름은 [foldersProvider] 에서 찾는다.
+class CollectionNotifier extends PaginatedNotifier<CollectionType, int> {
+  CollectionNotifier(this.folderId);
+
+  final int folderId;
+
+  @override
+  Future<PageState<CollectionType, int>> build() {
+    ref.watch(currentUserIdProvider);
+    return super.build();
+  }
+
+  @override
+  Future<CursorPage<CollectionType, int>> fetchPage(int? cursor) async {
+    final response = await ref
+        .read(folderApiProvider)
+        .getCollection(folderId, cursorId: cursor);
+    return CursorPage(
+      items: response.collectionLists,
+      nextCursor: response.hasNext ? response.cursorId : null,
+      hasNext: response.hasNext,
+    );
+  }
+}
+
+final collectionProvider = AsyncNotifierProvider.autoDispose
+    .family<CollectionNotifier, PageState<CollectionType, int>, int>(
+      CollectionNotifier.new,
+    );

@@ -836,4 +836,270 @@ as bool,
 
 }
 
+
+/// @nodoc
+mixin _$DefaultImageType {
+
+ String get name; String get imageUrl;
+/// Create a copy of DefaultImageType
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DefaultImageTypeCopyWith<DefaultImageType> get copyWith => _$DefaultImageTypeCopyWithImpl<DefaultImageType>(this as DefaultImageType, _$identity);
+
+  /// Serializes this DefaultImageType to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DefaultImageType&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,imageUrl);
+
+@override
+String toString() {
+  return 'DefaultImageType(name: $name, imageUrl: $imageUrl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DefaultImageTypeCopyWith<$Res>  {
+  factory $DefaultImageTypeCopyWith(DefaultImageType value, $Res Function(DefaultImageType) _then) = _$DefaultImageTypeCopyWithImpl;
+@useResult
+$Res call({
+ String name, String imageUrl
+});
+
+
+
+
+}
+/// @nodoc
+class _$DefaultImageTypeCopyWithImpl<$Res>
+    implements $DefaultImageTypeCopyWith<$Res> {
+  _$DefaultImageTypeCopyWithImpl(this._self, this._then);
+
+  final DefaultImageType _self;
+  final $Res Function(DefaultImageType) _then;
+
+/// Create a copy of DefaultImageType
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? imageUrl = null,}) {
+  return _then(_self.copyWith(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DefaultImageType].
+extension DefaultImageTypePatterns on DefaultImageType {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DefaultImageType value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DefaultImageType() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DefaultImageType value)  $default,){
+final _that = this;
+switch (_that) {
+case _DefaultImageType():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DefaultImageType value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DefaultImageType() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String imageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DefaultImageType() when $default != null:
+return $default(_that.name,_that.imageUrl);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String imageUrl)  $default,) {final _that = this;
+switch (_that) {
+case _DefaultImageType():
+return $default(_that.name,_that.imageUrl);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String imageUrl)?  $default,) {final _that = this;
+switch (_that) {
+case _DefaultImageType() when $default != null:
+return $default(_that.name,_that.imageUrl);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _DefaultImageType implements DefaultImageType {
+  const _DefaultImageType({required this.name, required this.imageUrl});
+  factory _DefaultImageType.fromJson(Map<String, dynamic> json) => _$DefaultImageTypeFromJson(json);
+
+@override final  String name;
+@override final  String imageUrl;
+
+/// Create a copy of DefaultImageType
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DefaultImageTypeCopyWith<_DefaultImageType> get copyWith => __$DefaultImageTypeCopyWithImpl<_DefaultImageType>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$DefaultImageTypeToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DefaultImageType&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,imageUrl);
+
+@override
+String toString() {
+  return 'DefaultImageType(name: $name, imageUrl: $imageUrl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DefaultImageTypeCopyWith<$Res> implements $DefaultImageTypeCopyWith<$Res> {
+  factory _$DefaultImageTypeCopyWith(_DefaultImageType value, $Res Function(_DefaultImageType) _then) = __$DefaultImageTypeCopyWithImpl;
+@override @useResult
+$Res call({
+ String name, String imageUrl
+});
+
+
+
+
+}
+/// @nodoc
+class __$DefaultImageTypeCopyWithImpl<$Res>
+    implements _$DefaultImageTypeCopyWith<$Res> {
+  __$DefaultImageTypeCopyWithImpl(this._self, this._then);
+
+  final _DefaultImageType _self;
+  final $Res Function(_DefaultImageType) _then;
+
+/// Create a copy of DefaultImageType
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? imageUrl = null,}) {
+  return _then(_DefaultImageType(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
 // dart format on

@@ -55,3 +55,12 @@ Map<String, dynamic> _$UserTypeToJson(_UserType instance) => <String, dynamic>{
   'isFollowed': instance.isFollowed,
   'isOwner': instance.isOwner,
 };
+
+_DefaultImageType _$DefaultImageTypeFromJson(Map<String, dynamic> json) =>
+    _DefaultImageType(
+      name: json['name'] as String,
+      imageUrl: json['imageUrl'] as String,
+    );
+
+Map<String, dynamic> _$DefaultImageTypeToJson(_DefaultImageType instance) =>
+    <String, dynamic>{'name': instance.name, 'imageUrl': instance.imageUrl};

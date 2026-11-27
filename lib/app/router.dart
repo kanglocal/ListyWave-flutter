@@ -110,8 +110,17 @@ FutureOr<OnEnterResult> authOnEnter(
 /// 로그아웃 상태로 보호 경로에 남게 되면 (세션 만료, 보호 경로 deep link) 로그인 sheet 로 보내고
 /// 돌아올 위치를 `from` 으로 넘긴다. 세션 확인 중(unknown)에는 막지 않는다.
 /// 확인이 끝나 로그아웃 상태가 되면 refreshListenable 로 다시 돈다.
-String? authRedirect(Ref ref, GoRouterState state) =>
-    _needsLogin(ref, state.uri.path) ? loginLocation(state.uri) : null;
+///
+/// 사용자가 직접 로그아웃/탈퇴했으면 다시 로그인하라고 하지 않고 홈으로 보낸다
+/// (web `LogoutModal`, `WithdrawalButton` 의 `router.push('/')`).
+String? authRedirect(Ref ref, GoRouterState state) {
+  if (!_needsLogin(ref, state.uri.path)) return null;
+  final reason = ref.read(authControllerProvider).reason;
+  if (reason == LogoutReason.user || reason == LogoutReason.withdraw) {
+    return AppRoutes.home;
+  }
+  return loginLocation(state.uri);
+}
 
 GoRouter createRouter(Ref ref) {
   // guard 결과가 바뀌는 것은 로그아웃 상태가 될 때뿐이다. 로그인 때 refresh 하면
@@ -148,9 +157,8 @@ final routerProvider = Provider<GoRouter>((ref) {
 String _param(GoRouterState state, String name) => state.pathParameters[name]!;
 
 final List<RouteBase> appRoutes = [
-  // 하단 탭 (web BottomNav: 홈 / 추가 / 내 피드). `/list/create` 는 탭 버튼의
-  // 목적지라 shell 안에 두지만, web 처럼 탭 바는 `/` 와 `/mylist` 에서만 보인다.
-  // `/mylist` 는 아래에서 따로 AppShell 로 감싼다.
+  // 하단 탭 (web BottomNav: 홈 / 추가 / 내 피드). web 처럼 탭 바는 `/` 와 `/mylist` 에서만
+  // 보인다. `/mylist` 는 아래에서 따로 AppShell 로 감싼다.
   ShellRoute(
     navigatorKey: _shellNavigatorKey,
     builder: (context, state, child) =>
@@ -160,14 +168,17 @@ final List<RouteBase> appRoutes = [
         path: AppRoutes.home,
         builder: (context, state) => const HomeScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.listCreate,
-        builder: (context, state) => ListCreateScreen(
-          title: state.uri.queryParameters['title'],
-          category: state.uri.queryParameters['category'],
-        ),
-      ),
     ],
+  ),
+  // 리스트 만들기는 탭 바가 없는 화면이라 shell 밖에 둔다. 상세·topics 등 root 화면에서
+  // `/list/create?title=&category=` 를 push 하면 shell navigator 가 stack 에 두 번 생겨
+  // Navigator 가 깨지기 때문이다 (아래 `/mylist` 설명과 같은 이유).
+  GoRoute(
+    path: AppRoutes.listCreate,
+    builder: (context, state) => ListCreateScreen(
+      title: state.uri.queryParameters['title'],
+      category: state.uri.queryParameters['category'],
+    ),
   ),
   // 마이리스트도 web 처럼 하단 탭을 보이지만 ShellRoute 밖에 둔다. 리스트 상세·댓글·팔로워
   // 목록 등 root 화면에서 다른 사람의 마이리스트를 push 하면, shell navigator(GlobalKey) 가

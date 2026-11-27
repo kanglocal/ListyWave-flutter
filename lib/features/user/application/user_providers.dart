@@ -56,3 +56,13 @@ final userListsProvider = AsyncNotifierProvider.autoDispose
     .family<UserListsNotifier, PageState<ListType, String>, UserListsQuery>(
       UserListsNotifier.new,
     );
+
+/// web QUERY_KEYS.getDefaultProfileImages. 서버 설정이라 앱이 살아 있는 동안 한 번만 부른다.
+final defaultProfileImagesProvider = FutureProvider<List<DefaultImageType>>(
+  (ref) => ref.watch(userApiProvider).getDefaultProfileImages(),
+);
+
+/// web QUERY_KEYS.getDefaultBackgroundImages.
+final defaultBackgroundImagesProvider = FutureProvider<List<DefaultImageType>>(
+  (ref) => ref.watch(userApiProvider).getDefaultBackgroundImages(),
+);

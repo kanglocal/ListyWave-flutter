@@ -1007,5 +1007,633 @@
   "toast_commentFailed": "댓글 처리에 실패했어요. 다시 시도해주세요.",
   "@toast_commentFailed": {
     "description": "앱 추가: 댓글 작성/수정/삭제 실패"
+  },
+  "common_lengthCounter": "{count}/{max}",
+  "@common_lengthCounter": {
+    "description": "앱 추가: 입력 글자 수",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_listTitleRequired": "타이틀을 입력해 주세요",
+  "@validation_listTitleRequired": {
+    "description": "web listTitleRules.required"
+  },
+  "validation_listTitleMaxLength": "리스트 타이틀은 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_listTitleMaxLength": {
+    "description": "web listTitleRules.maxLength",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_listDescriptionMaxLength": "리스트 소개는 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_listDescriptionMaxLength": {
+    "description": "web listDescriptionRules / listError.descriptionLength",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_itemTitleRequired": "아이템을 입력해 주세요.",
+  "@validation_itemTitleRequired": {
+    "description": "web itemTitleRules.required"
+  },
+  "validation_itemTitleMaxLength": "아이템 타이틀은 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_itemTitleMaxLength": {
+    "description": "web itemTitleRules.maxLength",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_itemCommentMaxLength": "코멘트는 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_itemCommentMaxLength": {
+    "description": "web itemCommentRules.maxLength (backend ItemComment 100)",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_linkRequired": "링크를 입력해 주세요",
+  "@validation_linkRequired": {
+    "description": "web itemLinkRules.required"
+  },
+  "validation_linkPattern": "올바른 URL 형식이 아니에요.",
+  "@validation_linkPattern": {
+    "description": "web itemLinkRules.pattern"
+  },
+  "validation_labelPattern": "유효한 한글, 영어, 숫자만 입력해 주세요.",
+  "@validation_labelPattern": {
+    "description": "web StepThree label pattern"
+  },
+  "validation_labelMaxCount": "태그는 {max}개까지 등록할 수 있어요.",
+  "@validation_labelMaxCount": {
+    "description": "web StepThree label maxLength",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_labelDuplicated": "이미 등록한 태그예요.",
+  "@validation_labelDuplicated": {
+    "description": "web StepThree label unique"
+  },
+  "validation_nicknameRequired": "닉네임을 입력해 주세요.",
+  "@validation_nicknameRequired": {
+    "description": "web nicknameRules.required"
+  },
+  "validation_nicknameMaxLength": "닉네임은 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_nicknameMaxLength": {
+    "description": "web nicknameRules.maxLength",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_nicknamePattern": "한글과 영어만 입력할 수 있어요.",
+  "@validation_nicknamePattern": {
+    "description": "web nicknameRules.pattern"
+  },
+  "validation_nicknameDuplicated": "이미 사용중인 닉네임이에요.",
+  "@validation_nicknameDuplicated": {
+    "description": "web nicknameDuplicateRules"
+  },
+  "validation_nicknameNotAllowed": "사용할 수 없는 닉네임이에요.",
+  "@validation_nicknameNotAllowed": {
+    "description": "web nicknamePolicyRules"
+  },
+  "validation_profileDescriptionMaxLength": "소개는 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_profileDescriptionMaxLength": {
+    "description": "web profileDescriptionRules",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validation_folderNameMaxLength": "폴더명은 최대 {max}자까지 입력할 수 있어요.",
+  "@validation_folderNameMaxLength": {
+    "description": "앱 추가: backend FolderName 30",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "listEditor_createList": "리스트 만들기",
+  "@listEditor_createList": {
+    "description": "web listLocale.createList"
+  },
+  "listEditor_editList": "리스트 수정하기",
+  "@listEditor_editList": {
+    "description": "web listLocale.editList"
+  },
+  "listEditor_next": "다음",
+  "@listEditor_next": {
+    "description": "web listLocale.next"
+  },
+  "listEditor_publish": "게시",
+  "@listEditor_publish": {
+    "description": "web listLocale.publish"
+  },
+  "listEditor_done": "확인",
+  "@listEditor_done": {
+    "description": "web listLocale.done"
+  },
+  "listEditor_intro": "기록하고 싶은 것들을 리스트로 남겨 봐요.\n나만의 기준으로 순위를 매겨도 좋고, 하나의 주제의 정보를 정리해도 좋아요.",
+  "@listEditor_intro": {
+    "description": "web StepOne 안내"
+  },
+  "listEditor_titleLabel": "타이틀",
+  "@listEditor_titleLabel": {
+    "description": "web StepOne"
+  },
+  "listEditor_titleHint": "리스트 제목을 적어주세요.",
+  "@listEditor_titleHint": {
+    "description": "web StepOne placeholder"
+  },
+  "listEditor_descriptionLabel": "소개",
+  "@listEditor_descriptionLabel": {
+    "description": "web StepOne"
+  },
+  "listEditor_descriptionHint": "리스트에 대해 소개해주세요.",
+  "@listEditor_descriptionHint": {
+    "description": "web StepOne placeholder"
+  },
+  "listEditor_categoryLabel": "카테고리",
+  "@listEditor_categoryLabel": {
+    "description": "web StepOne"
+  },
+  "listEditor_item": "아이템",
+  "@listEditor_item": {
+    "description": "web listLocale.item"
+  },
+  "listEditor_itemQuestion": "리스트에 무엇을 담고 싶나요?",
+  "@listEditor_itemQuestion": {
+    "description": "web StepTwo"
+  },
+  "listEditor_itemGuide": "・ 최소 {min}개, 최대 {max}개까지 추가할 수 있어요.\n・ 이미 등록한 아이템명은 수정이 불가능해요. 삭제는 할 수 있어요.\n・ 순서대로 순위가 정해져요. 순서는 언제든 바꿀 수 있어요.",
+  "@listEditor_itemGuide": {
+    "description": "web StepTwo 안내",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "listEditor_rank": "{rank}위",
+  "@listEditor_rank": {
+    "description": "web ItemAccordion 순위 배지",
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
+  "listEditor_itemTitleHint": "아이템명을 작성해 주세요.",
+  "@listEditor_itemTitleHint": {
+    "description": "web ItemAccordion placeholder"
+  },
+  "listEditor_itemCommentHint": "아이템에 대해 설명해주세요.",
+  "@listEditor_itemCommentHint": {
+    "description": "web ItemAccordion placeholder"
+  },
+  "listEditor_addItem": "아이템 추가하기",
+  "@listEditor_addItem": {
+    "description": "web listLocale.addItem"
+  },
+  "listEditor_minItemWarning": "⚠️ 아이템은 최소 {min}개가 필요해요.",
+  "@listEditor_minItemWarning": {
+    "description": "web StepTwo",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "listEditor_noItem": "아이템을 추가해 주세요.",
+  "@listEditor_noItem": {
+    "description": "web StepTwo NoData"
+  },
+  "listEditor_addImage": "이미지 추가",
+  "@listEditor_addImage": {
+    "description": "앱 추가: 이미지 버튼"
+  },
+  "listEditor_addLink": "링크 추가",
+  "@listEditor_addLink": {
+    "description": "web listLocale.addLink"
+  },
+  "listEditor_removeImage": "이미지 지우기",
+  "@listEditor_removeImage": {
+    "description": "web listLocale.imageAlt 대체"
+  },
+  "listEditor_removeLink": "링크 지우기",
+  "@listEditor_removeLink": {
+    "description": "web listLocale.deleteLinkAlt"
+  },
+  "listEditor_expand": "펼치기",
+  "@listEditor_expand": {
+    "description": "앱 추가: 아코디언"
+  },
+  "listEditor_collapse": "접기",
+  "@listEditor_collapse": {
+    "description": "앱 추가: 아코디언"
+  },
+  "listEditor_dragHandle": "순서 바꾸기",
+  "@listEditor_dragHandle": {
+    "description": "앱 추가: 드래그 핸들"
+  },
+  "listEditor_lockedItemTitle": "이미 등록한 아이템명은 수정이 불가능해요",
+  "@listEditor_lockedItemTitle": {
+    "description": "web ItemAccordion toast"
+  },
+  "listEditor_labelLabel": "태그",
+  "@listEditor_labelLabel": {
+    "description": "web StepThree"
+  },
+  "listEditor_labelHint": "엔터, 스페이스 또는 쉼표를 눌러 등록하세요.(최대 {max}개)",
+  "@listEditor_labelHint": {
+    "description": "web listPlaceholder.label",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "listEditor_collaboratorLabel": "콜라보레이터",
+  "@listEditor_collaboratorLabel": {
+    "description": "앱 추가: 협업자 선택"
+  },
+  "listEditor_collaboratorHint": "닉네임을 입력해주세요.",
+  "@listEditor_collaboratorHint": {
+    "description": "web listPlaceholder.collaborator"
+  },
+  "listEditor_collaboratorMax": "콜라보레이터는 최대 {max}명까지 추가할 수 있어요.",
+  "@listEditor_collaboratorMax": {
+    "description": "앱 추가: backend Collaborators 20",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "listEditor_noSearchedUser": "검색 결과가 없어요.",
+  "@listEditor_noSearchedUser": {
+    "description": "앱 추가: 협업자 검색 결과 없음"
+  },
+  "listEditor_backgroundLabel": "배경 색상",
+  "@listEditor_backgroundLabel": {
+    "description": "web StepThree"
+  },
+  "listEditor_visibilityLabel": "공개 여부",
+  "@listEditor_visibilityLabel": {
+    "description": "web StepThree"
+  },
+  "listEditor_public": "전체공개",
+  "@listEditor_public": {
+    "description": "web listLocale.public"
+  },
+  "listEditor_private": "비공개",
+  "@listEditor_private": {
+    "description": "web listLocale.private"
+  },
+  "listEditor_publicMessage": "모든 사람이 이 리스트를 볼 수 있어요.",
+  "@listEditor_publicMessage": {
+    "description": "web listLocale.publicMessage"
+  },
+  "listEditor_privateMessage": "이 리스트는 나만 볼 수 있어요.",
+  "@listEditor_privateMessage": {
+    "description": "web listLocale.privateMessage"
+  },
+  "topics_title": "이 리스트 만들어 주세요!",
+  "@topics_title": {
+    "description": "web topics page"
+  },
+  "topics_subtitle": "다른 리스터들이 궁금해하는 주제들이에요!\n누르면 그 주제로 리스트를 만들 수 있어요.",
+  "@topics_subtitle": {
+    "description": "web topics page"
+  },
+  "topics_empty": "아직 요청된 주제가 없어요.",
+  "@topics_empty": {
+    "description": "앱 추가: 빈 목록"
+  },
+  "topics_request": "주제 요청하기",
+  "@topics_request": {
+    "description": "web topics floating button"
+  },
+  "topics_anonymous": "익명",
+  "@topics_anonymous": {
+    "description": "web TopicBox"
+  },
+  "topics_requestTitle": "신청하기",
+  "@topics_requestTitle": {
+    "description": "web BottomSheet header"
+  },
+  "topics_requestDescription": "관리자 검토 후 노출되며, 정책에 위반될 경우 수정 또는 삭제될 수 있어요.",
+  "@topics_requestDescription": {
+    "description": "web BottomSheet"
+  },
+  "topics_selectCategory": "카테고리",
+  "@topics_selectCategory": {
+    "description": "web BottomSheet 카테고리 선택"
+  },
+  "topics_anonymousRequest": "익명으로 요청하기",
+  "@topics_anonymousRequest": {
+    "description": "web BottomSheet"
+  },
+  "topics_titleHint": "보고 싶은 리스트 주제를 입력해 주세요.*",
+  "@topics_titleHint": {
+    "description": "web BottomSheet"
+  },
+  "topics_descriptionHint": "요청 이유 또는 주제에 대한 설명을 입력해 주세요.",
+  "@topics_descriptionHint": {
+    "description": "web BottomSheet"
+  },
+  "topics_titleMaxLength": "리스트 주제를 {max}자 이내로 작성해주세요.",
+  "@topics_titleMaxLength": {
+    "description": "web BottomSheet",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "topics_send": "요청 보내기",
+  "@topics_send": {
+    "description": "web BottomSheet"
+  },
+  "topics_requestDone": "주제요청이 완료됐어요. 빠르게 검토할게요 :)",
+  "@topics_requestDone": {
+    "description": "web BottomSheet modal"
+  },
+  "topics_requestFailed": "요청 중 오류가 발생했습니다. 다시 시도해 주세요. :(",
+  "@topics_requestFailed": {
+    "description": "web BottomSheet error"
+  },
+  "collection_title": "콜렉션",
+  "@collection_title": {
+    "description": "web collectionLocale.collection"
+  },
+  "collection_entire": "전체",
+  "@collection_entire": {
+    "description": "web FolderList defaultFolder"
+  },
+  "collection_noCollection": "콜렉트한 리스트가 없어요",
+  "@collection_noCollection": {
+    "description": "web collectionLocale.noCollection"
+  },
+  "collection_folderMenu": "폴더 관리",
+  "@collection_folderMenu": {
+    "description": "앱 추가: 폴더 메뉴"
+  },
+  "collection_renameFolder": "폴더 이름 바꾸기",
+  "@collection_renameFolder": {
+    "description": "web CollectionsHeader"
+  },
+  "collection_deleteFolder": "폴더 삭제하기",
+  "@collection_deleteFolder": {
+    "description": "web CollectionsHeader"
+  },
+  "collection_deleteFolderConfirm": "정말 삭제하시나요?",
+  "@collection_deleteFolderConfirm": {
+    "description": "web collection/[folderId]"
+  },
+  "collection_deleteFolderDescription": "폴더와 안에 있었던 리스트가 모두 삭제돼요",
+  "@collection_deleteFolderDescription": {
+    "description": "web collection/[folderId]"
+  },
+  "account_settings": "설정",
+  "@account_settings": {
+    "description": "web accountLocale.settings"
+  },
+  "account_profileSetting": "프로필 설정",
+  "@account_profileSetting": {
+    "description": "web accountLocale.profileSetting"
+  },
+  "account_language": "언어",
+  "@account_language": {
+    "description": "web accountLocale.language"
+  },
+  "account_korean": "한국어",
+  "@account_korean": {
+    "description": "web accountLocale.korean"
+  },
+  "account_english": "영어",
+  "@account_english": {
+    "description": "web accountLocale.english"
+  },
+  "account_contact": "문의하기",
+  "@account_contact": {
+    "description": "web accountLocale.contact"
+  },
+  "account_sendFeedback": "의견 보내기",
+  "@account_sendFeedback": {
+    "description": "web accountLocale.sendFeedback"
+  },
+  "account_logout": "로그아웃",
+  "@account_logout": {
+    "description": "web accountLocale.logout"
+  },
+  "account_logoutMessage": "로그아웃 하시나요?",
+  "@account_logoutMessage": {
+    "description": "web accountLocale.logoutMessage"
+  },
+  "account_withdrawal": "회원탈퇴",
+  "@account_withdrawal": {
+    "description": "web accountLocale.withdrawal"
+  },
+  "account_withdraw": "탈퇴하기",
+  "@account_withdraw": {
+    "description": "web accountLocale.withdraw"
+  },
+  "account_withdrawMessage": "위 내용을 확인했으며, 리스티웨이브를 탈퇴하겠습니다.",
+  "@account_withdrawMessage": {
+    "description": "web accountLocale.withdrawMessage"
+  },
+  "account_withdrawModalMessage": "확인 버튼 클릭 시 즉시 탈퇴 처리됩니다.",
+  "@account_withdrawModalMessage": {
+    "description": "web accountLocale.withdrawModalMessage"
+  },
+  "account_withdrawCheck1": "리스티 탈퇴 전 확인하세요",
+  "@account_withdrawCheck1": {
+    "description": "web accountLocale.withdrawCheck1"
+  },
+  "account_withdrawCheck2": "탈퇴 시 모든 정보가 사라지며, 되살릴 수 없어요.",
+  "@account_withdrawCheck2": {
+    "description": "web accountLocale.withdrawCheck2"
+  },
+  "account_withdrawCheck3": "리스트, 댓글, 콜렉션, 팔로워/팔로잉 목록, 내 프로필 정보 등 모든 자료가 삭제되며 복구할 수 없어요.",
+  "@account_withdrawCheck3": {
+    "description": "web accountLocale.withdrawCheck3"
+  },
+  "account_withdrawCheck4": "참여 중인 모든 콜라보 리스트의 콜라보레이터에서 제거돼요.",
+  "@account_withdrawCheck4": {
+    "description": "web accountLocale.withdrawCheck4"
+  },
+  "account_withdrawCheck5": "30일 이내에 다시 가입할 수 없어요.",
+  "@account_withdrawCheck5": {
+    "description": "web accountLocale.withdrawCheck5"
+  },
+  "account_save": "저장",
+  "@account_save": {
+    "description": "web accountLocale.save"
+  },
+  "account_nickname": "닉네임",
+  "@account_nickname": {
+    "description": "web accountLocale.nickname"
+  },
+  "account_nicknameAvailable": "사용 가능한 닉네임이에요.",
+  "@account_nicknameAvailable": {
+    "description": "web accountLocale.nicknameDuplicateSuccessMessage"
+  },
+  "account_introduce": "소개",
+  "@account_introduce": {
+    "description": "web accountLocale.introduce"
+  },
+  "account_backgroundImage": "배경 이미지",
+  "@account_backgroundImage": {
+    "description": "web accountLocale.backgroundImage"
+  },
+  "profile_profileImage": "프로필 이미지",
+  "@profile_profileImage": {
+    "description": "web accountLocale.profileImageAlt"
+  },
+  "profile_uploadImage": "이미지 올리기",
+  "@profile_uploadImage": {
+    "description": "앱 추가: 직접 올리기 버튼"
+  },
+  "profile_nicknameHint": "닉네임을 입력해주세요. (최대{max}자)",
+  "@profile_nicknameHint": {
+    "description": "web profilePlaceholder.nickname",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profile_descriptionHint": "나를 소개해주세요.",
+  "@profile_descriptionHint": {
+    "description": "web profilePlaceholder.description"
+  },
+  "withdrawnAccount_message1": "탈퇴한 회원이에요",
+  "@withdrawnAccount_message1": {
+    "description": "web withdrawnAccountLocale.message1"
+  },
+  "withdrawnAccount_message2": "탈퇴 후 30일 내에는 재가입할 수 없어요.",
+  "@withdrawnAccount_message2": {
+    "description": "web withdrawnAccountLocale.message2"
+  },
+  "withdrawnAccount_goToHome": "홈으로 돌아가기",
+  "@withdrawnAccount_goToHome": {
+    "description": "web withdrawnAccountLocale.goToHome"
+  },
+  "withdrawnAccount_contact": "문의하기",
+  "@withdrawnAccount_contact": {
+    "description": "web withdrawnAccountLocale.contact"
+  },
+  "onboarding_createNickname": "닉네임을 만들어주세요.",
+  "@onboarding_createNickname": {
+    "description": "web startListyLocale.createNicknameMessage"
+  },
+  "onboarding_next": "다음으로",
+  "@onboarding_next": {
+    "description": "web startListyLocale.next"
+  },
+  "onboarding_complete": "완료",
+  "@onboarding_complete": {
+    "description": "web startListyLocale.complete"
+  },
+  "onboarding_skip": "Skip >",
+  "@onboarding_skip": {
+    "description": "web SkipButton"
+  },
+  "onboarding_skipMessage": "지금 바로 Listy Wave를 시작할까요?",
+  "@onboarding_skipMessage": {
+    "description": "web SkipButton modal"
+  },
+  "onboarding_step": "step{step}",
+  "@onboarding_step": {
+    "description": "web 진행 표시",
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "onboarding_ownList": "\"{nickname}\"님만의 리스트를 만들어 보아요.",
+  "@onboarding_ownList": {
+    "description": "web CreateListStep",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "onboarding_whatAbout": "무엇에 대한 리스트인가요?",
+  "@onboarding_whatAbout": {
+    "description": "web startListyLocale.whatAbout"
+  },
+  "onboarding_makeListTitle": "리스트의 제목을 지어주세요.",
+  "@onboarding_makeListTitle": {
+    "description": "web startListyLocale.makeListTitle"
+  },
+  "onboarding_registerItems": "리스트에 넣을 1, 2, 3위 아이템을 적어주세요.",
+  "@onboarding_registerItems": {
+    "description": "web RegisterItems"
+  },
+  "toast_createListError": "리스트 생성에 실패했어요. 다시 시도해주세요.🥲",
+  "@toast_createListError": {
+    "description": "web toastMessage createListError"
+  },
+  "toast_updateListError": "리스트 수정에 실패했어요. 다시 시도해주세요.🥲",
+  "@toast_updateListError": {
+    "description": "web toastMessage updateListError"
+  },
+  "toast_uploadImageError": "이미지를 업로드에 실패했어요. 다시 업로드해주세요.🥲",
+  "@toast_uploadImageError": {
+    "description": "web toastMessage uploadImageError"
+  },
+  "toast_duplicatedItemError": "중복된 아이템이 있어요🥲",
+  "@toast_duplicatedItemError": {
+    "description": "web toastMessage duplicatedItemError"
+  },
+  "toast_imageSizeError": "사진이 너무 커요. 50MB 이하 사진을 넣어주세요.🥹",
+  "@toast_imageSizeError": {
+    "description": "web toastMessage imageSizeError"
+  },
+  "toast_updateProfileSuccess": "프로필을 수정했습니다.🥰",
+  "@toast_updateProfileSuccess": {
+    "description": "web toastMessage updateProfileSuccess"
+  },
+  "toast_updateProfileError": "프로필 수정에 실패했어요. 다시 시도해주세요.🥲",
+  "@toast_updateProfileError": {
+    "description": "web toastMessage updateProfileError"
+  },
+  "toast_loggedOut": "로그아웃 되었어요.",
+  "@toast_loggedOut": {
+    "description": "web toastMessage loggedOut"
+  },
+  "toast_withdraw": "리스티웨이브를 탈퇴했어요.🥲 꼭 돌아와주세요!",
+  "@toast_withdraw": {
+    "description": "web toastMessage withdraw"
+  },
+  "toast_withdrawError": "탈퇴에 실패했어요. 다시 시도해주세요.",
+  "@toast_withdrawError": {
+    "description": "web toastMessage withdrawError"
   }
 }

@@ -91,7 +91,37 @@ class ImageCompressor {
       scale *= 0.75;
     }
   }
+
+  /// 서버에 올릴 수 있는 이미지로 만든다. backend 가 JPEG/PNG 만 받으므로 다른 형식
+  /// (HEIC, WebP, GIF 등) 은 원래 크기의 JPEG 로 바꾼 뒤 [ImageCompressor.compress] 를 거친다.
+  Future<({Uint8List bytes, String mimeType})> prepareForUpload(
+    Uint8List bytes, {
+    required String mimeType,
+  }) async {
+    final normalized = mimeType == 'image/jpg' ? 'image/jpeg' : mimeType;
+    if (uploadableMimeTypes.contains(normalized)) {
+      return compress(bytes, mimeType: normalized);
+    }
+    final size = await _codec.sizeOf(bytes);
+    final jpeg = await _codec.encodeJpeg(
+      bytes,
+      width: size.width,
+      height: size.height,
+      quality: _startQuality,
+    );
+    return compress(jpeg, mimeType: 'image/jpeg');
+  }
 }
+
+/// backend `ImageFileExtension` (JPEG, JPG, PNG) 로 올릴 수 있는 MIME.
+const uploadableMimeTypes = {'image/jpeg', 'image/png'};
+
+/// [mimeType] 을 backend `ImageFileExtension` 이름(소문자)으로 바꾼다. 모르면 null.
+String? uploadExtensionOf(String mimeType) => switch (mimeType) {
+  'image/jpeg' || 'image/jpg' => 'jpeg',
+  'image/png' => 'png',
+  _ => null,
+};
 
 final imageCompressorProvider = Provider<ImageCompressor>(
   (ref) => const ImageCompressor(NativeImageCodec()),

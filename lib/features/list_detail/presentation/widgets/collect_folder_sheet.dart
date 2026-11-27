@@ -9,6 +9,7 @@ import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/toast.dart';
 import '../../../collection/application/collection_providers.dart';
 import '../../../collection/data/folder_api.dart';
+import '../../../collection/presentation/widgets/folder_name_dialog.dart';
 
 /// 콜렉트할 폴더를 고르는 bottom sheet (web `CollectFolderSheet.tsx`, PLAN §11 Q1).
 /// 마지막으로 쓴 폴더를 기본 선택하고, 폴더가 없으면 새 폴더를 만들게 한다.
@@ -48,9 +49,10 @@ class _CollectFolderSheetState extends ConsumerState<CollectFolderSheet> {
 
   Future<void> _createFolder() async {
     final l10n = AppLocalizations.of(context);
-    final name = await showDialog<String>(
-      context: context,
-      builder: (_) => const _FolderNameDialog(),
+    final name = await showFolderNameDialog(
+      context,
+      title: l10n.collect_newFolder,
+      confirmLabel: l10n.collect_create,
     );
     if (name == null || !mounted) return;
     if (name.trim().isEmpty) {
@@ -162,49 +164,6 @@ class _CollectFolderSheetState extends ConsumerState<CollectFolderSheet> {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// web 콜렉트 sheet 의 "새로운 폴더" 입력.
-class _FolderNameDialog extends StatefulWidget {
-  const _FolderNameDialog();
-
-  @override
-  State<_FolderNameDialog> createState() => _FolderNameDialogState();
-}
-
-class _FolderNameDialogState extends State<_FolderNameDialog> {
-  final _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return AlertDialog(
-      title: Text(l10n.collect_newFolder),
-      content: TextField(
-        key: const Key('collect.folderName'),
-        controller: _controller,
-        autofocus: true,
-        decoration: InputDecoration(hintText: l10n.collect_folderNameHint),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.common_cancel),
-        ),
-        TextButton(
-          key: const Key('collect.createFolder'),
-          onPressed: () => Navigator.of(context).pop(_controller.text),
-          child: Text(l10n.collect_create),
-        ),
-      ],
     );
   }
 }

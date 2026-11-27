@@ -4,6 +4,7 @@ import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 
 import 'app/app.dart';
 import 'app/env.dart';
+import 'core/l10n/locale_controller.dart';
 import 'core/network/retry_policy.dart';
 
 Future<void> bootstrap(Env env) async {
@@ -13,10 +14,15 @@ Future<void> bootstrap(Env env) async {
   if (env.kakaoNativeAppKey.isNotEmpty) {
     await KakaoSdk.init(nativeAppKey: env.kakaoNativeAppKey);
   }
+  // 저장된 언어로 첫 frame 을 그린다 (ko 로 그렸다가 en 으로 바뀌지 않게).
+  final language = await LocaleController.readStoredLanguage();
   runApp(
     ProviderScope(
       retry: appRetry,
-      overrides: [envProvider.overrideWithValue(env)],
+      overrides: [
+        envProvider.overrideWithValue(env),
+        initialLanguageProvider.overrideWithValue(language),
+      ],
       child: const ListyWaveApp(),
     ),
   );
