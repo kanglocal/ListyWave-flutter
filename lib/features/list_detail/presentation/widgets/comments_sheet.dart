@@ -17,6 +17,8 @@ import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/infinite_scroll.dart';
 import '../../../../core/widgets/toast.dart';
 import '../../../../core/widgets/user_profile_image.dart';
+import '../../../report/data/report_api.dart';
+import '../../../report/presentation/report_sheet.dart';
 import '../../application/list_detail_providers.dart';
 
 /// web 리스트 상세의 전체 댓글 bottom sheet (`Comments.tsx` + `CommentForm.tsx`).
@@ -550,6 +552,14 @@ class _CommentTileState extends State<CommentTile> {
             onDelete: actions != null && !c.isDeleted && c.userId == me
                 ? () => actions.onDeleteComment(c)
                 : null,
+            // 로그인했고, 남이 쓴 지워지지 않은 댓글만 신고할 수 있다 (web `Comment.tsx`).
+            onReport: me != null && !c.isDeleted && c.userId != me
+                ? () => showReportSheet(
+                    context,
+                    targetType: ReportTargetType.comment,
+                    targetId: c.id,
+                  )
+                : null,
           ),
           if (c.replies.isNotEmpty && !_repliesOpened)
             Padding(
@@ -595,6 +605,13 @@ class _CommentTileState extends State<CommentTile> {
                   onDelete: actions != null && reply.userId == me
                       ? () => actions.onDeleteReply(reply)
                       : null,
+                  onReport: me != null && reply.userId != me
+                      ? () => showReportSheet(
+                          context,
+                          targetType: ReportTargetType.reply,
+                          targetId: reply.id,
+                        )
+                      : null,
                 ),
               ),
         ],
@@ -616,6 +633,7 @@ class _CommentBody extends StatelessWidget {
     this.onReply,
     this.onEdit,
     this.onDelete,
+    this.onReport,
   });
 
   final String keyPrefix;
@@ -631,6 +649,7 @@ class _CommentBody extends StatelessWidget {
   final VoidCallback? onReply;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final VoidCallback? onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -679,17 +698,35 @@ class _CommentBody extends StatelessWidget {
                     ? context.typo.label.copyWith(color: AppColors.gray)
                     : context.typo.label.copyWith(color: AppColors.black),
               ),
-              if (onReply != null || onEdit != null || onDelete != null)
+              if (onReply != null ||
+                  onEdit != null ||
+                  onDelete != null ||
+                  onReport != null)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
                   child: Wrap(
                     spacing: 12,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       if (onReply != null)
                         GestureDetector(
                           key: Key('$keyPrefix.reply'),
                           onTap: onReply,
                           child: Text(l10n.comment_reply, style: actionStyle),
+                        ),
+                      // web `reportButton`: 1rem, gray2, 500.
+                      if (onReport != null)
+                        GestureDetector(
+                          key: Key('$keyPrefix.report'),
+                          onTap: onReport,
+                          child: Text(
+                            l10n.report_button,
+                            style: context.typo.labelSmall.copyWith(
+                              fontSize: 10,
+                              color: AppColors.gray2,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       if (onEdit != null)
                         GestureDetector(

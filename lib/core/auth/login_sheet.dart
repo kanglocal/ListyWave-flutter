@@ -61,8 +61,16 @@ class _LoginSheetState extends ConsumerState<LoginSheet> {
         Navigator.of(context).pop();
       }
     } on Exception catch (e) {
+      final error = AppException.from(e);
+      if (error.code == 'SUSPENDED_USER') {
+        // 이용 정지 회원 (카카오·local 로그인 403). 안내는 dio 공통 처리
+        // (`SuspendedUserInterceptor`) 가 띄우고, web 카카오 redirect 처럼 홈으로 보낸다.
+        if (mounted) Navigator.of(context).pop();
+        router.go('/');
+        return;
+      }
       // 탈퇴 회원의 카카오 로그인은 400 `DELETED_USER_EXCEPTION` 이다 (`AuthService.java`).
-      if (isKakao && AppException.from(e).status == 400) {
+      if (isKakao && error.status == 400) {
         router.go('/withdrawn-account');
       } else {
         messenger?.showSnackBar(SnackBar(content: Text(failed)));

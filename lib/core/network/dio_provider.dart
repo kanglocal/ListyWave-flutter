@@ -8,6 +8,7 @@ import '../auth/token_storage.dart';
 import 'app_exception.dart';
 import 'auth_interceptor.dart';
 import 'refresh_interceptor.dart';
+import 'suspended_user_interceptor.dart';
 
 BaseOptions _baseOptions(Env env) => BaseOptions(
   baseUrl: env.apiBaseUrl,
@@ -36,6 +37,9 @@ final dioProvider = Provider<Dio>((ref) {
       onSessionExpired: () => ref
           .read(authControllerProvider.notifier)
           .logout(LogoutReason.expired),
+    ),
+    SuspendedUserInterceptor(
+      () => ref.read(suspendedUserNoticeProvider.notifier).notify(),
     ),
     const ErrorMapper(),
     if (env.isDev)

@@ -1920,5 +1920,85 @@
         "type": "String"
       }
     }
+  },
+  "listDetail_reportList": "리스트 신고하기",
+  "@listDetail_reportList": {
+    "description": "web listLocale reportList"
+  },
+  "report_titleList": "리스트 신고",
+  "@report_titleList": {
+    "description": "web ReportSheet TARGET_NAME LIST + ' 신고'"
+  },
+  "report_titleComment": "댓글 신고",
+  "@report_titleComment": {
+    "description": "web ReportSheet TARGET_NAME COMMENT + ' 신고'"
+  },
+  "report_titleReply": "답글 신고",
+  "@report_titleReply": {
+    "description": "web ReportSheet TARGET_NAME REPLY + ' 신고'"
+  },
+  "report_guide": "신고 사유를 골라 주세요. 신고한 사람은 공개되지 않아요.",
+  "@report_guide": {
+    "description": "web ReportSheet guide"
+  },
+  "report_reasonSpam": "광고·도배",
+  "@report_reasonSpam": {
+    "description": "web reportReasons SPAM"
+  },
+  "report_reasonAbuse": "욕설·비방·혐오",
+  "@report_reasonAbuse": {
+    "description": "web reportReasons ABUSE"
+  },
+  "report_reasonSexual": "음란·선정적인 내용",
+  "@report_reasonSexual": {
+    "description": "web reportReasons SEXUAL"
+  },
+  "report_reasonIllegal": "불법 정보",
+  "@report_reasonIllegal": {
+    "description": "web reportReasons ILLEGAL"
+  },
+  "report_reasonPrivacy": "개인정보 노출",
+  "@report_reasonPrivacy": {
+    "description": "web reportReasons PRIVACY"
+  },
+  "report_reasonEtc": "기타",
+  "@report_reasonEtc": {
+    "description": "web reportReasons ETC"
+  },
+  "report_detailPlaceholder": "자세한 내용이 있으면 적어 주세요 (선택)",
+  "@report_detailPlaceholder": {
+    "description": "web ReportSheet textarea placeholder"
+  },
+  "report_submit": "신고하기",
+  "@report_submit": {
+    "description": "web ReportSheet submit"
+  },
+  "report_button": "신고",
+  "@report_button": {
+    "description": "web Comment.tsx / Replies.tsx 신고 버튼"
+  },
+  "toast_reportSuccess": "신고가 접수됐어요. 확인 후 조치할게요.",
+  "@toast_reportSuccess": {
+    "description": "web ReportSheet onSuccess"
+  },
+  "toast_reportDuplicate": "이미 신고한 글이에요. 확인 후 조치할게요.",
+  "@toast_reportDuplicate": {
+    "description": "web ReportSheet ERROR_MESSAGE DUPLICATE_REPORT"
+  },
+  "toast_reportOwnContent": "내가 쓴 글은 신고할 수 없어요.",
+  "@toast_reportOwnContent": {
+    "description": "web ReportSheet ERROR_MESSAGE CANNOT_REPORT_OWN_CONTENT"
+  },
+  "toast_reportNotFound": "이미 삭제된 글이에요.",
+  "@toast_reportNotFound": {
+    "description": "web ReportSheet ERROR_MESSAGE RESOURCE_NOT_FOUND"
+  },
+  "toast_reportFailed": "신고에 실패했어요. 잠시 후 다시 시도해 주세요.",
+  "@toast_reportFailed": {
+    "description": "web ReportSheet 기본 오류"
+  },
+  "toast_suspendedUser": "이용이 정지된 계정이에요. 문의는 고객센터로 부탁드려요.",
+  "@toast_suspendedUser": {
+    "description": "web toastMessage suspendedUser"
   }
 }

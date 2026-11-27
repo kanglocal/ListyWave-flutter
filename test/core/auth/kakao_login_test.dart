@@ -156,6 +156,35 @@ void main() {
     expect(secure, isEmpty);
   });
 
+  testWidgets('정지 회원 (403 SUSPENDED_USER) 이면 안내하고 홈으로 간다', (tester) async {
+    final (:container, :router) = await openKakaoLogin(tester, (api) {
+      api.adapter.onGet(
+        '/auth/redirect/kakao',
+        (s) => s.reply(403, {
+          'status': 403,
+          'error': 'FORBIDDEN',
+          'code': 'SUSPENDED_USER',
+          'detail': '이용이 정지된 계정이에요. 문의는 고객센터로 부탁드려요.',
+          'message': '이용이 정지된 계정이에요. 문의는 고객센터로 부탁드려요.',
+        }),
+        queryParameters: {'code': 'banned'},
+      );
+    });
+
+    await webView.onNavigationRequest!(
+      Uri.parse('http://localhost:3000/auth/redirect/kakao?code=banned'),
+    );
+    await tester.pumpAndSettle();
+
+    expect(api.sent('GET', '/auth/redirect/kakao'), hasLength(1));
+    expect(locationOf(router), '/');
+    expect(find.byType(LoginSheet), findsNothing);
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.text('이용이 정지된 계정이에요. 문의는 고객센터로 부탁드려요.'), findsOneWidget);
+    expect(container.read(authControllerProvider).status, AuthStatus.loggedOut);
+    expect(secure, isEmpty);
+  });
+
   testWidgets('기존 회원이고 돌아갈 곳이 없으면 sheet 만 닫는다', (tester) async {
     final (:container, :router) = await openKakaoLogin(tester, (api) {
       api.adapter.onGet(

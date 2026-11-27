@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/env.dart';
 import '../../../../app/router.dart';
+import '../../../../core/auth/current_user.dart';
 import '../../../../core/auth/require_login.dart';
 import '../../../../core/l10n/gen/app_localizations.dart';
 import '../../../../core/models/list_type.dart';
@@ -11,6 +12,8 @@ import '../../../../core/share/share_service.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/toast.dart';
+import '../../../report/data/report_api.dart';
+import '../../../report/presentation/report_sheet.dart';
 import 'save_image_dialog.dart';
 
 /// 공유 URL (web `DOMAIN_URL + path`).
@@ -134,7 +137,8 @@ Future<void> showShareSheet(
   ]);
 }
 
-/// web `getBottomSheetOptionList.ts` type 'etc': 이미지로 저장, 이 타이틀로 리스트 생성.
+/// web `getBottomSheetOptionList.ts` type 'etc': 이미지로 저장, 이 타이틀로 리스트 생성,
+/// 남의 리스트면 신고하기 (비로그인은 누르면 로그인 sheet).
 /// 생성 화면 프리필은 web 과 같이 `category` 에 카테고리 한글 이름을 넘긴다 (`StepOne.tsx`).
 Future<void> showEtcSheet(
   BuildContext context, {
@@ -142,6 +146,10 @@ Future<void> showEtcSheet(
   required int listId,
 }) {
   final l10n = AppLocalizations.of(context);
+  final me = ProviderScope.containerOf(
+    context,
+    listen: false,
+  ).read(currentUserIdProvider);
   return showOptionSheet(context, [
     SheetOption(
       key: const Key('etc.saveImage'),
@@ -165,5 +173,18 @@ Future<void> showEtcSheet(
         );
       },
     ),
+    if (me != list.ownerId)
+      SheetOption(
+        key: const Key('etc.report'),
+        title: l10n.listDetail_reportList,
+        onTap: () {
+          if (requireLogin(context) == null) return;
+          showReportSheet(
+            context,
+            targetType: ReportTargetType.list,
+            targetId: listId,
+          );
+        },
+      ),
   ]);
 }

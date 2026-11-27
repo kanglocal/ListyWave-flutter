@@ -448,5 +448,25 @@
         "type": "String"
       }
     }
-  }
+  },
+  "listDetail_reportList": "Report this list",
+  "report_titleList": "Report list",
+  "report_titleComment": "Report comment",
+  "report_titleReply": "Report reply",
+  "report_guide": "Choose a reason. Reporters are kept anonymous.",
+  "report_reasonSpam": "Spam or flooding",
+  "report_reasonAbuse": "Abuse, insults or hate",
+  "report_reasonSexual": "Sexual or obscene content",
+  "report_reasonIllegal": "Illegal information",
+  "report_reasonPrivacy": "Exposure of personal information",
+  "report_reasonEtc": "Other",
+  "report_detailPlaceholder": "Add details if you have any (optional)",
+  "report_submit": "Report",
+  "report_button": "Report",
+  "toast_reportSuccess": "Your report has been received. We'll review it and take action.",
+  "toast_reportDuplicate": "You've already reported this. We'll review it and take action.",
+  "toast_reportOwnContent": "You can't report your own post.",
+  "toast_reportNotFound": "This post has already been deleted.",
+  "toast_reportFailed": "Failed to report. Please try again later.",
+  "toast_suspendedUser": "This account has been suspended. Please contact support."
 }

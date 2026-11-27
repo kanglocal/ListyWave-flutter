@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/auth/auth_controller.dart';
 import '../core/l10n/gen/app_localizations.dart';
 import '../core/l10n/locale_controller.dart';
+import '../core/network/suspended_user_interceptor.dart';
 import '../core/theme/app_theme.dart';
+import '../core/widgets/toast.dart';
 import 'router.dart';
 
 final rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -29,6 +31,15 @@ class ListyWaveApp extends ConsumerWidget {
             AppLocalizations.of(messenger.context).toast_userStatusLoggedOut,
           ),
         ),
+      );
+    });
+    // 이용 정지 회원의 요청이 403 SUSPENDED_USER 로 막히면 알린다 (web axiosInstance.ts).
+    ref.listen(suspendedUserNoticeProvider, (_, _) {
+      final messenger = rootScaffoldMessengerKey.currentState;
+      if (messenger == null) return;
+      showSuspendedNotice(
+        messenger,
+        AppLocalizations.of(messenger.context).toast_suspendedUser,
       );
     });
     return MaterialApp.router(
