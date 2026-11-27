@@ -1,0 +1,23 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.listywave.app",
+      "sha256_cert_fingerprints": [
+        "<PLAY_APP_SIGNING_SHA256>",
+        "<UPLOAD_KEY_SHA256>"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.listywave.app.dev",
+      "sha256_cert_fingerprints": [
+        "<DEBUG_KEY_SHA256>"
+      ]
+    }
+  }
+]

@@ -34,7 +34,14 @@ class NewestCommentPreview extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(c.userNickname, style: context.typo.labelBold),
+                  Flexible(
+                    child: Text(
+                      c.userNickname,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.typo.labelBold,
+                    ),
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     timeDiff(c.createdDate, l10n),

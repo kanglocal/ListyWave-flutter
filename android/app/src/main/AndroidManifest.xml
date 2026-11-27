@@ -27,9 +27,35 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- Flutter 가 intent data (deeplink) 를 router 로 넘긴다. 3.27+ 기본값이지만 명시한다. -->
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- 앱 custom scheme listywave://list/123 (PLAN §2.1). Flutter 가 URI 를 router 로
+                 넘기고 lib/app/router.dart 의 deepLinkLocation 이 앱 경로로 바꾼다. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="listywave"/>
+            </intent-filter>
+            <!-- App Links: 웹 공유 URL (SITE_URL host) 의 /list, /user, /notice 를 앱에서 연다.
+                 host 는 build.gradle.kts 의 appLinkHost (SITE_URL dart-define) 다. 검증에는 웹의
+                 /.well-known/assetlinks.json 이 필요하다 (docs/deeplinks/). -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:scheme="http"/>
+                <data android:host="${appLinkHost}"/>
+                <data android:pathPrefix="/list/"/>
+                <data android:pathPrefix="/user/"/>
+                <data android:pathPrefix="/notice/"/>
             </intent-filter>
             <!-- 카카오톡 공유 메시지의 앱 실행 (PLAN §12). scheme 은 build.gradle.kts 의
                  kakaoScheme (KAKAO_NATIVE_APP_KEY dart-define) 이다. -->

@@ -1635,5 +1635,34 @@
   "toast_withdrawError": "탈퇴에 실패했어요. 다시 시도해주세요.",
   "@toast_withdrawError": {
     "description": "web toastMessage withdrawError"
+  },
+  "notFound_message": "페이지를 찾을 수 없어요.",
+  "@notFound_message": {
+    "description": "router errorBuilder: unknown path / invalid deeplink"
+  },
+  "notFound_description": "주소가 잘못되었거나 더 이상 없는 페이지예요.",
+  "@notFound_description": {
+    "description": "router errorBuilder description"
+  },
+  "notFound_goHome": "홈으로 가기",
+  "@notFound_goHome": {
+    "description": "not-found screen home button"
+  },
+  "common_goHome": "홈으로 이동",
+  "@common_goHome": {
+    "description": "Semantics label of the logo button that goes home"
+  },
+  "video_play": "동영상 재생",
+  "@video_play": {
+    "description": "Semantics label of the YouTube thumbnail play button"
+  },
+  "profile_defaultImage": "기본 이미지 {index}",
+  "@profile_defaultImage": {
+    "description": "Semantics label of a default profile/background image option",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
   }
 }

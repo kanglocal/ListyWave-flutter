@@ -110,9 +110,13 @@ class _HeroSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () => context.go(AppRoutes.home),
-            child: SvgPicture.asset('assets/icons/logo.svg', height: 28),
+          Semantics(
+            button: true,
+            label: AppLocalizations.of(context).common_goHome,
+            child: GestureDetector(
+              onTap: () => context.go(AppRoutes.home),
+              child: SvgPicture.asset('assets/icons/logo.svg', height: 28),
+            ),
           ),
           const SizedBox(height: 32),
           Image.asset(

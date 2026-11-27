@@ -52,30 +52,41 @@ class ListFooter extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
+      // 리액션은 왼쪽, 콜렉트·공유·더보기는 오른쪽 끝. 큰 글씨로 한 줄에 안 들어가면 줄을 바꾼다.
+      child: Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        runSpacing: 8,
         children: [
-          for (final type in reactionTypes)
-            _ReactionButton(
-              type: type,
-              reaction: list.reactions
-                  .where((r) => r.reaction == type)
-                  .firstOrNull,
-              showCount: isOwner,
-              onTap: () => _react(context, ref, type),
-            ),
-          const Spacer(),
-          _CollectButton(list: list, listId: listId, isOwner: isOwner),
-          _FooterButton(
-            key: const Key('listFooter.share'),
-            icon: 'assets/icons/ver3/share.svg',
-            label: l10n.listDetail_share,
-            onTap: () => showShareSheet(context, list: list, listId: listId),
+          Wrap(
+            children: [
+              for (final type in reactionTypes)
+                _ReactionButton(
+                  type: type,
+                  reaction: list.reactions
+                      .where((r) => r.reaction == type)
+                      .firstOrNull,
+                  showCount: isOwner,
+                  onTap: () => _react(context, ref, type),
+                ),
+            ],
           ),
-          _FooterButton(
-            key: const Key('listFooter.more'),
-            icon: 'assets/icons/ver3/more.svg',
-            label: l10n.common_more,
-            onTap: () => showEtcSheet(context, list: list, listId: listId),
+          Wrap(
+            children: [
+              _CollectButton(list: list, listId: listId, isOwner: isOwner),
+              _FooterButton(
+                key: const Key('listFooter.share'),
+                icon: 'assets/icons/ver3/share.svg',
+                label: l10n.listDetail_share,
+                onTap: () =>
+                    showShareSheet(context, list: list, listId: listId),
+              ),
+              _FooterButton(
+                key: const Key('listFooter.more'),
+                icon: 'assets/icons/ver3/more.svg',
+                label: l10n.common_more,
+                onTap: () => showEtcSheet(context, list: list, listId: listId),
+              ),
+            ],
           ),
         ],
       ),

@@ -31,20 +31,30 @@ class _RankListSectionState extends State<RankListSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
+        // 한 줄에 안 들어가면 (큰 글씨) 보기 방식 선택이 다음 줄로 내려간다.
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Text(
-              formatDateTime(list.lastUpdatedDate),
-              style: context.typo.labelSmall.copyWith(color: AppColors.gray),
+            Wrap(
+              spacing: 8,
+              children: [
+                Text(
+                  formatDateTime(list.lastUpdatedDate),
+                  style: context.typo.labelSmall.copyWith(
+                    color: AppColors.gray,
+                  ),
+                ),
+                Text(
+                  list.updateCount == 0
+                      ? l10n.listDetail_firstUpload
+                      : l10n.home_updateCount(list.updateCount),
+                  style: context.typo.labelSmall.copyWith(
+                    color: AppColors.gray,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            Text(
-              list.updateCount == 0
-                  ? l10n.listDetail_firstUpload
-                  : l10n.home_updateCount(list.updateCount),
-              style: context.typo.labelSmall.copyWith(color: AppColors.gray),
-            ),
-            const Spacer(),
             DropdownButton<_ListViewType>(
               key: const Key('listDetail.viewType'),
               value: _type,

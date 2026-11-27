@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
+import '../l10n/gen/app_localizations.dart';
 import 'app_network_image.dart';
 import 'link_preview.dart';
 
@@ -67,24 +68,28 @@ class _VideoEmbedState extends State<VideoEmbed> {
           aspectRatio: 16 / 9,
           child: controller != null
               ? YoutubePlayer(controller: controller)
-              : GestureDetector(
-                  key: const Key('videoEmbed.thumbnail'),
-                  onTap: _play,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      AppNetworkImage(
-                        url:
-                            'https://img.youtube.com/vi/${widget.videoId}/hqdefault.jpg',
-                      ),
-                      const Center(
-                        child: Icon(
-                          Icons.play_circle_fill,
-                          size: 56,
-                          color: Colors.white,
+              : Semantics(
+                  button: true,
+                  label: AppLocalizations.of(context).video_play,
+                  child: GestureDetector(
+                    key: const Key('videoEmbed.thumbnail'),
+                    onTap: _play,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        AppNetworkImage(
+                          url:
+                              'https://img.youtube.com/vi/${widget.videoId}/hqdefault.jpg',
                         ),
-                      ),
-                    ],
+                        const Center(
+                          child: Icon(
+                            Icons.play_circle_fill,
+                            size: 56,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
         ),

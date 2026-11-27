@@ -57,4 +57,19 @@ void main() {
       expect(api.requests.map(authorizationOf).whereType<String>(), isEmpty);
     });
   }
+
+  testWidgets('인트로의 로고(아이콘뿐인 버튼)는 이름이 있고 누르면 홈으로 간다', (tester) async {
+    final container = await pumpApp(
+      tester,
+      beforePump: (c) => mockReadApis(ApiMock(c)),
+    );
+    container.read(routerProvider).go(AppRoutes.intro);
+    await settle(tester);
+
+    final logo = find.bySemanticsLabel('홈으로 이동');
+    expect(logo, findsOneWidget);
+    await tester.tap(logo);
+    await settle(tester);
+    expect(find.byType(HomeScreen), findsOneWidget);
+  });
 }

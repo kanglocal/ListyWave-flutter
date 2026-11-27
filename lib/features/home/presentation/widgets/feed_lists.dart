@@ -230,22 +230,35 @@ class FeedListCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                GestureDetector(
-                  onTap: () =>
-                      context.push(AppRoutes.myList('${item.ownerId}')),
-                  child: Row(
-                    children: [
-                      UserProfileImage(
-                        src: item.ownerProfileImage,
-                        size: 30,
-                        semanticLabel: l10n.common_listOwnerImage,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () =>
+                          context.push(AppRoutes.myList('${item.ownerId}')),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          UserProfileImage(
+                            src: item.ownerProfileImage,
+                            size: 30,
+                            semanticLabel: l10n.common_listOwnerImage,
+                          ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              item.ownerNickname,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.typo.labelBold,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      Text(item.ownerNickname, style: context.typo.labelBold),
-                    ],
+                    ),
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(width: 8),
                 Text(
                   l10n.home_updateCount(item.updateCount),
                   style: context.typo.labelSmall.copyWith(

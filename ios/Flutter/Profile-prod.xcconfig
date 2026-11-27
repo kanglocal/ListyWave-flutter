@@ -5,3 +5,7 @@
 // flavor: prod (PLAN §5.4)
 FLAVOR_BUNDLE_SUFFIX=
 APP_DISPLAY_NAME=ListyWave
+
+// Universal Links host = env/prod.json SITE_URL 의 host. 켜는 스위치는 UniversalLinks.xcconfig.
+UNIVERSAL_LINK_HOST=listywave.vercel.app
+#include "UniversalLinks.xcconfig"

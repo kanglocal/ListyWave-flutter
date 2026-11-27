@@ -13,3 +13,8 @@ linter:
   rules:
     prefer_single_quotes: true
     always_declare_return_types: true
+    # PLAN M5 성능: 바뀌지 않는 위젯은 const 로 만들어 rebuild 때 다시 만들지 않는다.
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true

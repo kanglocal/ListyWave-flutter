@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Universal Links (PLAN §2.1). host 는 flavor xcconfig 의 UNIVERSAL_LINK_HOST 다.
+	     이 파일은 UNIVERSAL_LINKS_ENABLED=YES 일 때만 서명에 쓰인다 (Flutter/UniversalLinks.xcconfig). -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:$(UNIVERSAL_LINK_HOST)</string>
+	</array>
+</dict>
+</plist>

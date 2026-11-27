@@ -8,8 +8,10 @@ import '../../../app/router.dart';
 import '../../../core/auth/current_user.dart';
 import '../../../core/l10n/gen/app_localizations.dart';
 import '../../../core/models/list_type.dart';
+import '../../../core/network/app_exception.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
+import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/label_chip.dart';
 import '../../../core/widgets/no_data.dart';
 import '../../../core/widgets/confirm_dialog.dart';
@@ -48,7 +50,18 @@ class ListDetailScreen extends ConsumerWidget {
         list != null && !list.isPublic && !isOwner && !isCollaborator;
 
     final Widget body;
-    if (detail == null || (detail.hasError && list == null)) {
+    final error = detail != null && list == null ? detail.error : null;
+    final errorStatus = error == null ? null : AppException.from(error).status;
+    if (error != null && (errorStatus == null || errorStatus >= 500)) {
+      // 응답을 못 받았거나 서버 오류면 리스트가 없는 것이 아니므로 다른 조회 화면처럼
+      // 다시 시도할 수 있게 한다.
+      body = Center(
+        child: ErrorView(
+          error: error,
+          onRetry: () => ref.invalidate(listDetailProvider(id!)),
+        ),
+      );
+    } else if (detail == null || error != null) {
       // web 은 조회 실패를 "삭제 또는 비공개" 모달로 안내하고 홈으로 보낸다.
       body = NoDataView(
         message: l10n.listDetail_deletedOrPrivate,
@@ -56,7 +69,7 @@ class ListDetailScreen extends ConsumerWidget {
         onButtonPressed: () => context.go(AppRoutes.home),
       );
     } else if (list == null) {
-      body = Skeletonizer(
+      body = const Skeletonizer(
         child: _ListContent(list: _skeletonList, listId: 0, isOwner: false),
       );
     } else if (isHidden) {
@@ -196,21 +209,34 @@ class _ListContent extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              GestureDetector(
-                onTap: () => context.push(AppRoutes.myList('${list.ownerId}')),
-                child: Row(
-                  children: [
-                    UserProfileImage(
-                      src: list.ownerProfileImageUrl,
-                      size: 36,
-                      semanticLabel: l10n.listDetail_profileImageAlt,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: () =>
+                        context.push(AppRoutes.myList('${list.ownerId}')),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        UserProfileImage(
+                          src: list.ownerProfileImageUrl,
+                          size: 36,
+                          semanticLabel: l10n.listDetail_profileImageAlt,
+                        ),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(
+                            list.ownerNickname,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.typo.bodyBold,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Text(list.ownerNickname, style: context.typo.bodyBold),
-                  ],
+                  ),
                 ),
               ),
-              const Spacer(),
               if (collaborators.isNotEmpty)
                 Collaborators(collaborators: collaborators),
               if (!isOwner && listId != 0) ...[

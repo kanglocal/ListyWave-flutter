@@ -73,6 +73,16 @@ class ShareService {
   }
 }
 
+/// 카카오 SDK 가 받은 `kakao{KEY}://kakaolink?…` 앱 실행 URL 을 [onLink] 로 넘긴다.
+/// iOS 에서는 카카오 plugin 이 이 URL 을 먼저 처리해서 (`application(_:open:)` 이 true) Flutter
+/// deep linking 으로 router 에 오지 않으므로 이 경로로 받는다 (PLAN §2.1). Android 는 두 경로로 다
+/// 오지만 같은 위치로 `go` 하므로 결과가 같다. 테스트는 override 해서 직접 URL 을 넣는다.
+typedef KakaoSchemeReceiver = void Function(void Function(Uri uri) onLink);
+
+final kakaoSchemeReceiverProvider = Provider<KakaoSchemeReceiver>(
+  (ref) => receiveKakaoScheme,
+);
+
 final shareServiceProvider = Provider<ShareService>(
   (ref) => ShareService(ref.watch(envProvider)),
 );

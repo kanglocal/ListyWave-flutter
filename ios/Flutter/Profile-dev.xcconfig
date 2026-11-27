@@ -5,3 +5,8 @@
 // flavor: dev (PLAN §5.4)
 FLAVOR_BUNDLE_SUFFIX=.dev
 APP_DISPLAY_NAME=ListyWave Dev
+
+// Universal Links host. dev SITE_URL 은 localhost 라 운영 웹 host 를 같이 쓴다 (AASA 에 .dev 번들도 넣는다).
+// 켜는 스위치는 UniversalLinks.xcconfig.
+UNIVERSAL_LINK_HOST=listywave.vercel.app
+#include "UniversalLinks.xcconfig"

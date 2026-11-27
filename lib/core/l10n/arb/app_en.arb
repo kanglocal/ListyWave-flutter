@@ -369,5 +369,11 @@
   "toast_updateProfileError": "Failed to update the profile. Please try again.🥲",
   "toast_loggedOut": "Logged out successfully.",
   "toast_withdraw": "You've withdrawn from ListyWave. 🥲 Please come back soon!",
-  "toast_withdrawError": "Failed to withdraw. Please try again."
+  "toast_withdrawError": "Failed to withdraw. Please try again.",
+  "notFound_message": "Page not found.",
+  "notFound_description": "The address is wrong or the page no longer exists.",
+  "notFound_goHome": "Go to home",
+  "common_goHome": "Go to home",
+  "video_play": "Play video",
+  "profile_defaultImage": "Default image {index}"
 }

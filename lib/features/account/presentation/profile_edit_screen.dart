@@ -462,19 +462,25 @@ class _ImageOptions extends StatelessWidget {
             ),
           ),
         ),
-        for (final image in images)
-          GestureDetector(
-            key: Key('$keyPrefix.${image.name}'),
-            onTap: () => onDefault(image.imageUrl),
-            child: Container(
-              width: 56,
-              height: 56,
-              clipBehavior: Clip.antiAlias,
-              decoration: border(!hasLocal && selectedUrl == image.imageUrl),
-              child: AppNetworkImage(
-                url: image.imageUrl,
+        for (final (index, image) in images.indexed)
+          Semantics(
+            button: true,
+            selected: !hasLocal && selectedUrl == image.imageUrl,
+            label: l10n.profile_defaultImage(index + 1),
+            child: GestureDetector(
+              key: Key('$keyPrefix.${image.name}'),
+              onTap: () => onDefault(image.imageUrl),
+              child: Container(
                 width: 56,
                 height: 56,
+                clipBehavior: Clip.antiAlias,
+                decoration: border(!hasLocal && selectedUrl == image.imageUrl),
+                child: AppNetworkImage(
+                  url: image.imageUrl,
+                  width: 56,
+                  height: 56,
+                  memCacheWidth: 56,
+                ),
               ),
             ),
           ),

@@ -18,10 +18,25 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<!-- 앱 custom scheme listywave://list/123 (PLAN §2.1). 카카오 scheme kakao{KEY} 는
+		     빌드 때 ios/scripts/kakao_url_scheme.sh 가 이 배열 뒤에 덧붙인다. -->
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.listywave.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>listywave</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>

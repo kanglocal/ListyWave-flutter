@@ -26,7 +26,7 @@ class Top3Card extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             if (hasImage) ...[
-              AppNetworkImage(url: list.representImageUrl),
+              AppNetworkImage(url: list.representImageUrl, memCacheWidth: 200),
               const ColoredBox(color: Color(0x66000000)),
             ] else
               ColoredBox(

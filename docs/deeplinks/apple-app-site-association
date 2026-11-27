@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "<APPLE_TEAM_ID>.com.listywave.app",
+          "<APPLE_TEAM_ID>.com.listywave.app.dev"
+        ],
+        "components": [
+          { "/": "/list/*", "comment": "리스트 상세·수정·히스토리 (/list/create 포함)" },
+          { "/": "/user/*", "comment": "마이리스트·콜라보리스트·팔로워·팔로잉" },
+          { "/": "/notice/*", "comment": "공지 상세" }
+        ]
+      }
+    ]
+  }
+}

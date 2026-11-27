@@ -188,9 +188,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               child: Row(
                 children: [
                   for (var i = 0; i < 2; i++)
-                    Expanded(
+                    const Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: EdgeInsets.all(8),
                         child: ListCard(list: _skeletonList, isOwner: false),
                       ),
                     ),

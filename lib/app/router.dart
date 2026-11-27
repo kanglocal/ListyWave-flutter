@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../core/auth/auth_controller.dart';
 import '../core/auth/login_sheet.dart';
+import '../core/share/share_service.dart';
 import '../features/account/presentation/account_screen.dart';
 import '../features/account/presentation/profile_edit_screen.dart';
 import '../features/account/presentation/withdraw_screen.dart';
@@ -28,8 +29,9 @@ import '../features/search/presentation/search_screen.dart';
 import '../features/topics/presentation/topics_screen.dart';
 import '../features/user/presentation/user_profile_screen.dart';
 import 'app_shell.dart';
+import 'not_found_screen.dart';
 
-/// PLAN §2 의 go_router path. web path 와 1:1 이라 deeplink 매핑이 필요 없다.
+/// PLAN §2 의 go_router path. web path 와 1:1 이라 웹 URL 은 path 를 그대로 쓴다.
 abstract final class AppRoutes {
   static const home = '/';
   static const intro = '/intro';
@@ -70,6 +72,54 @@ bool isAuthRequired(String path) =>
       AppRoutes.collection,
     ].any((p) => path == p || path.startsWith('$p/'));
 
+/// 앱 custom scheme (PLAN §2.1). `listywave://list/123` 처럼 host 자리에 첫 path 가 온다.
+const appLinkScheme = 'listywave';
+
+/// Flutter 가 platform 에서 받은 deeplink (iOS `openURL`/Universal Link, Android intent data)
+/// 는 scheme 과 host 가 붙은 전체 URI 로 router 에 들어온다. 이를 앱 경로로 바꾼다 (PLAN §2.1).
+/// - `https://<SITE_HOST>/list/1?x=y` → `/list/1?x=y` (웹 path 와 앱 path 가 같다. host 는
+///   OS 가 manifest/entitlement 에 등록된 것만 앱으로 보내므로 다시 확인하지 않는다)
+/// - `listywave://list/1` → `/list/1`, `listywave://` → `/`
+/// - `kakao{KEY}://kakaolink?listId=1` → `/list/1` (카카오 템플릿 실행 파라미터 `listId=${listId}`).
+///   `listId` 가 없거나 숫자가 아니면 홈으로 간다.
+///
+/// scheme 이 없으면 (앱 안의 `go`/`push`) null 이다. 모르는 scheme 은 경로로 바꿀 수 없으므로
+/// 아무 route 와도 맞지 않는 원래 URI 를 그대로 둬서 not-found 화면이 뜬다.
+String? deepLinkLocation(Uri uri) {
+  if (!uri.hasScheme) return null;
+  String location(String path) {
+    // go_router 는 빈 path 를 `/` 로 바꿔 넘기므로 (`listywave://account` → path `/`)
+    // 끝의 `/` 를 뗀다.
+    final trimmed = path.length > 1 && path.endsWith('/')
+        ? path.substring(0, path.length - 1)
+        : path;
+    return Uri(
+      path: trimmed.isEmpty ? '/' : trimmed,
+      query: uri.hasQuery ? uri.query : null,
+    ).toString();
+  }
+
+  switch (uri.scheme) {
+    case 'http' || 'https':
+      return location(uri.path);
+    case appLinkScheme:
+      return location('/${uri.host}${uri.path}');
+    case final scheme
+        when scheme.startsWith('kakao') && uri.host == 'kakaolink':
+      final listId = uri.queryParameters['listId'] ?? '';
+      return RegExp(r'^\d+$').hasMatch(listId)
+          ? AppRoutes.listDetail(listId)
+          : AppRoutes.home;
+  }
+  return null;
+}
+
+/// deeplink 면 바꾼 앱 경로, 아니면 그대로의 location.
+Uri _appUri(Uri uri) {
+  final location = deepLinkLocation(uri);
+  return location == null ? uri : Uri.parse(location);
+}
+
 bool _needsLogin(Ref ref, String path) =>
     ref.read(authControllerProvider).status == AuthStatus.loggedOut &&
     isAuthRequired(path);
@@ -88,7 +138,8 @@ FutureOr<OnEnterResult> authOnEnter(
   GoRouterState current,
   GoRouterState next,
 ) {
-  if (!_needsLogin(ref, next.uri.path) || isAuthRequired(current.uri.path)) {
+  final nextUri = _appUri(next.uri);
+  if (!_needsLogin(ref, nextUri.path) || isAuthRequired(current.uri.path)) {
     return const Allow();
   }
   // 막힌 parse 도중 router.push 를 하면 Router 가 그 결과를 버린다. 그래서 route 가 아닌
@@ -100,7 +151,7 @@ FutureOr<OnEnterResult> authOnEnter(
       navigator.push(
         DialogRoute<void>(
           context: navigator.context,
-          builder: (_) => LoginSheet(from: next.uri.toString()),
+          builder: (_) => LoginSheet(from: nextUri.toString()),
         ),
       ),
     );
@@ -113,7 +164,12 @@ FutureOr<OnEnterResult> authOnEnter(
 ///
 /// 사용자가 직접 로그아웃/탈퇴했으면 다시 로그인하라고 하지 않고 홈으로 보낸다
 /// (web `LogoutModal`, `WithdrawalButton` 의 `router.push('/')`).
+///
+/// deeplink 는 먼저 앱 경로로 바꾼다. go_router 는 바뀐 경로로 이 redirect 를 다시 부르므로
+/// 보호 경로 deeplink 도 같은 guard 를 거친다.
 String? authRedirect(Ref ref, GoRouterState state) {
+  final deepLink = deepLinkLocation(state.uri);
+  if (deepLink != null) return deepLink;
   if (!_needsLogin(ref, state.uri.path)) return null;
   final reason = ref.read(authControllerProvider).reason;
   if (reason == LogoutReason.user || reason == LogoutReason.withdraw) {
@@ -133,7 +189,7 @@ GoRouter createRouter(Ref ref) {
     },
   );
   ref.onDispose(loggedOut.dispose);
-  return GoRouter(
+  final router = GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: AppRoutes.home,
     refreshListenable: loggedOut,
@@ -141,7 +197,14 @@ GoRouter createRouter(Ref ref) {
         authOnEnter(ref, current, next),
     redirect: (context, state) => authRedirect(ref, state),
     routes: appRoutes,
+    // 모르는 경로 (잘못된 deeplink 포함).
+    errorBuilder: (context, state) => const NotFoundScreen(),
   );
+  // 카카오톡 공유 메시지의 앱 실행 URL. redirect 가 [deepLinkLocation] 으로 바꾼다.
+  final receiveKakaoLink = ref.read(kakaoSchemeReceiverProvider)
+    ..call((uri) => router.go(uri.toString()));
+  ref.onDispose(() => receiveKakaoLink((_) {}));
+  return router;
 }
 
 class _RouterRefresh extends ChangeNotifier {

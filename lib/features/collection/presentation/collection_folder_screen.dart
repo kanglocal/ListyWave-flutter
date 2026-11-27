@@ -152,7 +152,11 @@ class _CollectedListCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (image != null && image.isNotEmpty)
-              AspectRatio(aspectRatio: 1.4, child: AppNetworkImage(url: image)),
+              // 2열 grid 썸네일이라 화면 폭의 절반 정도만 decode 한다.
+              AspectRatio(
+                aspectRatio: 1.4,
+                child: AppNetworkImage(url: image, memCacheWidth: 200),
+              ),
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(

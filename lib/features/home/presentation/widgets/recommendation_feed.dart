@@ -191,48 +191,63 @@ class _RecommendedListItem extends StatelessWidget {
                   horizontal: 32,
                   vertical: 36,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.skyblue,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        item.category,
-                        style: context.typo.labelSmall.copyWith(
-                          color: AppColors.blue,
-                        ),
+                // 정사각형 카드라 글자가 커지면 (접근성 글자 크기) 넘치는 대신 내용 전체를 줄인다.
+                child: LayoutBuilder(
+                  builder: (context, constraints) => FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: SizedBox(
+                      width: constraints.maxWidth,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.skyblue,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              item.category,
+                              style: context.typo.labelSmall.copyWith(
+                                color: AppColors.blue,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            item.title,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.typo.subtitle.copyWith(
+                              color: textColor,
+                            ),
+                          ),
+                          Text(
+                            item.ownerNickname,
+                            style: context.typo.labelSmall.copyWith(
+                              color: textColor,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          for (final (index, top) in item.items.indexed)
+                            Text(
+                              '${index + 1}. ${top.title}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.typo.label.copyWith(
+                                color: hasImage
+                                    ? AppColors.skyblue
+                                    : AppColors.gray3,
+                              ),
+                            ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      item.title,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.typo.subtitle.copyWith(color: textColor),
-                    ),
-                    Text(
-                      item.ownerNickname,
-                      style: context.typo.labelSmall.copyWith(color: textColor),
-                    ),
-                    const SizedBox(height: 8),
-                    for (final (index, top) in item.items.indexed)
-                      Text(
-                        '${index + 1}. ${top.title}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.typo.label.copyWith(
-                          color: hasImage ? AppColors.skyblue : AppColors.gray3,
-                        ),
-                      ),
-                  ],
+                  ),
                 ),
               ),
             ],
@@ -258,8 +273,12 @@ class TopicsRecommendation extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text(l10n.home_topicsTitle, style: context.typo.subtitle),
-              const Spacer(),
+              Expanded(
+                child: Text(
+                  l10n.home_topicsTitle,
+                  style: context.typo.subtitle,
+                ),
+              ),
               TextButton(
                 onPressed: () => context.push(AppRoutes.topics),
                 child: Text(

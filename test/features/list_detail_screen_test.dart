@@ -5,6 +5,7 @@ import 'package:listywave_app/features/list_detail/presentation/list_detail_scre
 import 'package:listywave_app/features/list_detail/presentation/widgets/collaborators.dart';
 import 'package:listywave_app/features/user/presentation/user_profile_screen.dart';
 
+import '../helpers/fixtures.dart';
 import '../helpers/pump_app.dart';
 import '../helpers/read_api_mocks.dart';
 
@@ -69,6 +70,8 @@ void main() {
 
     expect(find.text('팡도르가 최고'), findsOneWidget);
     expect(find.byKey(const Key('videoEmbed.thumbnail')), findsOneWidget);
+    // 아이콘뿐인 재생 버튼도 스크린 리더가 읽는다.
+    expect(find.bySemanticsLabel('동영상 재생'), findsOneWidget);
     // 일반 링크는 기기에서 직접 og 를 읽는다.
     await tester.scrollUntilVisible(
       find.text('테일러커피 후기'),
@@ -126,5 +129,30 @@ void main() {
 
     expect(api.sent('GET', '/lists/404'), hasLength(1));
     expect(find.text('이 리스트는 삭제 또는 비공개 처리 되었어요.'), findsOneWidget);
+  });
+
+  testWidgets('서버 오류(5xx)면 삭제 안내 대신 ErrorView 를 보이고, 다시 시도하면 다시 읽는다', (
+    tester,
+  ) async {
+    final container = await pumpApp(
+      tester,
+      beforePump: (c) {
+        api = ApiMock(c);
+        mockReadApis(api);
+        api.adapter.onGet('/lists/7', (s) => s.reply(500, 'boom'));
+      },
+    );
+    container.read(routerProvider).push(AppRoutes.listDetail('7'));
+    await settle(tester);
+
+    expect(find.text('정보를 불러오지 못했어요.'), findsOneWidget);
+    expect(find.text('이 리스트는 삭제 또는 비공개 처리 되었어요.'), findsNothing);
+
+    api.adapter.onGet('/lists/7', (s) => s.reply(200, fixture('list_detail')));
+    await tester.tap(find.text('다시 시도'));
+    await settle(tester);
+
+    expect(api.sent('GET', '/lists/7'), hasLength(2));
+    expect(find.text('서울 브런치 카페 TOP5'), findsWidgets);
   });
 }

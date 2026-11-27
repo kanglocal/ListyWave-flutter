@@ -23,9 +23,11 @@ class SimpleRankList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: Row(
               children: [
-                SizedBox(
-                  width: 36,
+                // 글자가 커지면 순위 칸도 넓어진다.
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: 36),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       if (item.rank == 1)
                         SvgPicture.asset(

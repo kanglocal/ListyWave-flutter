@@ -1,3 +1,4 @@
+import java.net.URI
 import java.util.Base64
 
 plugins {
@@ -20,6 +21,14 @@ val dartDefines: Map<String, String> =
         ?.toMap()
         ?: emptyMap()
 val kakaoNativeAppKey = dartDefines["KAKAO_NATIVE_APP_KEY"].orEmpty()
+
+// App Links host (PLAN §2.1). env/<flavor>.json 의 SITE_URL 에서 host 만 꺼낸다.
+// 값이 없으면 (dart-define 없이 gradle 만 돌린 경우) 아무 링크와도 맞지 않는 host 로 둔다.
+val appLinkHost: String =
+    dartDefines["SITE_URL"]
+        ?.let { runCatching { URI(it).host }.getOrNull() }
+        ?.takeIf { it.isNotEmpty() }
+        ?: "listywave-unset.invalid"
 
 android {
     namespace = "com.listywave.app"
@@ -47,6 +56,7 @@ android {
         // 키가 없으면 (로컬 dev) 다른 앱과 겹치지 않는 값으로 둔다. 출시 전 env/prod.json 에 키를 넣는다.
         manifestPlaceholders["kakaoScheme"] =
             if (kakaoNativeAppKey.isEmpty()) "listywave-kakao-unset" else "kakao$kakaoNativeAppKey"
+        manifestPlaceholders["appLinkHost"] = appLinkHost
     }
 
     // dev/prod 를 한 기기에 같이 설치할 수 있게 dev 에 ".dev" suffix 를 붙인다 (PLAN §5.4).

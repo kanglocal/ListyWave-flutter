@@ -264,7 +264,8 @@ class _CommentsSheetState extends ConsumerState<CommentsSheet> {
           child: Skeletonizer(
             child: Column(
               children: [
-                for (var i = 0; i < 3; i++) CommentTile(comment: _skeleton),
+                for (var i = 0; i < 3; i++)
+                  const CommentTile(comment: _skeleton),
               ],
             ),
           ),
